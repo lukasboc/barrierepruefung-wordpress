@@ -36,19 +36,3 @@ add_action('plugins_loaded', static function (): void {
         (new A11y_Checker_Admin)->register();
     }
 });
-
-/**
- * Deinstallation entfernt alles restlos - Optionen und Zwischenspeicher.
- * Ein Plugin, das Spuren hinterlässt, wird nicht freigegeben (docs/08).
- */
-register_uninstall_hook(__FILE__, 'a11y_checker_uninstall');
-
-function a11y_checker_uninstall(): void
-{
-    foreach (['a11y_checker_token', 'a11y_checker_site_id', 'a11y_checker_api_url'] as $option) {
-        delete_option($option);
-    }
-
-    delete_transient('a11y_checker_declaration');
-    delete_transient('a11y_checker_status');
-}

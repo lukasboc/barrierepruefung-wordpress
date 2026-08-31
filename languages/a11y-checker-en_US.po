@@ -1,0 +1,174 @@
+# Englische Fassung des Barrierefreiheits-Checkers.
+# Copyright (C) 2026 lubomedia
+# This file is distributed under the same license as the Barrierefreiheits-Checker package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Barrierefreiheits-Checker 0.1.0\n"
+"Report-Msgid-Bugs-To: https://app.example.org/\n"
+"PO-Revision-Date: 2026-08-31 12:00+0000\n"
+"Last-Translator: lubomedia\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+#: includes/class-a11y-checker-admin.php:29
+#: includes/class-a11y-checker-admin.php:30 views/admin-page.php:18
+msgid "Barrierefreiheit"
+msgstr "Accessibility"
+
+#: includes/class-a11y-checker-admin.php:40
+msgid "Sie haben keine Berechtigung für diese Seite."
+msgstr "You do not have permission to view this page."
+
+#: includes/class-a11y-checker-admin.php:111
+msgid "Sie haben keine Berechtigung für diese Aktion."
+msgstr "You do not have permission to perform this action."
+
+#: includes/class-a11y-checker-client.php:59
+msgid "Das Plugin ist noch nicht mit einem Konto verbunden."
+msgstr "The plugin is not connected to an account yet."
+
+#: includes/class-a11y-checker-client.php:88
+msgid "Unbekannter Fehler."
+msgstr "Unknown error."
+
+#: includes/class-a11y-checker-shortcode.php:42
+msgid "Die Erklärung zur Barrierefreiheit kann gerade nicht geladen werden."
+msgstr "The accessibility statement cannot be loaded at the moment."
+
+#: includes/class-a11y-checker-shortcode.php:60
+#, php-format
+msgid "Version %1$s, Stand %2$s"
+msgstr "Version %1$s, as of %2$s"
+
+#: includes/class-a11y-checker-shortcode.php:84
+msgid "Erklärung zur Barrierefreiheit"
+msgstr "Accessibility statement"
+
+#: views/admin-page.php:10
+msgid "Verbindung hergestellt. Bestätigen Sie jetzt die Domain."
+msgstr "Connected. Please verify the domain now."
+
+#: views/admin-page.php:11
+msgid "Die Domain ist bestätigt."
+msgstr "The domain is verified."
+
+#: views/admin-page.php:12
+msgid "Die Domain konnte nicht bestätigt werden."
+msgstr "The domain could not be verified."
+
+#: views/admin-page.php:13
+msgid ""
+"Die Prüfung wurde gestartet. Das Ergebnis steht in wenigen Minuten bereit."
+msgstr "The scan has started. The result will be ready in a few minutes."
+
+#: views/admin-page.php:14
+msgid "Es ist ein Fehler aufgetreten."
+msgstr "An error occurred."
+
+#: views/admin-page.php:32
+msgid "Mit Ihrem Konto verbinden"
+msgstr "Connect to your account"
+
+#: views/admin-page.php:34
+msgid ""
+"Legen Sie im Konto ein API-Token für diese Website an und tragen Sie es hier "
+"ein."
+msgstr "Create an API token for this site in your account and enter it here."
+
+#: views/admin-page.php:43
+msgid "Adresse des Dienstes"
+msgstr "Service address"
+
+#: views/admin-page.php:50
+msgid "API-Token"
+msgstr "API token"
+
+#: views/admin-page.php:54
+msgid "Das Token gilt nur für diese Website."
+msgstr "The token is valid for this site only."
+
+#: views/admin-page.php:59
+msgid "Website-Kennung"
+msgstr "Site ID"
+
+#: views/admin-page.php:64
+msgid "Verbinden"
+msgstr "Connect"
+
+#: views/admin-page.php:67
+msgid "Status"
+msgstr "Status"
+
+#: views/admin-page.php:70
+msgid ""
+"Die Website konnte nicht abgerufen werden. Prüfen Sie Token und Kennung."
+msgstr "The site could not be retrieved. Please check the token and the site ID."
+
+#: views/admin-page.php:73
+msgid "Status dieser Website"
+msgstr "Status of this site"
+
+#: views/admin-page.php:76
+msgid "Adresse"
+msgstr "Address"
+
+#: views/admin-page.php:80
+msgid "Domain bestätigt"
+msgstr "Domain verified"
+
+#: views/admin-page.php:83
+msgid "nein"
+msgstr "no"
+
+#: views/admin-page.php:84
+msgid "ja"
+msgstr "yes"
+
+#: views/admin-page.php:88
+msgid "Nächste Prüfung"
+msgstr "Next scan"
+
+#: views/admin-page.php:91
+msgid "nicht geplant"
+msgstr "not scheduled"
+
+#: views/admin-page.php:103
+msgid "Domain jetzt bestätigen"
+msgstr "Verify domain now"
+
+#: views/admin-page.php:109
+msgid "Jetzt prüfen"
+msgstr "Scan now"
+
+#: views/admin-page.php:115
+msgid "Erklärung einbinden"
+msgstr "Embed the statement"
+
+#: views/admin-page.php:116
+msgid ""
+"Fügen Sie diesen Shortcode auf der Seite ein, die Ihre Erklärung zur "
+"Barrierefreiheit tragen soll:"
+msgstr "Add this shortcode to the page that should carry your accessibility statement:"
+
+#: views/admin-page.php:119
+msgid ""
+"Optionen: teil=\"maengel\" oder teil=\"kontakt\" für einen einzelnen "
+"Abschnitt, stand=\"nein\" ohne Datumszeile, ueberschrift=\"3\" zum Einpassen "
+"in Ihre Überschriftenhierarchie."
+msgstr "Options: teil=\"maengel\" or teil=\"kontakt\" for a single section, stand=\"nein\" to omit the date line, ueberschrift=\"3\" to fit your heading hierarchy."
+
+#: views/admin-page.php:122
+msgid "Datenübertragung"
+msgstr "Data transfer"
+
+#: views/admin-page.php:124
+msgid ""
+"Dieses Plugin überträgt die Adresse dieser Website sowie das API-Token an "
+"den oben eingetragenen Dienst, um Prüfungen auszulösen und die Erklärung "
+"abzurufen. Es werden keine Inhalte Ihrer Nutzerinnen und Nutzer übermittelt."
+msgstr "This plugin sends the address of this site and the API token to the service configured above in order to start scans and retrieve the statement. No content belonging to your visitors is transmitted."

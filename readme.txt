@@ -45,10 +45,12 @@ Datenschutzerklärung und Nutzungsbedingungen des Dienstes: https://app.example.
 == Installation ==
 
 1. Plugin installieren und aktivieren.
-2. Unter *Werkzeuge → Barrierefreiheit* das API-Token und die Website-Kennung eintragen.
-3. Domain bestätigen — das Plugin liefert den Nachweis selbst aus, Sie brauchen keinen
+2. Im Konto des Dienstes unter *Integrationen* ein API-Token für diese Website erzeugen.
+   Dort stehen zugleich die Website-Kennung und die Adresse des Dienstes.
+3. Unter *Werkzeuge → Barrierefreiheit* diese drei Angaben eintragen.
+4. Domain bestätigen — das Plugin liefert den Nachweis selbst aus, Sie brauchen keinen
    DNS-Zugriff.
-4. Prüfung anstoßen und den Shortcode `[barrierefreiheitserklaerung]` auf einer Seite einfügen.
+5. Prüfung anstoßen und den Shortcode `[barrierefreiheitserklaerung]` auf einer Seite einfügen.
 
 == Frequently Asked Questions ==
 
@@ -63,6 +65,17 @@ Die zuletzt erfolgreich geladene Fassung der Erklärung wird weiter ausgeliefert
 ursprünglichen Stand-Datum. Eine Erklärung, die wegen einer Störung von der Website
 verschwindet, wäre für Sie ein Rechtsproblem.
 
+= In welchen Sprachen liegt das Plugin vor? =
+
+Deutsch (Ausgangssprache) und Englisch. Die Vorlage für weitere Übersetzungen liegt dem
+Plugin unter `languages/a11y-checker.pot` bei.
+
+= Was bleibt nach der Deinstallation zurück? =
+
+Nichts. Die Deinstallation entfernt alle Optionen und Zwischenspeicher, einschließlich des
+Tokens und der zuletzt geladenen Fassung der Erklärung — in einem Netzwerk für jede
+Unterseite einzeln.
+
 = Ersetzt die automatische Prüfung ein Gutachten? =
 
 Nein. Automatisierte Tests decken nur einen Teil der Anforderungen ab. Der Dienst führt Sie
@@ -73,3 +86,4 @@ Selbstbewertung beruht.
 
 = 0.1.0 =
 * Erste Fassung: Verbindung, Domain-Bestätigung, Prüfung anstoßen, Shortcode und Block.
+* Deutsche und englische Sprachfassung, vollständige Deinstallation.
