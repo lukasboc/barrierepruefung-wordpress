@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the Barrierefreiheits-Checker package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Barrierefreiheits-Checker 0.1.0\n"
+"Project-Id-Version: Barrierefreiheits-Checker 0.2.0\n"
 "Report-Msgid-Bugs-To: https://app.example.org/\n"
 "PO-Revision-Date: 2026-08-31 12:00+0000\n"
 "Last-Translator: lubomedia\n"

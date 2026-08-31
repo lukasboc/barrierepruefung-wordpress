@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,14 @@ durch die übrigen Prüfschritte; die Erklärung weist ausdrücklich aus, dass s
 Selbstbewertung beruht.
 
 == Changelog ==
+
+= 0.2.0 =
+* Behoben: Die Überschriftenebene wird jetzt an der obersten tatsächlich ausgegebenen
+  Überschrift gemessen. Bisher blieb bei der Voreinstellung die h1 der Erklärung eine h1 -
+  mitten in einer Seite ist das selbst ein Verstoß gegen WCAG 1.3.1 -, und ein mit
+  teil="maengel" oder teil="kontakt" eingebundener Abschnitt kam eine Ebene zu tief heraus.
+  Wer die Ebenen bisher mit ueberschrift="3" von Hand ausgeglichen hat, stellt jetzt auf
+  ueberschrift="2" um (oder lässt das Attribut weg).
 
 = 0.1.0 =
 * Erste Fassung: Verbindung, Domain-Bestätigung, Prüfung anstoßen, Shortcode und Block.

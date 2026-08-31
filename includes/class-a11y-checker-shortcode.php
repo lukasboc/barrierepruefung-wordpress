@@ -143,11 +143,24 @@ class A11y_Checker_Shortcode
      *
      * Damit fügt sich der Text korrekt in die Hierarchie der Seite ein - eine
      * h1 mitten im Inhalt wäre selbst ein Verstoß (WCAG 1.3.1).
+     *
+     * $start ist die Ebene, die die oberste Überschrift der Ausgabe bekommt.
+     * Gemessen wird an ihr, nicht fest an einer h1: bei einem
+     * herausgeschnittenen Abschnitt ist die oberste Überschrift eine h2, und
+     * ohne diese Messung käme der Abschnitt eine Ebene zu tief heraus.
+     *
+     * Dieselbe Bedeutung hat die Angabe in der Einbindung ohne Plugin
+     * (App\Domain\Declarations\DeclarationFragment), damit sich beide Wege
+     * gleich verhalten.
      */
     private function ueberschriften_verschieben(string $html, int $start): string
     {
-        $start = max(2, min(4, $start));
-        $verschiebung = $start - 2;
+        if (! preg_match_all('#<h([1-6])[^>]*>#i', $html, $treffer)) {
+            return $html;
+        }
+
+        $oberste = min(array_map('intval', $treffer[1]));
+        $verschiebung = max(2, min(4, $start)) - $oberste;
 
         if ($verschiebung === 0) {
             return $html;
@@ -155,6 +168,7 @@ class A11y_Checker_Shortcode
 
         return preg_replace_callback('#<(/?)h([1-6])([^>]*)>#i',
             static function (array $treffer) use ($verschiebung): string {
+                // Über h6 hinaus gibt es nichts; gedeckelt statt ungültiges HTML.
                 $ebene = min(6, (int) $treffer[2] + $verschiebung);
 
                 return '<'.$treffer[1].'h'.$ebene.$treffer[3].'>';
