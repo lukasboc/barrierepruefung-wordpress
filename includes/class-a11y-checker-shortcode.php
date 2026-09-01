@@ -64,6 +64,13 @@ class A11y_Checker_Shortcode
             );
         }
 
+        // Der Hinweis auf das Werkzeug kommt fertig ausgezeichnet aus der API -
+        // eine Formulierung, nicht zwei. Fehlt er, hat die Organisation
+        // Whitelabel eingeschaltet.
+        if (! empty($erklaerung['attribution'])) {
+            $html .= (string) $erklaerung['attribution'];
+        }
+
         return sprintf(
             '<div class="a11y-checker-erklaerung" lang="%s">%s</div>',
             esc_attr((string) ($erklaerung['locale'] ?? 'de')),
