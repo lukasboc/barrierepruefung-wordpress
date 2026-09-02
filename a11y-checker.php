@@ -1,6 +1,7 @@
 <?php
 /**
- * Plugin Name:       Barrierefreiheits-Checker
+ * Plugin Name:       Barrierepruefung.de – Web Accessibility Checker
+ * Plugin URI:        https://github.com/lukasboc/barrierepruefung-wordpress
  * Description:       Prüft diese Website auf Barrierefreiheit und bindet die Erklärung zur Barrierefreiheit per Shortcode ein.
  * Version:           0.2.0
  * Requires at least: 6.5

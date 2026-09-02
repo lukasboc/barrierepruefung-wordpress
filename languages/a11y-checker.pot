@@ -6,8 +6,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Barrierefreiheits-Checker 0.2.0\n"
-"Report-Msgid-Bugs-To: https://app.example.org/\n"
+"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/lukasboc/barrierepruefung-wordpress/issues\n"
 "POT-Creation-Date: 2026-08-31 14:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"

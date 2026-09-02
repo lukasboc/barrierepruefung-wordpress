@@ -1,5 +1,5 @@
-=== Barrierefreiheits-Checker ===
-Contributors: lubomedia
+=== Barrierepruefung.de – Web Accessibility Checker ===
+Contributors: lukasbo
 Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 6.8
@@ -28,7 +28,7 @@ assistiven Technologien und sind kein Konformitätsnachweis.
 == External services ==
 
 Dieses Plugin ruft einen externen Dienst auf, dessen Adresse Sie bei der Einrichtung selbst
-eintragen (Standard: app.example.org).
+eintragen (Standard: barrierepruefung.de).
 
 Übertragen werden:
 
@@ -40,7 +40,7 @@ eintragen (Standard: app.example.org).
 Besucher. Die Übertragung erfolgt, wenn Sie eine Prüfung anstoßen, die Domain bestätigen oder
 die Erklärung abgerufen wird (höchstens einmal pro Stunde, danach aus dem Zwischenspeicher).
 
-Datenschutzerklärung und Nutzungsbedingungen des Dienstes: https://app.example.org/rechtliches
+Datenschutzerklärung und Nutzungsbedingungen des Dienstes: https://barrierepruefung.de/rechtliches
 
 == Installation ==
 

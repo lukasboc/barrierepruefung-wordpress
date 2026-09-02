@@ -12,7 +12,7 @@ if (! defined('ABSPATH')) {
  */
 class A11y_Checker_Client
 {
-    public const DEFAULT_API = 'https://app.example.org/api/v1';
+    public const DEFAULT_API = 'https://barrierepruefung.de/api/v1';
 
     public function is_connected(): bool
     {
