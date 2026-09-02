@@ -5,8 +5,12 @@ if (! defined('ABSPATH')) {
 
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nur Lesen des eigenen Redirect-Status zur Anzeige, keine Zustandsaenderung; die Aktion selbst wurde bereits mit Nonce geprueft (siehe A11y_Checker_Admin::pruefe_berechtigung()).
 $status = isset($_GET['a11y_status']) ? sanitize_key(wp_unslash($_GET['a11y_status'])) : '';
-// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- wie oben; sanitize_text_field() muss nach rawurldecode() laufen, damit es auf dem tatsaechlichen Text statt der Prozent-kodierten Form arbeitet - das erkennt der Sniff nicht. Ausgabe erfolgt ohnehin ueber esc_html().
-$meldung = isset($_GET['a11y_meldung']) ? sanitize_text_field(rawurldecode(wp_unslash($_GET['a11y_meldung']))) : '';
+// Kein rawurldecode() hier: PHP dekodiert $_GET-Werte beim Parsen des Query-Strings bereits
+// einmal automatisch. Das rawurlencode() in zurueck() gleicht nur aus, dass add_query_arg()
+// selbst nicht kodiert - ein zweites Dekodieren hier wuerde vom Aufrufer als Text gemeinte
+// Prozent-Sequenzen (z. B. "%41") faelschlich in Zeichen ("A") verwandeln.
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- wie oben.
+$meldung = isset($_GET['a11y_meldung']) ? sanitize_text_field(wp_unslash($_GET['a11y_meldung'])) : '';
 
 $meldungen = [
     'verbunden' => [__('Verbindung hergestellt. Bestätigen Sie jetzt die Domain.', 'a11y-checker'), 'success'],

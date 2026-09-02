@@ -22,7 +22,9 @@
 
     <rule ref="WordPress.WP.I18n">
         <properties>
-            <property name="text_domain" type="array" value="a11y-checker"/>
+            <property name="text_domain" type="array">
+                <element value="a11y-checker"/>
+            </property>
         </properties>
     </rule>
 
