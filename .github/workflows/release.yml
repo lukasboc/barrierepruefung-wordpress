@@ -38,7 +38,10 @@ jobs:
     # Abgeschaltet, solange es weder Slug noch SVN-Zugang gibt. Scharfschalten:
     # Repository-Variable WPORG_DEPLOY auf "true" setzen und die beiden Secrets
     # hinterlegen. Vorher SLUG unten auf den beim Review vergebenen Slug ziehen
-    # - und mit ihm die Text-Domain (siehe CLAUDE.md).
+    # - und mit ihm die Text-Domain (siehe CLAUDE.md). Achtung: Dieser Job checkt
+    # roh aus und muss vor dem Scharfschalten stattdessen den bereits nach
+    # .distignore bereinigten Baum aus dem zip-Job verwenden, sonst landen
+    # tests/, composer.json und .github/ im SVN.
     if: vars.WPORG_DEPLOY == 'true'
     steps:
       - uses: actions/checkout@v4

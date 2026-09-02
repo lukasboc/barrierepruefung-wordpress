@@ -41,4 +41,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: wordpress/plugin-check-action@v1
         with:
+          # Slug muss der Text-Domain folgen (a11y-checker), nicht dem Repo-Namen
+          # (barrierepruefung-wordpress): ohne slug-/build-dir-Override leitet die Action
+          # den erwarteten Slug aus basename($GITHUB_WORKSPACE) ab, bei actions/checkout@v4
+          # also aus dem Repo-Namen. Der Sniff WordPress.WP.I18n.TextDomainMismatch prueft
+          # dagegen und wuerde sonst bei allen 38 Textdomain-Stellen im Code einen Fehler
+          # werfen. Vergibt wordpress.org beim Review einen anderen Slug, muss er hier
+          # zusammen mit der Text-Domain geaendert werden (offener Punkt, siehe CLAUDE.md).
+          slug: a11y-checker
           exclude-directories: 'tests,vendor,assets'
