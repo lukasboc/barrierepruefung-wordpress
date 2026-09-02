@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  zip:
+    name: GitHub-Release mit ZIP
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ZIP nach .distignore bauen
+        run: |
+          set -euo pipefail
+          mkdir -p dist/a11y-checker
+          rsync -a --exclude='/dist' --exclude-from=.distignore ./ dist/a11y-checker/
+          cd dist && zip -r a11y-checker.zip a11y-checker
+
+      - name: Pruefen, dass nichts Fremdes im ZIP liegt
+        run: |
+          set -euo pipefail
+          unzip -l dist/a11y-checker.zip
+          ! unzip -l dist/a11y-checker.zip | grep -E 'vendor/|tests/|composer\.json'
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/a11y-checker.zip
+          generate_release_notes: true
+
+  wporg:
+    name: Deploy ins Plugin-Verzeichnis
+    needs: zip
+    runs-on: ubuntu-latest
+    # Abgeschaltet, solange es weder Slug noch SVN-Zugang gibt. Scharfschalten:
+    # Repository-Variable WPORG_DEPLOY auf "true" setzen und die beiden Secrets
+    # hinterlegen. Vorher SLUG unten auf den beim Review vergebenen Slug ziehen
+    # - und mit ihm die Text-Domain (siehe CLAUDE.md).
+    if: vars.WPORG_DEPLOY == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: a11y-checker
+          ASSETS_DIR: assets
