@@ -55,8 +55,8 @@ Datenschutzerklärung und Nutzungsbedingungen des Dienstes: https://barriereprue
 == Shortcode ==
 
 `[barrierefreiheitserklaerung]` gibt den Text Ihrer Erklärung zur Barrierefreiheit
-serverseitig aus. Derselbe Umfang und dieselben Einstellungen stehen auch als Block
-„Erklärung zur Barrierefreiheit" zur Verfügung.
+serverseitig aus. Denselben Umfang und dieselbe Einbindung bietet auch der Block „Erklärung
+zur Barrierefreiheit" — mit den Einstellungen `teil`, `stand` und `ueberschrift`.
 
 Beispiel für die vollständige Erklärung:
 
@@ -90,8 +90,9 @@ innerhalb der Erklärung werden entsprechend mitverschoben, jedoch nie über h6 
 
 = stand =
 
-`ja` (Voreinstellung) hängt einen Absatz mit Versionsnummer und Datum der Erklärung an. Jeder
-andere Wert unterdrückt diesen Absatz.
+`ja` (Voreinstellung) hängt einen Absatz mit Versionsnummer und Datum der Erklärung an — aber
+nur, wenn die geladene Erklärung ein Datum mitbringt. Fehlt das, bleibt der Absatz auch bei
+`stand="ja"` aus. Jeder andere Wert unterdrückt den Absatz in jedem Fall.
 
 = sprache =
 
