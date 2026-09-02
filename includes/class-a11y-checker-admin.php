@@ -56,8 +56,11 @@ class A11y_Checker_Admin
     {
         $this->pruefe_berechtigung('a11y_checker_connect');
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce wird bereits oben in pruefe_berechtigung() per check_admin_referer() geprueft; der Sniff sieht nicht ueber Methodengrenzen hinweg.
         update_option('a11y_checker_api_url', esc_url_raw(wp_unslash($_POST['api_url'] ?? '')));
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- siehe oben.
         update_option('a11y_checker_token', sanitize_text_field(wp_unslash($_POST['token'] ?? '')));
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- siehe oben.
         update_option('a11y_checker_site_id', sanitize_text_field(wp_unslash($_POST['site_id'] ?? '')));
 
         // Nachweise holen und selbst ausliefern - dafür braucht die Kundin

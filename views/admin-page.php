@@ -3,7 +3,9 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nur Lesen des eigenen Redirect-Status zur Anzeige, keine Zustandsaenderung; die Aktion selbst wurde bereits mit Nonce geprueft (siehe A11y_Checker_Admin::pruefe_berechtigung()).
 $status = isset($_GET['a11y_status']) ? sanitize_key(wp_unslash($_GET['a11y_status'])) : '';
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- wie oben; sanitize_text_field() muss nach rawurldecode() laufen, damit es auf dem tatsaechlichen Text statt der Prozent-kodierten Form arbeitet - das erkennt der Sniff nicht. Ausgabe erfolgt ohnehin ueber esc_html().
 $meldung = isset($_GET['a11y_meldung']) ? sanitize_text_field(rawurldecode(wp_unslash($_GET['a11y_meldung']))) : '';
 
 $meldungen = [
