@@ -10,7 +10,7 @@ if (! defined('ABSPATH')) {
  * Serverseitig gerendert, nicht per JavaScript nachgeladen: sonst wäre der
  * Text für manche assistiven Technologien und ohne JavaScript gar nicht
  * vorhanden. Ein Barrierefreiheitsprodukt darf hier keinen Kompromiss machen
- * (docs/08).
+ * (docs/08 der Dienst-Dokumentation).
  */
 class A11y_Checker_Shortcode
 {
@@ -38,7 +38,8 @@ class A11y_Checker_Shortcode
 
         if ($erklaerung === null) {
             // Eine Erklärung, die wegen eines Serverausfalls von der Website
-            // verschwindet, wäre ein Rechtsproblem für die Kundin (docs/08).
+            // verschwindet, wäre ein Rechtsproblem für die Kundin (docs/08 der
+            // Dienst-Dokumentation).
             return $this->hinweis(__('Die Erklärung zur Barrierefreiheit kann gerade nicht geladen werden.', 'a11y-checker'));
         }
 

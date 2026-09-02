@@ -12,7 +12,7 @@
  *
  * Dieses Plugin ruft einen externen Dienst auf. Welche Daten dabei übertragen
  * werden, steht auf der Einstellungsseite und in der readme.txt — das verlangt
- * das Plugin-Verzeichnis, und es ist ohnehin richtig (docs/08).
+ * das Plugin-Verzeichnis, und es ist ohnehin richtig (docs/08 der Dienst-Dokumentation).
  */
 
 if (! defined('ABSPATH')) {

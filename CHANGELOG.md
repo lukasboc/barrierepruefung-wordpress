@@ -14,6 +14,8 @@ die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
   Wer die Ebenen bisher mit `ueberschrift="3"` von Hand ausgeglichen hat, stellt jetzt auf
   `ueberschrift="2"` um (oder lässt das Attribut weg).
+- Die Rückmeldung im Backend wurde doppelt URL-dekodiert, wodurch eine Meldung mit einer
+  wörtlichen Prozent-Sequenz (z. B. `%41`) fälschlich als Zeichen ankam.
 
 ## [0.1.0]
 

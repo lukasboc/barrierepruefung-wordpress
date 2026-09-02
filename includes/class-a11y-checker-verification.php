@@ -9,7 +9,7 @@ if (! defined('ABSPATH')) {
  *
  * Das ist der Grund, warum viele WordPress-Betreiber überhaupt zum Plugin
  * greifen: die Domain-Verifikation läuft ohne DNS-Zugriff und ohne
- * Copy-and-paste (docs/08).
+ * Copy-and-paste (docs/08 der Dienst-Dokumentation).
  */
 class A11y_Checker_Verification
 {

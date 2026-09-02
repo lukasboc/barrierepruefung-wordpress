@@ -3,6 +3,7 @@
 /.gitignore
 /.distignore
 /.editorconfig
+.DS_Store
 /.phpunit.cache
 /.phpunit.result.cache
 /assets

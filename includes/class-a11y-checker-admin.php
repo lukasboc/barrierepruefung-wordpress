@@ -9,7 +9,7 @@ if (! defined('ABSPATH')) {
  *
  * Bewusst kleiner Funktionsumfang: Verbinden, Domain bestätigen, prüfen,
  * Ergebnis sehen. Ein Plugin, das alles kann, wird nicht gepflegt und nicht
- * freigegeben (docs/08).
+ * freigegeben (docs/08 der Dienst-Dokumentation).
  */
 class A11y_Checker_Admin
 {
@@ -64,7 +64,7 @@ class A11y_Checker_Admin
         update_option('a11y_checker_site_id', sanitize_text_field(wp_unslash($_POST['site_id'] ?? '')));
 
         // Nachweise holen und selbst ausliefern - dafür braucht die Kundin
-        // keinen DNS-Zugriff (docs/08).
+        // keinen DNS-Zugriff (docs/08 der Dienst-Dokumentation).
         $client = new A11y_Checker_Client;
         $antwort = $client->get('/sites/'.$client->site_id().'/verification');
 
@@ -107,7 +107,7 @@ class A11y_Checker_Admin
         $this->zurueck($antwort['ok'] ? 'geprueft' : 'fehler', $antwort['error']);
     }
 
-    /** Berechtigung und Nonce - beides, nicht nur eines (docs/08). */
+    /** Berechtigung und Nonce - beides, nicht nur eines (docs/08 der Dienst-Dokumentation). */
     private function pruefe_berechtigung(string $aktion): void
     {
         if (! current_user_can(self::CAPABILITY)) {

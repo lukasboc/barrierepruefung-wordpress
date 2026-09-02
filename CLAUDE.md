@@ -33,11 +33,16 @@ composer lint:fix
 
 ## Der Vertrag mit dem Dienst
 
-`ueberschriften_verschieben()` und `abschnitt()` existieren ein zweites Mal im Dienst
+`ueberschriften_verschieben()` existiert ein zweites Mal im Dienst
 (`App\Domain\Declarations\DeclarationFragment`), weil es zwei Laufzeiten sind — portiert, nicht
 geteilt. Das Dienst-Repository zieht dieses Plugin als Composer-Paket herein und vergleicht
 beide Ausgaben Zeichen für Zeichen. Sie sind schon einmal auseinandergelaufen. Eine Änderung an
-diesen beiden Methoden ist eine Änderung an beiden Seiten.
+dieser Methode ist eine Änderung an beiden Seiten.
+
+`abschnitt()` liegt ebenfalls doppelt vor (dort mit anderer Signatur, `string $teil` statt
+`array $titel`), wird aber **nicht** automatisch gegen die Dienst-Fassung geprüft — der
+Paritätstest hält nur `ueberschriften_verschieben()`. Änderungen an `abschnitt()` brauchen
+deshalb besondere Sorgfalt von Hand.
 
 ## wordpress.org
 

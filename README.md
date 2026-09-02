@@ -19,8 +19,9 @@ Prüf-Engine.
 
 ## Installation
 
-Aus dem WordPress-Verzeichnis oder als ZIP aus den
-[Releases](https://github.com/lukasboc/barrierepruefung-wordpress/releases).
+Das Plugin ist noch nicht im WordPress-Verzeichnis eingereicht. Bis dahin als ZIP aus den
+[Releases](https://github.com/lukasboc/barrierepruefung-wordpress/releases); künftig auch aus
+dem WordPress-Verzeichnis.
 
 Einrichtung, Shortcode-Attribute und häufige Fragen stehen in [`readme.txt`](readme.txt) —
 das ist zugleich der Text im Plugin-Verzeichnis.
@@ -46,8 +47,11 @@ berechnet — das Verschieben der Überschriftenebenen und das Herausschneiden v
 Die Logik der Überschriftenverschiebung liegt zweimal vor: hier im Plugin und serverseitig im
 Dienst (für die Einbindung ohne Plugin). Das sind zwei Laufzeiten, deshalb portiert statt
 geteilt. Ein Test im Dienst-Repository zieht dieses Plugin als Composer-Paket herein und
-vergleicht beide Ausgaben Zeichen für Zeichen. Wer `ueberschriften_verschieben` oder
-`abschnitt` ändert, ändert damit einen Vertrag.
+vergleicht beide Ausgaben von `ueberschriften_verschieben` Zeichen für Zeichen — wer sie
+ändert, ändert damit einen Vertrag.
+
+`abschnitt` liegt ebenfalls doppelt vor, hat serverseitig aber eine andere Signatur und wird
+**nicht** automatisch gegengeprüft. Änderungen daran brauchen deshalb besondere Sorgfalt.
 
 ## Lizenz
 

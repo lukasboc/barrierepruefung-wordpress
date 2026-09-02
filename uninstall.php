@@ -4,7 +4,7 @@
  *
  * Als eigene Datei statt als register_uninstall_hook, weil WordPress sie auch
  * dann ausführt, wenn das Plugin selbst nicht mehr geladen werden kann — und
- * weil das Plugin-Verzeichnis diesen Weg erwartet (docs/08).
+ * weil das Plugin-Verzeichnis diesen Weg erwartet (docs/08 der Dienst-Dokumentation).
  *
  * Entfernt werden auch der zwischengespeicherte Erklärungstext und der
  * Verifikations-Token: Ersterer ist ein Inhalt der Kundin, Letzterer ein

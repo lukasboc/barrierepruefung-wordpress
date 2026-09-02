@@ -40,13 +40,14 @@ eintragen (Standard: barrierepruefung.de).
 Besucher. Die Übertragung erfolgt, wenn Sie eine Prüfung anstoßen, die Domain bestätigen oder
 die Erklärung abgerufen wird (höchstens einmal pro Stunde, danach aus dem Zwischenspeicher).
 
-Datenschutzerklärung und Nutzungsbedingungen des Dienstes: https://barrierepruefung.de/rechtliches
+Datenschutzerklärung des Dienstes: https://barrierepruefung.de/datenschutz
+Nutzungsbedingungen des Dienstes: https://barrierepruefung.de/agb
 
 == Installation ==
 
 1. Plugin installieren und aktivieren.
-2. Im Konto des Dienstes unter *Integrationen* ein API-Token für diese Website erzeugen.
-   Dort stehen zugleich die Website-Kennung und die Adresse des Dienstes.
+2. Im Konto des Dienstes unter *Websites → [Website] → Einbindung* ein API-Token für diese
+   Website erzeugen. Dort stehen zugleich die Website-Kennung und die Adresse des Dienstes.
 3. Unter *Werkzeuge → Barrierefreiheit* diese drei Angaben eintragen.
 4. Domain bestätigen — das Plugin liefert den Nachweis selbst aus, Sie brauchen keinen
    DNS-Zugriff.
@@ -138,6 +139,8 @@ Selbstbewertung beruht.
   teil="maengel" oder teil="kontakt" eingebundener Abschnitt kam eine Ebene zu tief heraus.
   Wer die Ebenen bisher mit ueberschrift="3" von Hand ausgeglichen hat, stellt jetzt auf
   ueberschrift="2" um (oder lässt das Attribut weg).
+* Behoben: Die Rückmeldung im Backend wurde doppelt URL-dekodiert, wodurch eine Meldung mit
+  einer wörtlichen Prozent-Sequenz (z. B. "%41") fälschlich als Zeichen ankam.
 
 = 0.1.0 =
 * Erste Fassung: Verbindung, Domain-Bestätigung, Prüfung anstoßen, Shortcode und Block.

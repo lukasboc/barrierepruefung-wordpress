@@ -131,7 +131,7 @@ final class ShortcodeTest extends TestCase
     }
 
     /**
-     * Der Hinweis auf das Werkzeug (docs/07).
+     * Der Hinweis auf das Werkzeug (docs/07 der Dienst-Dokumentation).
      *
      * Formuliert wird er im Dienst und über das API-Feld "attribution"
      * durchgereicht; das Plugin hängt ihn nur an - innerhalb des Umschlags und
