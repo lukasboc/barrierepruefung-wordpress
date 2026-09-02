@@ -52,6 +52,52 @@ Datenschutzerklärung und Nutzungsbedingungen des Dienstes: https://barriereprue
    DNS-Zugriff.
 5. Prüfung anstoßen und den Shortcode `[barrierefreiheitserklaerung]` auf einer Seite einfügen.
 
+== Shortcode ==
+
+`[barrierefreiheitserklaerung]` gibt den Text Ihrer Erklärung zur Barrierefreiheit
+serverseitig aus. Derselbe Umfang und dieselben Einstellungen stehen auch als Block
+„Erklärung zur Barrierefreiheit" zur Verfügung.
+
+Beispiel für die vollständige Erklärung:
+
+`[barrierefreiheitserklaerung]`
+
+Beispiel für nur den Mängel-Abschnitt, eine Ebene tiefer eingebunden:
+
+`[barrierefreiheitserklaerung teil="maengel" ueberschrift="3"]`
+
+= teil =
+
+Welcher Ausschnitt der Erklärung ausgegeben wird.
+
+* `komplett` (Voreinstellung) — die vollständige Erklärung.
+* `maengel` — nur der Abschnitt zu bekannten Barrieren.
+* `kontakt` — nur der Abschnitt mit den Kontaktangaben für Rückmeldungen.
+
+Ein unbekannter Wert liefert ohne Fehlermeldung die vollständige Erklärung, genau wie
+`komplett` — ebenso, wenn der gesuchte Abschnitt in der geladenen Erklärung nicht gefunden
+wird.
+
+= ueberschrift =
+
+Die Ebene, die die oberste Überschrift der Ausgabe bekommt (Voreinstellung `2`). Gemessen
+wird relativ zur obersten Überschrift, die in der Erklärung tatsächlich vorkommt — nicht fest
+an einer h1 —, damit sich der Text in die Überschriftenhierarchie Ihrer Seite einfügt.
+
+Zulässig sind Werte von `2` bis `4`; kleinere oder größere Werte werden ohne Fehlermeldung auf
+diesen Bereich gekappt (`1` wirkt also wie `2`, `5` wie `4`). Tiefer liegende Überschriften
+innerhalb der Erklärung werden entsprechend mitverschoben, jedoch nie über h6 hinaus.
+
+= stand =
+
+`ja` (Voreinstellung) hängt einen Absatz mit Versionsnummer und Datum der Erklärung an. Jeder
+andere Wert unterdrückt diesen Absatz.
+
+= sprache =
+
+Wird entgegengenommen, wirkt sich in dieser Version aber auf nichts aus — die Sprache der
+Ausgabe richtet sich allein nach der Sprachfassung, die im Dienst hinterlegt ist.
+
 == Frequently Asked Questions ==
 
 = Muss ich einen DNS-Eintrag setzen? =

@@ -8,7 +8,9 @@ Deutsch ist die Sprache für Kommentare, Commits und Dokumentation.
 ```bash
 composer install
 composer test       # PHPUnit 10, ohne WordPress-Installation
-composer lint       # PHPCS: WordPress.Security, WordPress.DB, WP.I18n, PHPCompatibilityWP
+composer lint       # PHPCS: WordPress.Security, WordPress.DB, WordPress.WP.AlternativeFunctions,
+                    # WordPress.WP.EnqueuedResources, WordPress.WP.DeprecatedFunctions, WordPress.WP.I18n,
+                    # PHPCompatibilityWP
 composer lint:fix
 ```
 
