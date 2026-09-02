@@ -10,9 +10,9 @@ $status = isset($_GET['a11y_status']) ? sanitize_key(wp_unslash($_GET['a11y_stat
 // selbst nicht kodiert - ein zweites Dekodieren hier wuerde vom Aufrufer als Text gemeinte
 // Prozent-Sequenzen (z. B. "%41") faelschlich in Zeichen ("A") verwandeln.
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- wie oben.
-$meldung = isset($_GET['a11y_meldung']) ? sanitize_text_field(wp_unslash($_GET['a11y_meldung'])) : '';
+$a11y_checker_meldung = isset($_GET['a11y_meldung']) ? sanitize_text_field(wp_unslash($_GET['a11y_meldung'])) : '';
 
-$meldungen = [
+$a11y_checker_meldungen = [
     'verbunden' => [__('Verbindung hergestellt. Bestätigen Sie jetzt die Domain.', 'a11y-checker'), 'success'],
     'bestaetigt' => [__('Die Domain ist bestätigt.', 'a11y-checker'), 'success'],
     'nicht_bestaetigt' => [__('Die Domain konnte nicht bestätigt werden.', 'a11y-checker'), 'warning'],
@@ -23,12 +23,12 @@ $meldungen = [
 <div class="wrap">
     <h1><?php esc_html_e('Barrierefreiheit', 'a11y-checker'); ?></h1>
 
-    <?php if ($status !== '' && isset($meldungen[$status])) : ?>
-        <div class="notice notice-<?php echo esc_attr($meldungen[$status][1]); ?>" role="status">
+    <?php if ($status !== '' && isset($a11y_checker_meldungen[$status])) : ?>
+        <div class="notice notice-<?php echo esc_attr($a11y_checker_meldungen[$status][1]); ?>" role="status">
             <p>
-                <?php echo esc_html($meldungen[$status][0]); ?>
-                <?php if ($meldung !== '') : ?>
-                    <br><em><?php echo esc_html($meldung); ?></em>
+                <?php echo esc_html($a11y_checker_meldungen[$status][0]); ?>
+                <?php if ($a11y_checker_meldung !== '') : ?>
+                    <br><em><?php echo esc_html($a11y_checker_meldung); ?></em>
                 <?php endif; ?>
             </p>
         </div>

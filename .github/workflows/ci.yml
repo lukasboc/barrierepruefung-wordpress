@@ -39,6 +39,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # plugin-check muss den ausgelieferten Stand pruefen, nicht das rohe Repo -
+      # sonst schlagen hidden_files/application_detected/github_directory/
+      # unexpected_markdown_file auf .gitignore, .distignore, .editorconfig,
+      # composer.json, composer.lock, phpcs.xml.dist, phpunit.xml.dist, .github
+      # und CLAUDE.md an, obwohl keine dieser Dateien je im Plugin-ZIP landet.
+      # Derselbe Baum wie im Release-Workflow (siehe release.yml, Job "zip").
+      - name: Ausgelieferten Stand bauen
+        run: |
+          set -euo pipefail
+          mkdir -p dist/a11y-checker
+          rsync -a --exclude='/dist' --exclude-from=.distignore ./ dist/a11y-checker/
+
       - uses: wordpress/plugin-check-action@v1
         with:
           # Slug muss der Text-Domain folgen (a11y-checker), nicht dem Repo-Namen
@@ -49,4 +62,26 @@ jobs:
           # werfen. Vergibt wordpress.org beim Review einen anderen Slug, muss er hier
           # zusammen mit der Text-Domain geaendert werden (offener Punkt, siehe CLAUDE.md).
           slug: a11y-checker
-          exclude-directories: 'tests,vendor,assets'
+          # build-dir zeigt auf den nach .distignore bereinigten Baum von oben - kein
+          # exclude-directories mehr noetig, .distignore hat tests/vendor/assets dort
+          # schon herausgefiltert, bevor plugin-check ueberhaupt zu sehen bekommt.
+          build-dir: dist/a11y-checker
+          # Vorgemerkte Aufgaben vor der wordpress.org-Einreichung, keine wegdefinierten
+          # Maengel - jeder Code hier hat einen eigenen, spaeter zu erledigenden Grund:
+          # - outdated_tested_upto_header: readme.txt sagt "Tested up to: 6.8", aktuell
+          #   ist WordPress 7.1. Diese Angabe ist eine Zusage ueber tatsaechlich
+          #   durchgefuehrte Tests; sie hochzusetzen, ohne gegen 7.1 getestet zu haben,
+          #   waere eine Falschaussage. Wird vor der Einreichung gesetzt, nicht von der CI.
+          # - readme_short_description_non_official_language /
+          #   readme_description_non_official_language: wordpress.org verlangt seit Juli
+          #   2025 eine englische readme.txt, unsere ist deutsch. Ob und wie das geloest
+          #   wird, ist eine offene Entscheidung des Betreibers, keine Codefrage.
+          # - PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound:
+          #   gilt fuer auf wordpress.org gehostete Plugins ab WP 4.6, aber "Requires at
+          #   least" ist 6.5 - fuer 6.5/6.6 laedt WordPress mitgelieferte Uebersetzungen
+          #   nicht von selbst, der Aufruf ist dort weiterhin noetig und bleibt stehen.
+          ignore-codes: |-
+            outdated_tested_upto_header
+            readme_short_description_non_official_language
+            readme_description_non_official_language
+            PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound

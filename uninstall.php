@@ -48,10 +48,10 @@ function a11y_checker_purge_site(): void
  * Token aller anderen zurück.
  */
 if (is_multisite()) {
-    $seiten = get_sites(['fields' => 'ids', 'number' => 0]);
+    $a11y_checker_seiten = get_sites(['fields' => 'ids', 'number' => 0]);
 
-    foreach ($seiten as $seiten_id) {
-        switch_to_blog((int) $seiten_id);
+    foreach ($a11y_checker_seiten as $a11y_checker_seiten_id) {
+        switch_to_blog((int) $a11y_checker_seiten_id);
         a11y_checker_purge_site();
         restore_current_blog();
     }
