@@ -3,6 +3,8 @@
 /.gitignore
 /.distignore
 /.editorconfig
+/.phpunit.cache
+/.phpunit.result.cache
 /assets
 /dist
 /tests
