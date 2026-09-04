@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,14 @@ verschwindet, wäre für Sie ein Rechtsproblem.
 Deutsch (Ausgangssprache) und Englisch. Die Vorlage für weitere Übersetzungen liegt dem
 Plugin unter `languages/a11y-checker.pot` bei.
 
+= Ich habe mich beim Verbinden vertippt — wie komme ich zurück? =
+
+Unter *Werkzeuge → Barrierefreiheit* steht die eingetragene Verbindung mit der Schaltfläche
+„Verbindung trennen". Danach erscheint das Formular wieder, und Sie können Token, Kennung
+und Adresse neu eintragen. Die Adresse des Dienstes lässt sich dort auch einzeln auf den
+Standardwert zurücksetzen. Ihr Konto bleibt davon unberührt; das Token gilt weiter und wird
+im Konto widerrufen.
+
 = Was bleibt nach der Deinstallation zurück? =
 
 Nichts. Die Deinstallation entfernt alle Optionen und Zwischenspeicher, einschließlich des
@@ -131,6 +139,15 @@ durch die übrigen Prüfschritte; die Erklärung weist ausdrücklich aus, dass s
 Selbstbewertung beruht.
 
 == Changelog ==
+
+= 0.2.1 =
+* Neu: Die eingetragene Verbindung ist unter Werkzeuge → Barrierefreiheit sichtbar und lässt
+  sich wieder trennen. Bisher blendete das Plugin das Formular aus, sobald Token und Kennung
+  einmal gespeichert waren - auch wenn sie falsch waren.
+* Neu: Die Adresse des Dienstes lässt sich einzeln auf den Standardwert zurücksetzen; das
+  Formular schlägt die zuletzt eingetragene Adresse vor statt stets den Standard.
+* Behoben: Eine verworfene Adresse blieb als leere Option stehen; jede Anfrage ging danach an
+  einen relativen Pfad. Jetzt gilt in diesem Fall wieder der Standardwert.
 
 = 0.2.0 =
 * Behoben: Die Überschriftenebene wird jetzt an der obersten tatsächlich ausgegebenen

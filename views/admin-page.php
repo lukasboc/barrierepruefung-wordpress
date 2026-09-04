@@ -17,6 +17,8 @@ $a11y_checker_meldungen = [
     'bestaetigt' => [__('Die Domain ist bestätigt.', 'a11y-checker'), 'success'],
     'nicht_bestaetigt' => [__('Die Domain konnte nicht bestätigt werden.', 'a11y-checker'), 'warning'],
     'geprueft' => [__('Die Prüfung wurde gestartet. Das Ergebnis steht in wenigen Minuten bereit.', 'a11y-checker'), 'success'],
+    'getrennt' => [__('Die Verbindung wurde getrennt. Token, Website-Kennung und der gespeicherte Text der Erklärung wurden entfernt.', 'a11y-checker'), 'success'],
+    'adresse_zurueckgesetzt' => [__('Die Adresse des Dienstes steht wieder auf dem Standardwert.', 'a11y-checker'), 'success'],
     'fehler' => [__('Es ist ein Fehler aufgetreten.', 'a11y-checker'), 'error'],
 ];
 ?>
@@ -48,8 +50,18 @@ $a11y_checker_meldungen = [
                 <tr>
                     <th scope="row"><label for="api_url"><?php esc_html_e('Adresse des Dienstes', 'a11y-checker'); ?></label></th>
                     <td>
+                        <?php // Der zuletzt eingetragene Wert, nicht stur der Standard: nach einem
+                              // Tippfehler im Token soll die Adresse stehenbleiben. ?>
                         <input id="api_url" name="api_url" type="url" class="regular-text" required
-                               value="<?php echo esc_attr(A11y_Checker_Client::DEFAULT_API); ?>">
+                               value="<?php echo esc_attr($client->api_url()); ?>"
+                               aria-describedby="api_url_hinweis">
+                        <p class="description" id="api_url_hinweis">
+                            <?php printf(
+                                /* translators: %s: Standardadresse des Dienstes */
+                                esc_html__('Standard: %s', 'a11y-checker'),
+                                '<code>'.esc_html(A11y_Checker_Client::DEFAULT_API).'</code>'
+                            ); ?>
+                        </p>
                     </td>
                 </tr>
                 <tr>
@@ -69,6 +81,16 @@ $a11y_checker_meldungen = [
 
             <?php submit_button(__('Verbinden', 'a11y-checker')); ?>
         </form>
+
+        <?php // Ein eigenes Formular, weil das Feld oben "required" ist: leeren und
+              // abschicken geht nicht. Nur zu sehen, wenn es etwas zurueckzusetzen gibt.
+        if ($client->api_url() !== A11y_Checker_Client::DEFAULT_API) : ?>
+            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+                <?php wp_nonce_field('a11y_checker_reset_url'); ?>
+                <input type="hidden" name="action" value="a11y_checker_reset_url">
+                <?php submit_button(__('Adresse auf den Standardwert zurücksetzen', 'a11y-checker'), 'secondary', 'submit', false); ?>
+            </form>
+        <?php endif; ?>
     <?php else : ?>
         <h2><?php esc_html_e('Status', 'a11y-checker'); ?></h2>
 
@@ -117,6 +139,31 @@ $a11y_checker_meldungen = [
                 <?php endif; ?>
             </p>
         <?php endif; ?>
+
+        <h2><?php esc_html_e('Verbindung', 'a11y-checker'); ?></h2>
+        <table class="widefat striped" style="max-width:40rem">
+            <caption class="screen-reader-text"><?php esc_html_e('Eingetragene Verbindung', 'a11y-checker'); ?></caption>
+            <tbody>
+                <tr>
+                    <th scope="row"><?php esc_html_e('Adresse des Dienstes', 'a11y-checker'); ?></th>
+                    <td><code><?php echo esc_html($client->api_url()); ?></code></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php esc_html_e('Website-Kennung', 'a11y-checker'); ?></th>
+                    <td><code><?php echo esc_html($client->site_id()); ?></code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <?php // Das Token steht hier absichtlich nicht - auch nicht gekuerzt. ?>
+        <p class="description" id="trennen_hinweis">
+            <?php esc_html_e('Trennen entfernt Token, Website-Kennung und den gespeicherten Text der Erklärung aus dieser Installation; danach lassen sich die Angaben neu eintragen. Im Konto bleibt alles bestehen, das Token gilt weiter — widerrufen wird es dort.', 'a11y-checker'); ?>
+        </p>
+        <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+            <?php wp_nonce_field('a11y_checker_disconnect'); ?>
+            <input type="hidden" name="action" value="a11y_checker_disconnect">
+            <?php submit_button(__('Verbindung trennen', 'a11y-checker'), 'secondary', 'submit', false, ['aria-describedby' => 'trennen_hinweis']); ?>
+        </form>
 
         <h2><?php esc_html_e('Erklärung einbinden', 'a11y-checker'); ?></h2>
         <p><?php esc_html_e('Fügen Sie diesen Shortcode auf der Seite ein, die Ihre Erklärung zur Barrierefreiheit tragen soll:', 'a11y-checker'); ?></p>

@@ -3,6 +3,25 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.2.1]
+
+### Hinzugefügt
+
+- *Werkzeuge → Barrierefreiheit* zeigt die eingetragene Verbindung und lässt sie wieder
+  trennen. Bisher blendete das Plugin das Formular aus, sobald Token und Kennung einmal
+  gespeichert waren — auch wenn sie falsch waren; korrigieren ließ sich das nur über WP-CLI
+  oder die Datenbank. Getrennt wird alles entfernt, was zum Konto gehört: Token,
+  Website-Kennung, Verifikationsnachweis und die zuletzt geholte Fassung der Erklärung.
+  Im Konto bleibt das Token bestehen und wird dort widerrufen.
+- Die Adresse des Dienstes lässt sich einzeln auf den Standardwert zurücksetzen, und das
+  Formular schlägt jetzt die zuletzt eingetragene Adresse vor statt stets den Standard.
+
+### Behoben
+
+- Eine Adresse, die `esc_url_raw()` verworfen hat, blieb als leere Option stehen. Der
+  Vorgabewert von `get_option()` greift dann nicht mehr, und jede Anfrage ging danach an
+  einen relativen Pfad. Jetzt gilt in diesem Fall wieder der Standardwert.
+
 ## [0.2.0]
 
 ### Behoben

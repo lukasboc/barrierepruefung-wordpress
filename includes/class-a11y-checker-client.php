@@ -31,7 +31,13 @@ class A11y_Checker_Client
 
     public function api_url(): string
     {
-        return untrailingslashit((string) get_option('a11y_checker_api_url', self::DEFAULT_API));
+        // Der zweite Parameter von get_option greift nur, wenn die Option
+        // fehlt - nicht, wenn sie leer ist. Genau das hinterlaesst eine
+        // Adresse, die esc_url_raw() verworfen hat, und jede Anfrage ginge
+        // danach an einen relativen Pfad.
+        $gespeichert = trim((string) get_option('a11y_checker_api_url', ''));
+
+        return untrailingslashit($gespeichert !== '' ? $gespeichert : self::DEFAULT_API);
     }
 
     /**

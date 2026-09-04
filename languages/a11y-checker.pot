@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.2.0\n"
+"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/lukasboc/barrierepruefung-wordpress/issues\n"
-"POT-Creation-Date: 2026-08-31 14:38+0200\n"
+"POT-Creation-Date: 2026-09-04 15:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: includes/class-a11y-checker-admin.php:29
-#: includes/class-a11y-checker-admin.php:30 views/admin-page.php:18
+#: includes/class-a11y-checker-admin.php:31
+#: includes/class-a11y-checker-admin.php:32 views/admin-page.php:26
 msgid "Barrierefreiheit"
 msgstr ""
 
-#: includes/class-a11y-checker-admin.php:40
+#: includes/class-a11y-checker-admin.php:42
 msgid "Sie haben keine Berechtigung für diese Seite."
 msgstr ""
 
-#: includes/class-a11y-checker-admin.php:111
+#: includes/class-a11y-checker-admin.php:168
 msgid "Sie haben keine Berechtigung für diese Aktion."
 msgstr ""
 
@@ -38,137 +38,178 @@ msgstr ""
 msgid "Unbekannter Fehler."
 msgstr ""
 
-#: includes/class-a11y-checker-shortcode.php:42
+#: includes/class-a11y-checker-shortcode.php:43
 msgid "Die Erklärung zur Barrierefreiheit kann gerade nicht geladen werden."
 msgstr ""
 
-#: includes/class-a11y-checker-shortcode.php:60
+#. translators: 1: Versionsnummer, 2: Datum
+#: includes/class-a11y-checker-shortcode.php:61
 #, php-format
 msgid "Version %1$s, Stand %2$s"
 msgstr ""
 
-#: includes/class-a11y-checker-shortcode.php:84
+#: includes/class-a11y-checker-shortcode.php:92
 msgid "Erklärung zur Barrierefreiheit"
 msgstr ""
 
-#: views/admin-page.php:10
+#: views/admin-page.php:16
 msgid "Verbindung hergestellt. Bestätigen Sie jetzt die Domain."
 msgstr ""
 
-#: views/admin-page.php:11
+#: views/admin-page.php:17
 msgid "Die Domain ist bestätigt."
 msgstr ""
 
-#: views/admin-page.php:12
+#: views/admin-page.php:18
 msgid "Die Domain konnte nicht bestätigt werden."
 msgstr ""
 
-#: views/admin-page.php:13
+#: views/admin-page.php:19
 msgid ""
 "Die Prüfung wurde gestartet. Das Ergebnis steht in wenigen Minuten bereit."
 msgstr ""
 
-#: views/admin-page.php:14
+#: views/admin-page.php:20
+msgid ""
+"Die Verbindung wurde getrennt. Token, Website-Kennung und der gespeicherte "
+"Text der Erklärung wurden entfernt."
+msgstr ""
+
+#: views/admin-page.php:21
+msgid "Die Adresse des Dienstes steht wieder auf dem Standardwert."
+msgstr ""
+
+#: views/admin-page.php:22
 msgid "Es ist ein Fehler aufgetreten."
 msgstr ""
 
-#: views/admin-page.php:32
+#: views/admin-page.php:40
 msgid "Mit Ihrem Konto verbinden"
 msgstr ""
 
-#: views/admin-page.php:34
+#: views/admin-page.php:42
 msgid ""
 "Legen Sie im Konto ein API-Token für diese Website an und tragen Sie es hier "
 "ein."
 msgstr ""
 
-#: views/admin-page.php:43
+#: views/admin-page.php:51 views/admin-page.php:148
 msgid "Adresse des Dienstes"
 msgstr ""
 
-#: views/admin-page.php:50
+#. translators: %s: Standardadresse des Dienstes
+#: views/admin-page.php:61
+#, php-format
+msgid "Standard: %s"
+msgstr ""
+
+#: views/admin-page.php:68
 msgid "API-Token"
 msgstr ""
 
-#: views/admin-page.php:54
+#: views/admin-page.php:72
 msgid "Das Token gilt nur für diese Website."
 msgstr ""
 
-#: views/admin-page.php:59
+#: views/admin-page.php:77 views/admin-page.php:152
 msgid "Website-Kennung"
 msgstr ""
 
-#: views/admin-page.php:64
+#: views/admin-page.php:82
 msgid "Verbinden"
 msgstr ""
 
-#: views/admin-page.php:67
+#: views/admin-page.php:91
+msgid "Adresse auf den Standardwert zurücksetzen"
+msgstr ""
+
+#: views/admin-page.php:95
 msgid "Status"
 msgstr ""
 
-#: views/admin-page.php:70
+#: views/admin-page.php:98
 msgid ""
 "Die Website konnte nicht abgerufen werden. Prüfen Sie Token und Kennung."
 msgstr ""
 
-#: views/admin-page.php:73
+#: views/admin-page.php:101
 msgid "Status dieser Website"
 msgstr ""
 
-#: views/admin-page.php:76
+#: views/admin-page.php:104
 msgid "Adresse"
 msgstr ""
 
-#: views/admin-page.php:80
+#: views/admin-page.php:108
 msgid "Domain bestätigt"
 msgstr ""
 
-#: views/admin-page.php:83
+#: views/admin-page.php:111
 msgid "nein"
 msgstr ""
 
-#: views/admin-page.php:84
+#: views/admin-page.php:112
 msgid "ja"
 msgstr ""
 
-#: views/admin-page.php:88
+#: views/admin-page.php:116
 msgid "Nächste Prüfung"
 msgstr ""
 
-#: views/admin-page.php:91
+#: views/admin-page.php:119
 msgid "nicht geplant"
 msgstr ""
 
-#: views/admin-page.php:103
+#: views/admin-page.php:131
 msgid "Domain jetzt bestätigen"
 msgstr ""
 
-#: views/admin-page.php:109
+#: views/admin-page.php:137
 msgid "Jetzt prüfen"
 msgstr ""
 
-#: views/admin-page.php:115
+#: views/admin-page.php:143
+msgid "Verbindung"
+msgstr ""
+
+#: views/admin-page.php:145
+msgid "Eingetragene Verbindung"
+msgstr ""
+
+#: views/admin-page.php:160
+msgid ""
+"Trennen entfernt Token, Website-Kennung und den gespeicherten Text der "
+"Erklärung aus dieser Installation; danach lassen sich die Angaben neu "
+"eintragen. Im Konto bleibt alles bestehen, das Token gilt weiter — "
+"widerrufen wird es dort."
+msgstr ""
+
+#: views/admin-page.php:165
+msgid "Verbindung trennen"
+msgstr ""
+
+#: views/admin-page.php:168
 msgid "Erklärung einbinden"
 msgstr ""
 
-#: views/admin-page.php:116
+#: views/admin-page.php:169
 msgid ""
 "Fügen Sie diesen Shortcode auf der Seite ein, die Ihre Erklärung zur "
 "Barrierefreiheit tragen soll:"
 msgstr ""
 
-#: views/admin-page.php:119
+#: views/admin-page.php:172
 msgid ""
 "Optionen: teil=\"maengel\" oder teil=\"kontakt\" für einen einzelnen "
 "Abschnitt, stand=\"nein\" ohne Datumszeile, ueberschrift=\"3\" zum Einpassen "
 "in Ihre Überschriftenhierarchie."
 msgstr ""
 
-#: views/admin-page.php:122
+#: views/admin-page.php:175
 msgid "Datenübertragung"
 msgstr ""
 
-#: views/admin-page.php:124
+#: views/admin-page.php:177
 msgid ""
 "Dieses Plugin überträgt die Adresse dieser Website sowie das API-Token an "
 "den oben eingetragenen Dienst, um Prüfungen auszulösen und die Erklärung "
