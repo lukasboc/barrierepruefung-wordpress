@@ -3,6 +3,39 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.3.0]
+
+### Hinzugefügt
+
+- *Werkzeuge → Barrierefreiheit* zeigt die offenen Befunde der letzten Prüfung: je Regel der
+  Schweregrad, das Erfolgskriterium, die Zahl der Fundstellen, ein Hinweis zur Behebung und
+  die betroffenen Seiten. Damit ist die Seite eine Arbeitsliste — beheben lässt sich in
+  WordPress, und die Schaltfläche „Jetzt prüfen" schließt den Durchgang ab. Für alle
+  Einzelheiten führt ein Verweis in den vollständigen Bericht.
+- Die Seite nennt das Seitenkontingent des laufenden Abrechnungszeitraums: verbrauchte und
+  enthaltene Seiten, verbleibender Rest und das Ende des Zeitraums.
+- Eine Schaltfläche „Status aktualisieren" holt Kontingent und Befunde neu. Sie ersetzt
+  bewusst ein selbsttätiges Neuladen der Seite: ein automatischer Kontextwechsel wäre für
+  Screenreader-Nutzende störend (WCAG 2.2.2/3.2.5). Das Plugin bringt weiterhin kein
+  JavaScript mit.
+- Läuft gerade eine Prüfung, sagt die Seite das, statt ein veraltetes Ergebnis als aktuelles
+  auszugeben.
+
+### Geändert
+
+- Zustand und Befunde liegen fünf Minuten im Zwischenspeicher (`a11y_checker_status`), damit
+  ein Blick ins Backend nicht bei jedem Aufruf zwei Anfragen an den Dienst auslöst. Das
+  Auslösen einer Prüfung und die Schaltfläche „Status aktualisieren" verwerfen ihn; ein
+  fehlgeschlagener Abruf wird gar nicht erst abgelegt.
+- Lässt sich die Website nicht abrufen, steht jetzt der Grund des Dienstes dabei statt nur
+  der allgemeine Hinweis.
+
+### Voraussetzung
+
+- Benötigt die Felder `quota`, `latest_scan` und `running_scan` in `GET /sites/{id}` sowie
+  `remediation` und `page_urls` in `GET /scans/{id}/findings`. Ältere Stände des Dienstes
+  liefern sie nicht; die neuen Abschnitte bleiben dann leer, alles Übrige arbeitet weiter.
+
 ## [0.2.1]
 
 ### Hinzugefügt

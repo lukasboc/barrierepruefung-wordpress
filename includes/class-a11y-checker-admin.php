@@ -15,12 +15,25 @@ class A11y_Checker_Admin
 {
     private const CAPABILITY = 'manage_options';
 
+    /** Zwischenspeicher fuer Website, Kontingent und Befunde. */
+    private const ZUSTAND = 'a11y_checker_status';
+
+    /**
+     * Haltbarkeit des Zwischenspeichers in Sekunden.
+     *
+     * Kurz, weil die Seite auch waehrend einer laufenden Pruefung gelesen wird;
+     * lang genug, dass ein Blick ins Backend nicht bei jedem Aufruf zwei
+     * Anfragen an den Dienst ausloest.
+     */
+    private const ZUSTAND_DAUER = 300;
+
     public function register(): void
     {
         add_action('admin_menu', [$this, 'add_page']);
         add_action('admin_post_a11y_checker_connect', [$this, 'handle_connect']);
         add_action('admin_post_a11y_checker_verify', [$this, 'handle_verify']);
         add_action('admin_post_a11y_checker_scan', [$this, 'handle_scan']);
+        add_action('admin_post_a11y_checker_refresh', [$this, 'handle_refresh']);
         add_action('admin_post_a11y_checker_disconnect', [$this, 'handle_disconnect']);
         add_action('admin_post_a11y_checker_reset_url', [$this, 'handle_reset_url']);
     }
@@ -45,13 +58,61 @@ class A11y_Checker_Admin
         $client = new A11y_Checker_Client;
         $verbunden = $client->is_connected();
         $site = null;
+        $befunde = [];
+        $abruffehler = null;
 
         if ($verbunden) {
-            $antwort = $client->get('/sites/'.$client->site_id());
-            $site = $antwort['ok'] ? ($antwort['data']['data'] ?? null) : null;
+            $zustand = $this->zustand($client);
+            $site = $zustand['site'];
+            $befunde = $zustand['findings'];
+            $abruffehler = $zustand['error'];
         }
 
         include A11Y_CHECKER_PATH.'views/admin-page.php';
+    }
+
+    /**
+     * Website samt Kontingent und die offenen Befunde der letzten Pruefung.
+     *
+     * Zwei Abrufe, deshalb zwischengespeichert. Gefiltert wird auf offene,
+     * verbindliche Befunde: bewertete Mangel und blosse Empfehlungen gehoeren
+     * nicht in eine Arbeitsliste. Der Verweis auf den Lauf kommt aus der
+     * Antwort des Dienstes und nicht aus einer eigenen Option - sonst waere
+     * eine geplante Pruefung hier unsichtbar.
+     *
+     * Ein fehlgeschlagener Abruf wird nicht abgelegt: wer ein falsches Token
+     * richtigstellt, soll nicht fuenf Minuten weiter die alte Meldung sehen.
+     *
+     * @return array{site: array<string, mixed>|null, findings: list<array<string, mixed>>, error: string|null}
+     */
+    public function zustand(A11y_Checker_Client $client): array
+    {
+        $gespeichert = get_transient(self::ZUSTAND);
+
+        if (is_array($gespeichert)) {
+            return $gespeichert;
+        }
+
+        $antwort = $client->get('/sites/'.$client->site_id());
+
+        if (! $antwort['ok']) {
+            return ['site' => null, 'findings' => [], 'error' => $antwort['error']];
+        }
+
+        $site = $antwort['data']['data'] ?? null;
+        $lauf = is_array($site) ? ($site['latest_scan']['id'] ?? null) : null;
+        $befunde = [];
+
+        if (is_string($lauf) && $lauf !== '') {
+            $funde = $client->get('/scans/'.rawurlencode($lauf).'/findings?binding_only=1&state=open');
+            $befunde = $funde['ok'] ? (array) ($funde['data']['data'] ?? []) : [];
+        }
+
+        $zustand = ['site' => $site, 'findings' => $befunde, 'error' => null];
+
+        set_transient(self::ZUSTAND, $zustand, self::ZUSTAND_DAUER);
+
+        return $zustand;
     }
 
     public function handle_connect(): void
@@ -104,9 +165,30 @@ class A11y_Checker_Admin
         if ($antwort['ok']) {
             // Der Text kann sich durch die neue Prüfung ändern.
             delete_transient('a11y_checker_declaration');
+
+            // Ohne das zeigte die Seite bis zu fünf Minuten weiter „keine
+            // laufende Prüfung", obwohl gerade eine gestartet wurde.
+            delete_transient(self::ZUSTAND);
         }
 
         $this->zurueck($antwort['ok'] ? 'geprueft' : 'fehler', $antwort['error']);
+    }
+
+    /**
+     * Holt Zustand und Befunde neu.
+     *
+     * Der bewusste Ersatz für ein selbsttätiges Neuladen der Seite: ein
+     * automatischer Kontextwechsel wäre für Screenreader-Nutzende störend
+     * (WCAG 2.2.2/3.2.5) — in einem Barrierefreiheitsprodukt kein zulässiger
+     * Kompromiss. Aus demselben Grund bringt das Plugin kein Skript mit.
+     */
+    public function handle_refresh(): void
+    {
+        $this->pruefe_berechtigung('a11y_checker_refresh');
+
+        delete_transient(self::ZUSTAND);
+
+        $this->zurueck('aktualisiert');
     }
 
     /**
@@ -135,7 +217,7 @@ class A11y_Checker_Admin
             delete_option($option);
         }
 
-        foreach (['a11y_checker_declaration', 'a11y_checker_status'] as $transient) {
+        foreach (['a11y_checker_declaration', self::ZUSTAND] as $transient) {
             delete_transient($transient);
         }
 

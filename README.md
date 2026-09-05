@@ -1,8 +1,14 @@
 # Barrierepruefung.de – Web Accessibility Checker
 
 WordPress-Plugin zu [barrierepruefung.de](https://barrierepruefung.de): Prüfung der eigenen
-Website aus dem Backend anstoßen und die Erklärung zur Barrierefreiheit per Shortcode oder
-Block einbinden.
+Website aus dem Backend anstoßen, die offenen Befunde samt Hinweis zur Behebung und das
+Seitenkontingent einsehen, und die Erklärung zur Barrierefreiheit per Shortcode oder Block
+einbinden.
+
+Unter *Werkzeuge → Barrierefreiheit* stehen die Befunde der letzten Prüfung als Arbeitsliste
+— je Regel Schweregrad, Erfolgskriterium, Zahl der Fundstellen, was zu tun ist und welche
+Seiten betroffen sind. Behoben wird in WordPress, danach stößt dieselbe Seite die nächste
+Prüfung an.
 
 Die Erklärung wird **serverseitig** eingebunden — sie ist also auch ohne JavaScript und für
 assistive Technologien vollständig vorhanden.

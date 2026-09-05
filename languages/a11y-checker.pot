@@ -6,9 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.2.1\n"
-"Report-Msgid-Bugs-To: https://github.com/lukasboc/barrierepruefung-wordpress/issues\n"
-"POT-Creation-Date: 2026-09-04 15:21+0200\n"
+"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.3.0\n"
+"Report-Msgid-Bugs-To: https://github.com/lukasboc/barrierepruefung-wordpress/"
+"issues\n"
+"POT-Creation-Date: 2026-09-05 15:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,24 +18,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: includes/class-a11y-checker-admin.php:31
-#: includes/class-a11y-checker-admin.php:32 views/admin-page.php:26
+#: includes/class-a11y-checker-admin.php:44
+#: includes/class-a11y-checker-admin.php:45 views/admin-page.php:27
 msgid "Barrierefreiheit"
 msgstr ""
 
-#: includes/class-a11y-checker-admin.php:42
+#: includes/class-a11y-checker-admin.php:55
 msgid "Sie haben keine Berechtigung für diese Seite."
 msgstr ""
 
-#: includes/class-a11y-checker-admin.php:168
+#: includes/class-a11y-checker-admin.php:250
 msgid "Sie haben keine Berechtigung für diese Aktion."
 msgstr ""
 
-#: includes/class-a11y-checker-client.php:59
+#: includes/class-a11y-checker-client.php:65
 msgid "Das Plugin ist noch nicht mit einem Konto verbunden."
 msgstr ""
 
-#: includes/class-a11y-checker-client.php:88
+#: includes/class-a11y-checker-client.php:94
 msgid "Unbekannter Fehler."
 msgstr ""
 
@@ -70,113 +71,245 @@ msgid ""
 msgstr ""
 
 #: views/admin-page.php:20
+msgid "Der Status wurde neu abgerufen."
+msgstr ""
+
+#: views/admin-page.php:21
 msgid ""
 "Die Verbindung wurde getrennt. Token, Website-Kennung und der gespeicherte "
 "Text der Erklärung wurden entfernt."
 msgstr ""
 
-#: views/admin-page.php:21
+#: views/admin-page.php:22
 msgid "Die Adresse des Dienstes steht wieder auf dem Standardwert."
 msgstr ""
 
-#: views/admin-page.php:22
+#: views/admin-page.php:23
 msgid "Es ist ein Fehler aufgetreten."
 msgstr ""
 
-#: views/admin-page.php:40
+#: views/admin-page.php:41
 msgid "Mit Ihrem Konto verbinden"
 msgstr ""
 
-#: views/admin-page.php:42
+#: views/admin-page.php:43
 msgid ""
 "Legen Sie im Konto ein API-Token für diese Website an und tragen Sie es hier "
 "ein."
 msgstr ""
 
-#: views/admin-page.php:51 views/admin-page.php:148
+#: views/admin-page.php:52 views/admin-page.php:312
 msgid "Adresse des Dienstes"
 msgstr ""
 
 #. translators: %s: Standardadresse des Dienstes
-#: views/admin-page.php:61
+#: views/admin-page.php:62
 #, php-format
 msgid "Standard: %s"
 msgstr ""
 
-#: views/admin-page.php:68
+#: views/admin-page.php:69
 msgid "API-Token"
 msgstr ""
 
-#: views/admin-page.php:72
+#: views/admin-page.php:73
 msgid "Das Token gilt nur für diese Website."
 msgstr ""
 
-#: views/admin-page.php:77 views/admin-page.php:152
+#: views/admin-page.php:78 views/admin-page.php:316
 msgid "Website-Kennung"
 msgstr ""
 
-#: views/admin-page.php:82
+#: views/admin-page.php:83
 msgid "Verbinden"
 msgstr ""
 
-#: views/admin-page.php:91
+#: views/admin-page.php:92
 msgid "Adresse auf den Standardwert zurücksetzen"
 msgstr ""
 
-#: views/admin-page.php:95
+#: views/admin-page.php:96
 msgid "Status"
 msgstr ""
 
-#: views/admin-page.php:98
+#: views/admin-page.php:99
 msgid ""
 "Die Website konnte nicht abgerufen werden. Prüfen Sie Token und Kennung."
 msgstr ""
 
-#: views/admin-page.php:101
+#: views/admin-page.php:106
 msgid "Status dieser Website"
 msgstr ""
 
-#: views/admin-page.php:104
+#: views/admin-page.php:109
 msgid "Adresse"
 msgstr ""
 
-#: views/admin-page.php:108
+#: views/admin-page.php:113
 msgid "Domain bestätigt"
 msgstr ""
 
-#: views/admin-page.php:111
+#: views/admin-page.php:116
 msgid "nein"
 msgstr ""
 
-#: views/admin-page.php:112
+#: views/admin-page.php:117
 msgid "ja"
 msgstr ""
 
-#: views/admin-page.php:116
+#: views/admin-page.php:121
 msgid "Nächste Prüfung"
 msgstr ""
 
-#: views/admin-page.php:119
+#: views/admin-page.php:124
 msgid "nicht geplant"
 msgstr ""
 
-#: views/admin-page.php:131
+#: views/admin-page.php:136
 msgid "Domain jetzt bestätigen"
 msgstr ""
 
-#: views/admin-page.php:137
+#: views/admin-page.php:142
 msgid "Jetzt prüfen"
 msgstr ""
 
-#: views/admin-page.php:143
+#: views/admin-page.php:151
+msgid "Status aktualisieren"
+msgstr ""
+
+#: views/admin-page.php:157
+msgid ""
+"Eine Prüfung läuft gerade. Das Ergebnis steht in wenigen Minuten bereit — "
+"wählen Sie dann „Status aktualisieren\"."
+msgstr ""
+
+#: views/admin-page.php:161
+msgid "Kontingent"
+msgstr ""
+
+#: views/admin-page.php:165
+msgid "Das Kontingent konnte nicht abgerufen werden."
+msgstr ""
+
+#: views/admin-page.php:168
+msgid "Geprüfte Seiten im laufenden Abrechnungszeitraum"
+msgstr ""
+
+#: views/admin-page.php:171
+msgid "Geprüfte Seiten in diesem Zeitraum"
+msgstr ""
+
+#. translators: %s: Anzahl geprüfter Seiten
+#: views/admin-page.php:177
+#, php-format
+msgid "%s (unbegrenzt)"
+msgstr ""
+
+#. translators: 1: verbrauchte Seiten, 2: enthaltene Seiten
+#: views/admin-page.php:183
+#, php-format
+msgid "%1$s von %2$s"
+msgstr ""
+
+#: views/admin-page.php:192
+msgid "Verbleibend"
+msgstr ""
+
+#: views/admin-page.php:198
+msgid "Zeitraum bis"
+msgstr ""
+
+#: views/admin-page.php:206
+msgid "Befunde"
+msgstr ""
+
+#: views/admin-page.php:214
+msgid "kritisch"
+msgstr ""
+
+#: views/admin-page.php:215
+msgid "schwer"
+msgstr ""
+
+#: views/admin-page.php:216
+msgid "mittel"
+msgstr ""
+
+#: views/admin-page.php:217
+msgid "gering"
+msgstr ""
+
+#: views/admin-page.php:222
+msgid ""
+"Für diese Website liegt noch kein Prüfergebnis vor. Wählen Sie „Jetzt "
+"prüfen\"."
+msgstr ""
+
+#: views/admin-page.php:224
+msgid "Die letzte Prüfung hat keine offenen Befunde ergeben."
+msgstr ""
+
+#. translators: %s: Datum der letzten Prüfung
+#: views/admin-page.php:229
+#, php-format
+msgid ""
+"Offene Befunde der Prüfung vom %s. Beheben Sie sie in WordPress und starten "
+"Sie danach eine neue Prüfung."
+msgstr ""
+
+#: views/admin-page.php:231
+msgid "unbekannten Datum"
+msgstr ""
+
+#: views/admin-page.php:237
+msgid "Offene Befunde je Regel"
+msgstr ""
+
+#: views/admin-page.php:242
+msgid "Schweregrad"
+msgstr ""
+
+#: views/admin-page.php:243
+msgid "Befund"
+msgstr ""
+
+#: views/admin-page.php:244
+msgid "Erfolgskriterium"
+msgstr ""
+
+#: views/admin-page.php:245
+msgid "Fundstellen"
+msgstr ""
+
+#: views/admin-page.php:246
+msgid "Betroffene Seiten"
+msgstr ""
+
+#. translators: %s: Hinweis, wie der Befund zu beheben ist
+#: views/admin-page.php:262
+#, php-format
+msgid "Behebung: %s"
+msgstr ""
+
+#. translators: %s: Anzahl weiterer betroffener Seiten
+#: views/admin-page.php:285
+#, php-format
+msgid "und %s weitere"
+msgstr ""
+
+#: views/admin-page.php:301
+msgid "Vollständiger Bericht mit allen Fundstellen"
+msgstr ""
+
+#: views/admin-page.php:307
 msgid "Verbindung"
 msgstr ""
 
-#: views/admin-page.php:145
+#: views/admin-page.php:309
 msgid "Eingetragene Verbindung"
 msgstr ""
 
-#: views/admin-page.php:160
+#: views/admin-page.php:324
 msgid ""
 "Trennen entfernt Token, Website-Kennung und den gespeicherten Text der "
 "Erklärung aus dieser Installation; danach lassen sich die Angaben neu "
@@ -184,32 +317,32 @@ msgid ""
 "widerrufen wird es dort."
 msgstr ""
 
-#: views/admin-page.php:165
+#: views/admin-page.php:329
 msgid "Verbindung trennen"
 msgstr ""
 
-#: views/admin-page.php:168
+#: views/admin-page.php:332
 msgid "Erklärung einbinden"
 msgstr ""
 
-#: views/admin-page.php:169
+#: views/admin-page.php:333
 msgid ""
 "Fügen Sie diesen Shortcode auf der Seite ein, die Ihre Erklärung zur "
 "Barrierefreiheit tragen soll:"
 msgstr ""
 
-#: views/admin-page.php:172
+#: views/admin-page.php:336
 msgid ""
 "Optionen: teil=\"maengel\" oder teil=\"kontakt\" für einen einzelnen "
 "Abschnitt, stand=\"nein\" ohne Datumszeile, ueberschrift=\"3\" zum Einpassen "
 "in Ihre Überschriftenhierarchie."
 msgstr ""
 
-#: views/admin-page.php:175
+#: views/admin-page.php:339
 msgid "Datenübertragung"
 msgstr ""
 
-#: views/admin-page.php:177
+#: views/admin-page.php:341
 msgid ""
 "Dieses Plugin überträgt die Adresse dieser Website sowie das API-Token an "
 "den oben eingetragenen Dienst, um Prüfungen auszulösen und die Erklärung "

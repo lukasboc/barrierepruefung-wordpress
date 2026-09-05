@@ -17,6 +17,7 @@ $a11y_checker_meldungen = [
     'bestaetigt' => [__('Die Domain ist bestätigt.', 'a11y-checker'), 'success'],
     'nicht_bestaetigt' => [__('Die Domain konnte nicht bestätigt werden.', 'a11y-checker'), 'warning'],
     'geprueft' => [__('Die Prüfung wurde gestartet. Das Ergebnis steht in wenigen Minuten bereit.', 'a11y-checker'), 'success'],
+    'aktualisiert' => [__('Der Status wurde neu abgerufen.', 'a11y-checker'), 'success'],
     'getrennt' => [__('Die Verbindung wurde getrennt. Token, Website-Kennung und der gespeicherte Text der Erklärung wurden entfernt.', 'a11y-checker'), 'success'],
     'adresse_zurueckgesetzt' => [__('Die Adresse des Dienstes steht wieder auf dem Standardwert.', 'a11y-checker'), 'success'],
     'fehler' => [__('Es ist ein Fehler aufgetreten.', 'a11y-checker'), 'error'],
@@ -96,6 +97,10 @@ $a11y_checker_meldungen = [
 
         <?php if ($site === null) : ?>
             <p><?php esc_html_e('Die Website konnte nicht abgerufen werden. Prüfen Sie Token und Kennung.', 'a11y-checker'); ?></p>
+            <?php // Der Grund des Dienstes, damit nicht geraten werden muss. ?>
+            <?php if (! empty($abruffehler)) : ?>
+                <p class="description"><em><?php echo esc_html($abruffehler); ?></em></p>
+            <?php endif; ?>
         <?php else : ?>
             <table class="widefat striped" style="max-width:40rem">
                 <caption class="screen-reader-text"><?php esc_html_e('Status dieser Website', 'a11y-checker'); ?></caption>
@@ -137,7 +142,166 @@ $a11y_checker_meldungen = [
                         <?php submit_button(__('Jetzt prüfen', 'a11y-checker'), 'primary', 'submit', false); ?>
                     </form>
                 <?php endif; ?>
+
+                <?php // Verwirft den Zwischenspeicher; ein selbsttätiges Neuladen
+                      // der Seite waere ein automatischer Kontextwechsel (WCAG 2.2.2). ?>
+                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="display:inline">
+                    <?php wp_nonce_field('a11y_checker_refresh'); ?>
+                    <input type="hidden" name="action" value="a11y_checker_refresh">
+                    <?php submit_button(__('Status aktualisieren', 'a11y-checker'), 'secondary', 'submit', false); ?>
+                </form>
             </p>
+
+            <?php if (! empty($site['running_scan'])) : ?>
+                <p role="status">
+                    <?php esc_html_e('Eine Prüfung läuft gerade. Das Ergebnis steht in wenigen Minuten bereit — wählen Sie dann „Status aktualisieren".', 'a11y-checker'); ?>
+                </p>
+            <?php endif; ?>
+
+            <h2><?php esc_html_e('Kontingent', 'a11y-checker'); ?></h2>
+
+            <?php $a11y_checker_kontingent = $site['quota'] ?? null; ?>
+            <?php if (! is_array($a11y_checker_kontingent)) : ?>
+                <p><?php esc_html_e('Das Kontingent konnte nicht abgerufen werden.', 'a11y-checker'); ?></p>
+            <?php else : ?>
+                <table class="widefat striped" style="max-width:40rem">
+                    <caption class="screen-reader-text"><?php esc_html_e('Geprüfte Seiten im laufenden Abrechnungszeitraum', 'a11y-checker'); ?></caption>
+                    <tbody>
+                        <tr>
+                            <th scope="row"><?php esc_html_e('Geprüfte Seiten in diesem Zeitraum', 'a11y-checker'); ?></th>
+                            <td>
+                                <?php // Eine hinterlegte null bedeutet unbegrenzt und darf nicht als 0 erscheinen. ?>
+                                <?php if ($a11y_checker_kontingent['limit'] === null) : ?>
+                                    <?php printf(
+                                        /* translators: %s: Anzahl geprüfter Seiten */
+                                        esc_html__('%s (unbegrenzt)', 'a11y-checker'),
+                                        esc_html(number_format_i18n((int) $a11y_checker_kontingent['used']))
+                                    ); ?>
+                                <?php else : ?>
+                                    <?php printf(
+                                        /* translators: 1: verbrauchte Seiten, 2: enthaltene Seiten */
+                                        esc_html__('%1$s von %2$s', 'a11y-checker'),
+                                        esc_html(number_format_i18n((int) $a11y_checker_kontingent['used'])),
+                                        esc_html(number_format_i18n((int) $a11y_checker_kontingent['limit']))
+                                    ); ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php if ($a11y_checker_kontingent['limit'] !== null) : ?>
+                            <tr>
+                                <th scope="row"><?php esc_html_e('Verbleibend', 'a11y-checker'); ?></th>
+                                <td><?php echo esc_html(number_format_i18n((int) $a11y_checker_kontingent['remaining'])); ?></td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if (! empty($a11y_checker_kontingent['period_end'])) : ?>
+                            <tr>
+                                <th scope="row"><?php esc_html_e('Zeitraum bis', 'a11y-checker'); ?></th>
+                                <td><?php echo esc_html(date_i18n(get_option('date_format'), strtotime($a11y_checker_kontingent['period_end']))); ?></td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+
+            <h2><?php esc_html_e('Befunde', 'a11y-checker'); ?></h2>
+
+            <?php
+            // Drei Zustaende, alle ausgesprochen: noch kein Ergebnis, ein
+            // Ergebnis ohne offene Befunde, oder die Arbeitsliste. Eine leere
+            // Tabelle waere in allen dreien die falsche Antwort.
+            $a11y_checker_lauf = $site['latest_scan'] ?? null;
+            $a11y_checker_schweregrade = [
+                'critical' => __('kritisch', 'a11y-checker'),
+                'serious' => __('schwer', 'a11y-checker'),
+                'moderate' => __('mittel', 'a11y-checker'),
+                'minor' => __('gering', 'a11y-checker'),
+            ];
+            ?>
+
+            <?php if (! is_array($a11y_checker_lauf)) : ?>
+                <p><?php esc_html_e('Für diese Website liegt noch kein Prüfergebnis vor. Wählen Sie „Jetzt prüfen".', 'a11y-checker'); ?></p>
+            <?php elseif (empty($befunde)) : ?>
+                <p><?php esc_html_e('Die letzte Prüfung hat keine offenen Befunde ergeben.', 'a11y-checker'); ?></p>
+            <?php else : ?>
+                <p>
+                    <?php printf(
+                        /* translators: %s: Datum der letzten Prüfung */
+                        esc_html__('Offene Befunde der Prüfung vom %s. Beheben Sie sie in WordPress und starten Sie danach eine neue Prüfung.', 'a11y-checker'),
+                        esc_html(empty($a11y_checker_lauf['finished_at'])
+                            ? __('unbekannten Datum', 'a11y-checker')
+                            : date_i18n(get_option('date_format'), strtotime($a11y_checker_lauf['finished_at'])))
+                    ); ?>
+                </p>
+
+                <table class="widefat striped">
+                    <caption class="screen-reader-text"><?php esc_html_e('Offene Befunde je Regel', 'a11y-checker'); ?></caption>
+                    <thead>
+                        <tr>
+                            <?php // Der Schweregrad steht als Wort in der Zelle - Farbe allein
+                                  // waere hier der Fehler, den das Produkt selbst benennt (WCAG 1.4.1). ?>
+                            <th scope="col"><?php esc_html_e('Schweregrad', 'a11y-checker'); ?></th>
+                            <th scope="col"><?php esc_html_e('Befund', 'a11y-checker'); ?></th>
+                            <th scope="col"><?php esc_html_e('Erfolgskriterium', 'a11y-checker'); ?></th>
+                            <th scope="col"><?php esc_html_e('Fundstellen', 'a11y-checker'); ?></th>
+                            <th scope="col"><?php esc_html_e('Betroffene Seiten', 'a11y-checker'); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($befunde as $a11y_checker_befund) : ?>
+                            <tr>
+                                <td>
+                                    <?php $a11y_checker_grad = (string) ($a11y_checker_befund['severity'] ?? '');
+                                    echo esc_html($a11y_checker_schweregrade[$a11y_checker_grad] ?? $a11y_checker_grad); ?>
+                                </td>
+                                <th scope="row">
+                                    <?php echo esc_html($a11y_checker_befund['title'] ?? $a11y_checker_befund['rule'] ?? ''); ?>
+                                    <?php if (! empty($a11y_checker_befund['remediation'])) : ?>
+                                        <p class="description">
+                                            <?php printf(
+                                                /* translators: %s: Hinweis, wie der Befund zu beheben ist */
+                                                esc_html__('Behebung: %s', 'a11y-checker'),
+                                                esc_html($a11y_checker_befund['remediation'])
+                                            ); ?>
+                                        </p>
+                                    <?php endif; ?>
+                                </th>
+                                <td><?php echo esc_html(implode(', ', (array) ($a11y_checker_befund['success_criteria'] ?? []))); ?></td>
+                                <td><?php echo esc_html(number_format_i18n((int) ($a11y_checker_befund['occurrences'] ?? 0))); ?></td>
+                                <td>
+                                    <?php $a11y_checker_seiten = (array) ($a11y_checker_befund['page_urls'] ?? []); ?>
+                                    <?php if ($a11y_checker_seiten === []) : ?>
+                                        —
+                                    <?php else : ?>
+                                        <ul>
+                                            <?php foreach ($a11y_checker_seiten as $a11y_checker_seite) : ?>
+                                                <li><a href="<?php echo esc_url($a11y_checker_seite); ?>"><?php echo esc_html($a11y_checker_seite); ?></a></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                        <?php // Die Liste ist gedeckelt; die volle Zahl steht in "pages". ?>
+                                        <?php if ((int) ($a11y_checker_befund['pages'] ?? 0) > count($a11y_checker_seiten)) : ?>
+                                            <p class="description">
+                                                <?php printf(
+                                                    /* translators: %s: Anzahl weiterer betroffener Seiten */
+                                                    esc_html__('und %s weitere', 'a11y-checker'),
+                                                    esc_html(number_format_i18n((int) $a11y_checker_befund['pages'] - count($a11y_checker_seiten)))
+                                                ); ?>
+                                            </p>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+
+            <?php if (is_array($a11y_checker_lauf) && ! empty($a11y_checker_lauf['report_url'])) : ?>
+                <p>
+                    <a href="<?php echo esc_url($a11y_checker_lauf['report_url']); ?>">
+                        <?php esc_html_e('Vollständiger Bericht mit allen Fundstellen', 'a11y-checker'); ?>
+                    </a>
+                </p>
+            <?php endif; ?>
         <?php endif; ?>
 
         <h2><?php esc_html_e('Verbindung', 'a11y-checker'); ?></h2>

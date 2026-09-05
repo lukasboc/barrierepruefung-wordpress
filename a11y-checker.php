@@ -3,7 +3,7 @@
  * Plugin Name:       Barrierepruefung.de – Web Accessibility Checker
  * Plugin URI:        https://github.com/lukasboc/barrierepruefung-wordpress
  * Description:       Prüft diese Website auf Barrierefreiheit und bindet die Erklärung zur Barrierefreiheit per Shortcode ein.
- * Version:           0.2.1
+ * Version:           0.3.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            lubomedia
@@ -19,7 +19,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('A11Y_CHECKER_VERSION', '0.2.1');
+define('A11Y_CHECKER_VERSION', '0.3.0');
 define('A11Y_CHECKER_PATH', plugin_dir_path(__FILE__));
 
 require_once A11Y_CHECKER_PATH.'includes/class-a11y-checker-client.php';

@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
-Stable tag: 0.2.1
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,8 +13,14 @@ Prüft diese Website auf Barrierefreiheit und bindet die Erklärung zur Barriere
 == Description ==
 
 Das Plugin verbindet Ihre WordPress-Installation mit einem Prüfdienst für digitale
-Barrierefreiheit. Sie können aus dem Backend eine Prüfung anstoßen und den Text Ihrer
-Erklärung zur Barrierefreiheit per Shortcode oder Block auf einer Seite ausgeben.
+Barrierefreiheit. Sie können aus dem Backend eine Prüfung anstoßen, die offenen Befunde samt
+Hinweis zur Behebung einsehen und den Text Ihrer Erklärung zur Barrierefreiheit per Shortcode
+oder Block auf einer Seite ausgeben.
+
+Unter *Werkzeuge → Barrierefreiheit* stehen die Befunde der letzten Prüfung als Arbeitsliste:
+je Regel der Schweregrad, das Erfolgskriterium, die Zahl der Fundstellen, was zu tun ist und
+welche Seiten betroffen sind. Dazu das Seitenkontingent des laufenden Abrechnungszeitraums.
+Behoben wird in WordPress; danach stoßen Sie die nächste Prüfung an derselben Stelle an.
 
 Die Erklärung wird **serverseitig** eingebunden — sie ist also auch ohne JavaScript und für
 assistive Technologien vollständig vorhanden.
@@ -37,8 +43,10 @@ eintragen (Standard: barrierepruefung.de).
 * die Kennung Ihrer Website im Dienst.
 
 Übertragen werden **keine** Inhalte oder personenbezogenen Daten Ihrer Besucherinnen und
-Besucher. Die Übertragung erfolgt, wenn Sie eine Prüfung anstoßen, die Domain bestätigen oder
-die Erklärung abgerufen wird (höchstens einmal pro Stunde, danach aus dem Zwischenspeicher).
+Besucher. Die Übertragung erfolgt, wenn Sie eine Prüfung anstoßen, die Domain bestätigen, die
+Seite *Werkzeuge → Barrierefreiheit* aufrufen (höchstens alle fünf Minuten, danach aus dem
+Zwischenspeicher) oder die Erklärung abgerufen wird (höchstens einmal pro Stunde, danach
+ebenfalls aus dem Zwischenspeicher).
 
 Datenschutzerklärung des Dienstes: https://barrierepruefung.de/datenschutz
 Nutzungsbedingungen des Dienstes: https://barrierepruefung.de/agb
@@ -139,6 +147,18 @@ durch die übrigen Prüfschritte; die Erklärung weist ausdrücklich aus, dass s
 Selbstbewertung beruht.
 
 == Changelog ==
+
+= 0.3.0 =
+* Neu: Werkzeuge → Barrierefreiheit zeigt die offenen Befunde der letzten Prüfung - je Regel
+  Schweregrad, Erfolgskriterium, Zahl der Fundstellen, ein Hinweis zur Behebung und die
+  betroffenen Seiten. Beheben lässt sich in WordPress, "Jetzt prüfen" schließt den Durchgang ab.
+* Neu: Die Seite nennt das Seitenkontingent des laufenden Abrechnungszeitraums.
+* Neu: Eine Schaltfläche "Status aktualisieren" holt Kontingent und Befunde neu. Sie ersetzt
+  bewusst ein selbsttätiges Neuladen der Seite, das für Screenreader-Nutzende störend wäre.
+* Neu: Läuft gerade eine Prüfung, sagt die Seite das, statt ein veraltetes Ergebnis zu zeigen.
+* Geändert: Zustand und Befunde liegen fünf Minuten im Zwischenspeicher; das Auslösen einer
+  Prüfung und "Status aktualisieren" verwerfen ihn.
+* Geändert: Lässt sich die Website nicht abrufen, steht jetzt der Grund des Dienstes dabei.
 
 = 0.2.1 =
 * Neu: Die eingetragene Verbindung ist unter Werkzeuge → Barrierefreiheit sichtbar und lässt
