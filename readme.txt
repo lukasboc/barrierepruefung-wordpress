@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.3.0
+Stable tag: 0.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,6 +142,17 @@ No. Automated tests cover only part of the requirements. The service guides you 
 remaining test steps; the statement explicitly states that it is based on a self-assessment.
 
 == Changelog ==
+
+= 0.3.1 =
+* Changed: The readme and the plugin description are in English now, as the WordPress Plugin
+  Directory requires.
+* Changed: English is now the source language of the plugin's own strings. German ships as a
+  translation in languages/a11y-checker-de_DE.po - a German installation shows exactly the same
+  text as before.
+* Changed: Tested up to WordPress 7.1.
+* Known limitation: only the de_DE translation is bundled. Installations running de_AT, de_CH or
+  de_DE_formal fall back to English until the plugin is listed in the directory and
+  translate.wordpress.org supplies those language packs.
 
 = 0.3.0 =
 * New: Tools → Accessibility shows the open findings of the last scan - for each rule the
