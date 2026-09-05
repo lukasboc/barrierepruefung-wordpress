@@ -49,6 +49,42 @@ deshalb besondere Sorgfalt von Hand.
 `readme.txt` ist das Gesicht im Verzeichnis, `README.md` das auf GitHub. Der Änderungsverlauf
 steht in beiden — `CHANGELOG.md` ist die Quelle. `.distignore` bestimmt, was ins ZIP kommt.
 
-Offen bis zur Einreichung: die Grafiken in `assets/`, `Tested up to:` gegen die aktuelle
-WordPress-Version, und die Text-Domain auf den beim Review vergebenen Slug ziehen (sonst laden
-Übersetzungen von translate.wordpress.org still nicht).
+`readme.txt`, das Feld `Description:` im Plugin-Kopf und **jede Zeichenkette in `__()`** sind
+englisch und bleiben es. Das Plugins-Team verlangt das für die `readme.txt` seit dem 28.07.2025
+(<https://make.wordpress.org/plugins/2025/07/28/requiring-the-readme-to-be-written-in-english/>),
+und für die Strings folgt es aus derselben Sache: GlotPress liest die msgids als die englischen
+Originale. Standen dort deutsche Sätze, müssten Übersetzerinnen auf translate.wordpress.org
+Deutsch nach Deutsch übersetzen. Das ist die einzige Ausnahme von der deutschen Hausregel —
+Kommentare, Commits, Testnamen und alle übrigen Dokumente bleiben deutsch.
+
+Deutsch ist damit eine Übersetzung wie jede andere und liegt in
+`languages/a11y-checker-de_DE.po`. Kommt eine Zeichenkette dazu oder ändert sich eine, gehören
+beide Dateien in denselben Commit:
+
+```bash
+wp i18n make-pot . languages/a11y-checker.pot --slug=a11y-checker --domain=a11y-checker \
+    --exclude=vendor,tests,dist
+msgmerge --update --backup=none languages/a11y-checker-de_DE.po languages/a11y-checker.pot
+# deutsche Fassung nachtragen, dann:
+msgfmt --check -o languages/a11y-checker-de_DE.mo languages/a11y-checker-de_DE.po
+```
+
+Eine englische msgid ohne deutschen msgstr fällt nicht auf: die Seite zeigt dann englischen
+Text in einer deutschen Installation, ohne Fehler. `msgfmt --statistics` nennt die Zahl der
+untersetzten Einträge — drei sind es planmäßig (Plugin-Name, Plugin-URI, Author).
+
+Auch `*.mo` gehört ins Repository. Solange das Plugin nicht im Verzeichnis ist, gibt es keine
+Sprachpakete von translate.wordpress.org, und ohne die mitgelieferte `.mo` läuft jede deutsche
+Installation auf Englisch. Nach der Aufnahme gewinnen die Sprachpakete aus `WP_LANG_DIR`
+ohnehin. Mitgeliefert ist nur `de_DE`; `de_AT`, `de_CH` und `de_DE_formal` sehen bis zur
+Aufnahme Englisch — WordPress hat keinen Rückfall zwischen Locales.
+
+Nicht übersetzt werden Shortcode-Name und Attribute (`teil`, `stand`, `ueberschrift`, `sprache`
+samt Werten `komplett`, `maengel`, `kontakt`) — das sind Bezeichner, keine Prosa. Der
+Änderungsverlauf in der `readme.txt` ist die englische Fassung von `CHANGELOG.md`, nicht dessen
+Kopie.
+
+Offen bis zur Einreichung: die Grafiken in `assets/` samt `== Screenshots ==` in der
+`readme.txt`, und die Text-Domain auf den beim Review vergebenen Slug ziehen (sonst laden
+Übersetzungen von translate.wordpress.org still nicht — und die mitgelieferte
+`a11y-checker-de_DE.mo` heißt dann ebenfalls anders).

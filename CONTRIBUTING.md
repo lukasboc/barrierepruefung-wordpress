@@ -16,8 +16,12 @@ nur auf 8.1) und lässt zusätzlich `plugin-check` laufen.
 
 ## Was hier gilt
 
-- **Sprache:** Code-Kommentare, Commit-Nachrichten und Dokumentation auf Deutsch. Sichtbare
-  Zeichenketten kommen durch `__()` mit der Text-Domain `a11y-checker`.
+- **Sprache:** Code-Kommentare, Commit-Nachrichten und Dokumentation auf Deutsch — sichtbare
+  Zeichenketten dagegen **auf Englisch**, durch `__()` mit der Text-Domain `a11y-checker`.
+  Englisch ist die Quellsprache von translate.wordpress.org; Deutsch ist eine Übersetzung und
+  steht in `languages/a11y-checker-de_DE.po`. Eine neue Zeichenkette ohne Eintrag dort erscheint
+  in deutschen Installationen englisch — `.po`, `.mo` und `.pot` gehören in denselben Commit
+  (die Befehle stehen in `CLAUDE.md`).
 - **Keine eigenen HTTP-Bibliotheken.** Ausschließlich `wp_remote_get()` / `wp_remote_post()` —
   das Plugin-Verzeichnis lässt nichts anderes zu.
 - **Kein Nachladen von ausführbarem Code, keine Telemetrie.**

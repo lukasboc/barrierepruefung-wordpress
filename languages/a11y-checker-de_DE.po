@@ -1,17 +1,19 @@
+# Deutsche Fassung des Barrierefreiheits-Checkers.
 # Copyright (C) 2026 lubomedia
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
 "Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.3.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/a11y-checker\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Report-Msgid-Bugs-To: https://github.com/lukasboc/barrierepruefung-wordpress/issues\n"
+"POT-Creation-Date: 2026-09-05T17:05:33+00:00\n"
+"PO-Revision-Date: 2026-09-05T19:06:00+0200\n"
+"Last-Translator: lubomedia\n"
+"Language-Team: Deutsch\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-05T17:05:33+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: a11y-checker\n"
 
 #. Plugin Name of the plugin
@@ -27,7 +29,7 @@ msgstr ""
 #. Description of the plugin
 #: a11y-checker.php
 msgid "Scans this site for accessibility barriers and embeds your accessibility statement via shortcode."
-msgstr ""
+msgstr "Prüft diese Website auf Barrierefreiheit und bindet die Erklärung zur Barrierefreiheit per Shortcode ein."
 
 #. Author of the plugin
 #: a11y-checker.php
@@ -38,308 +40,308 @@ msgstr ""
 #: includes/class-a11y-checker-admin.php:45
 #: views/admin-page.php:27
 msgid "Accessibility"
-msgstr ""
+msgstr "Barrierefreiheit"
 
 #: includes/class-a11y-checker-admin.php:55
 msgid "You do not have permission to view this page."
-msgstr ""
+msgstr "Sie haben keine Berechtigung für diese Seite."
 
 #: includes/class-a11y-checker-admin.php:250
 msgid "You do not have permission to perform this action."
-msgstr ""
+msgstr "Sie haben keine Berechtigung für diese Aktion."
 
 #: includes/class-a11y-checker-client.php:65
 msgid "The plugin is not connected to an account yet."
-msgstr ""
+msgstr "Das Plugin ist noch nicht mit einem Konto verbunden."
 
 #: includes/class-a11y-checker-client.php:94
 msgid "Unknown error."
-msgstr ""
+msgstr "Unbekannter Fehler."
 
 #: includes/class-a11y-checker-shortcode.php:43
 msgid "The accessibility statement cannot be loaded at the moment."
-msgstr ""
+msgstr "Die Erklärung zur Barrierefreiheit kann gerade nicht geladen werden."
 
 #. translators: 1: version number, 2: date
 #: includes/class-a11y-checker-shortcode.php:61
 #, php-format
 msgid "Version %1$s, as of %2$s"
-msgstr ""
+msgstr "Version %1$s, Stand %2$s"
 
 #: includes/class-a11y-checker-shortcode.php:92
 msgid "Accessibility statement"
-msgstr ""
+msgstr "Erklärung zur Barrierefreiheit"
 
 #: views/admin-page.php:16
 msgid "Connected. Please verify the domain now."
-msgstr ""
+msgstr "Verbindung hergestellt. Bestätigen Sie jetzt die Domain."
 
 #: views/admin-page.php:17
 msgid "The domain is verified."
-msgstr ""
+msgstr "Die Domain ist bestätigt."
 
 #: views/admin-page.php:18
 msgid "The domain could not be verified."
-msgstr ""
+msgstr "Die Domain konnte nicht bestätigt werden."
 
 #: views/admin-page.php:19
 msgid "The scan has started. The result will be ready in a few minutes."
-msgstr ""
+msgstr "Die Prüfung wurde gestartet. Das Ergebnis steht in wenigen Minuten bereit."
 
 #: views/admin-page.php:20
 msgid "The status has been refreshed."
-msgstr ""
+msgstr "Der Status wurde neu abgerufen."
 
 #: views/admin-page.php:21
 msgid "The connection has been removed. Token, site ID and the stored text of the statement were deleted."
-msgstr ""
+msgstr "Die Verbindung wurde getrennt. Token, Website-Kennung und der gespeicherte Text der Erklärung wurden entfernt."
 
 #: views/admin-page.php:22
 msgid "The service address is back to its default value."
-msgstr ""
+msgstr "Die Adresse des Dienstes steht wieder auf dem Standardwert."
 
 #: views/admin-page.php:23
 msgid "An error occurred."
-msgstr ""
+msgstr "Es ist ein Fehler aufgetreten."
 
 #: views/admin-page.php:41
 msgid "Connect to your account"
-msgstr ""
+msgstr "Mit Ihrem Konto verbinden"
 
 #: views/admin-page.php:43
 msgid "Create an API token for this site in your account and enter it here."
-msgstr ""
+msgstr "Legen Sie im Konto ein API-Token für diese Website an und tragen Sie es hier ein."
 
 #: views/admin-page.php:52
 #: views/admin-page.php:312
 msgid "Service address"
-msgstr ""
+msgstr "Adresse des Dienstes"
 
 #. translators: %s: default address of the service
 #: views/admin-page.php:62
 #, php-format
 msgid "Default: %s"
-msgstr ""
+msgstr "Standard: %s"
 
 #: views/admin-page.php:69
 msgid "API token"
-msgstr ""
+msgstr "API-Token"
 
 #: views/admin-page.php:73
 msgid "The token is valid for this site only."
-msgstr ""
+msgstr "Das Token gilt nur für diese Website."
 
 #: views/admin-page.php:78
 #: views/admin-page.php:316
 msgid "Site ID"
-msgstr ""
+msgstr "Website-Kennung"
 
 #: views/admin-page.php:83
 msgid "Connect"
-msgstr ""
+msgstr "Verbinden"
 
 #: views/admin-page.php:92
 msgid "Reset address to the default value"
-msgstr ""
+msgstr "Adresse auf den Standardwert zurücksetzen"
 
 #: views/admin-page.php:96
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: views/admin-page.php:99
 msgid "The site could not be retrieved. Please check the token and the site ID."
-msgstr ""
+msgstr "Die Website konnte nicht abgerufen werden. Prüfen Sie Token und Kennung."
 
 #: views/admin-page.php:106
 msgid "Status of this site"
-msgstr ""
+msgstr "Status dieser Website"
 
 #: views/admin-page.php:109
 msgid "Address"
-msgstr ""
+msgstr "Adresse"
 
 #: views/admin-page.php:113
 msgid "Domain verified"
-msgstr ""
+msgstr "Domain bestätigt"
 
 #: views/admin-page.php:116
 msgid "no"
-msgstr ""
+msgstr "nein"
 
 #: views/admin-page.php:117
 msgid "yes"
-msgstr ""
+msgstr "ja"
 
 #: views/admin-page.php:121
 msgid "Next scan"
-msgstr ""
+msgstr "Nächste Prüfung"
 
 #: views/admin-page.php:124
 msgid "not scheduled"
-msgstr ""
+msgstr "nicht geplant"
 
 #: views/admin-page.php:136
 msgid "Verify domain now"
-msgstr ""
+msgstr "Domain jetzt bestätigen"
 
 #: views/admin-page.php:142
 msgid "Scan now"
-msgstr ""
+msgstr "Jetzt prüfen"
 
 #: views/admin-page.php:151
 msgid "Refresh status"
-msgstr ""
+msgstr "Status aktualisieren"
 
 #: views/admin-page.php:157
 msgid "A scan is currently running. The result will be ready in a few minutes — then choose “Refresh status”."
-msgstr ""
+msgstr "Eine Prüfung läuft gerade. Das Ergebnis steht in wenigen Minuten bereit — wählen Sie dann „Status aktualisieren\"."
 
 #: views/admin-page.php:161
 msgid "Quota"
-msgstr ""
+msgstr "Kontingent"
 
 #: views/admin-page.php:165
 msgid "The quota could not be retrieved."
-msgstr ""
+msgstr "Das Kontingent konnte nicht abgerufen werden."
 
 #: views/admin-page.php:168
 msgid "Pages scanned in the current billing period"
-msgstr ""
+msgstr "Geprüfte Seiten im laufenden Abrechnungszeitraum"
 
 #: views/admin-page.php:171
 msgid "Pages scanned in this period"
-msgstr ""
+msgstr "Geprüfte Seiten in diesem Zeitraum"
 
 #. translators: %s: number of pages scanned
 #: views/admin-page.php:177
 #, php-format
 msgid "%s (unlimited)"
-msgstr ""
+msgstr "%s (unbegrenzt)"
 
 #. translators: 1: pages used, 2: pages included
 #: views/admin-page.php:183
 #, php-format
 msgid "%1$s of %2$s"
-msgstr ""
+msgstr "%1$s von %2$s"
 
 #: views/admin-page.php:192
 msgid "Remaining"
-msgstr ""
+msgstr "Verbleibend"
 
 #: views/admin-page.php:198
 msgid "Period ends"
-msgstr ""
+msgstr "Zeitraum bis"
 
 #: views/admin-page.php:206
 msgid "Findings"
-msgstr ""
+msgstr "Befunde"
 
 #: views/admin-page.php:214
 msgid "critical"
-msgstr ""
+msgstr "kritisch"
 
 #: views/admin-page.php:215
 msgid "serious"
-msgstr ""
+msgstr "schwer"
 
 #: views/admin-page.php:216
 msgid "moderate"
-msgstr ""
+msgstr "mittel"
 
 #: views/admin-page.php:217
 msgid "minor"
-msgstr ""
+msgstr "gering"
 
 #: views/admin-page.php:222
 msgid "There is no scan result for this site yet. Choose “Scan now”."
-msgstr ""
+msgstr "Für diese Website liegt noch kein Prüfergebnis vor. Wählen Sie „Jetzt prüfen\"."
 
 #: views/admin-page.php:224
 msgid "The last scan found no open findings."
-msgstr ""
+msgstr "Die letzte Prüfung hat keine offenen Befunde ergeben."
 
 #. translators: %s: date of the last scan
 #: views/admin-page.php:229
 #, php-format
 msgid "Open findings from the scan on %s. Fix them in WordPress and then start a new scan."
-msgstr ""
+msgstr "Offene Befunde der Prüfung vom %s. Beheben Sie sie in WordPress und starten Sie danach eine neue Prüfung."
 
 #: views/admin-page.php:231
 msgid "an unknown date"
-msgstr ""
+msgstr "unbekannten Datum"
 
 #: views/admin-page.php:237
 msgid "Open findings by rule"
-msgstr ""
+msgstr "Offene Befunde je Regel"
 
 #: views/admin-page.php:242
 msgid "Severity"
-msgstr ""
+msgstr "Schweregrad"
 
 #: views/admin-page.php:243
 msgid "Finding"
-msgstr ""
+msgstr "Befund"
 
 #: views/admin-page.php:244
 msgid "Success criterion"
-msgstr ""
+msgstr "Erfolgskriterium"
 
 #: views/admin-page.php:245
 msgid "Occurrences"
-msgstr ""
+msgstr "Fundstellen"
 
 #: views/admin-page.php:246
 msgid "Affected pages"
-msgstr ""
+msgstr "Betroffene Seiten"
 
 #. translators: %s: note on how to fix the finding
 #: views/admin-page.php:262
 #, php-format
 msgid "How to fix: %s"
-msgstr ""
+msgstr "Behebung: %s"
 
 #. translators: %s: number of further affected pages
 #: views/admin-page.php:285
 #, php-format
 msgid "and %s more"
-msgstr ""
+msgstr "und %s weitere"
 
 #: views/admin-page.php:301
 msgid "Full report with all occurrences"
-msgstr ""
+msgstr "Vollständiger Bericht mit allen Fundstellen"
 
 #: views/admin-page.php:307
 msgid "Connection"
-msgstr ""
+msgstr "Verbindung"
 
 #: views/admin-page.php:309
 msgid "Stored connection"
-msgstr ""
+msgstr "Eingetragene Verbindung"
 
 #: views/admin-page.php:324
 msgid "Disconnecting removes the token, the site ID and the stored text of the statement from this installation; you can then enter the details again. Nothing changes in your account — the token stays valid and is revoked there."
-msgstr ""
+msgstr "Trennen entfernt Token, Website-Kennung und den gespeicherten Text der Erklärung aus dieser Installation; danach lassen sich die Angaben neu eintragen. Im Konto bleibt alles bestehen, das Token gilt weiter — widerrufen wird es dort."
 
 #: views/admin-page.php:329
 msgid "Disconnect"
-msgstr ""
+msgstr "Verbindung trennen"
 
 #: views/admin-page.php:332
 msgid "Embed the statement"
-msgstr ""
+msgstr "Erklärung einbinden"
 
 #: views/admin-page.php:333
 msgid "Add this shortcode to the page that should carry your accessibility statement:"
-msgstr ""
+msgstr "Fügen Sie diesen Shortcode auf der Seite ein, die Ihre Erklärung zur Barrierefreiheit tragen soll:"
 
 #: views/admin-page.php:336
 msgid "Options: teil=\"maengel\" or teil=\"kontakt\" for a single section, stand=\"nein\" to omit the date line, ueberschrift=\"3\" to fit your heading hierarchy."
-msgstr ""
+msgstr "Optionen: teil=\"maengel\" oder teil=\"kontakt\" für einen einzelnen Abschnitt, stand=\"nein\" ohne Datumszeile, ueberschrift=\"3\" zum Einpassen in Ihre Überschriftenhierarchie."
 
 #: views/admin-page.php:339
 msgid "Data transfer"
-msgstr ""
+msgstr "Datenübertragung"
 
 #: views/admin-page.php:341
 msgid "This plugin sends the address of this site and the API token to the service configured above in order to start scans and retrieve the statement. No content belonging to your visitors is transmitted."
-msgstr ""
+msgstr "Dieses Plugin überträgt die Adresse dieser Website sowie das API-Token an den oben eingetragenen Dienst, um Prüfungen auszulösen und die Erklärung abzurufen. Es werden keine Inhalte Ihrer Nutzerinnen und Nutzer übermittelt."

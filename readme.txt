@@ -2,183 +2,177 @@
 Contributors: lukasbo
 Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
 Requires at least: 6.5
-Tested up to: 6.8
+Tested up to: 7.1
 Requires PHP: 8.1
 Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Prüft diese Website auf Barrierefreiheit und bindet die Erklärung zur Barrierefreiheit per Shortcode ein.
+Scans this site for accessibility barriers and embeds your accessibility statement via shortcode.
 
 == Description ==
 
-Das Plugin verbindet Ihre WordPress-Installation mit einem Prüfdienst für digitale
-Barrierefreiheit. Sie können aus dem Backend eine Prüfung anstoßen, die offenen Befunde samt
-Hinweis zur Behebung einsehen und den Text Ihrer Erklärung zur Barrierefreiheit per Shortcode
-oder Block auf einer Seite ausgeben.
+The plugin connects your WordPress installation to an auditing service for digital
+accessibility. From the admin area you can start a scan, review the open findings together with
+a note on how to fix them, and output the text of your accessibility statement on a page via
+shortcode or block.
 
-Unter *Werkzeuge → Barrierefreiheit* stehen die Befunde der letzten Prüfung als Arbeitsliste:
-je Regel der Schweregrad, das Erfolgskriterium, die Zahl der Fundstellen, was zu tun ist und
-welche Seiten betroffen sind. Dazu das Seitenkontingent des laufenden Abrechnungszeitraums.
-Behoben wird in WordPress; danach stoßen Sie die nächste Prüfung an derselben Stelle an.
+Under *Tools → Accessibility* the findings of the last scan are laid out as a work list: for
+each rule the severity, the success criterion, the number of occurrences, what needs to be done
+and which pages are affected. Along with that, the page quota of the current billing period.
+You fix things in WordPress; then you start the next scan from the same place.
 
-Die Erklärung wird **serverseitig** eingebunden — sie ist also auch ohne JavaScript und für
-assistive Technologien vollständig vorhanden.
+The statement is embedded **server-side** — so it is fully present without JavaScript and for
+assistive technologies.
 
-= Was das Plugin nicht tut =
+= What the plugin does not do =
 
-Es verändert Ihre Website nicht und repariert nichts automatisch. Sogenannte
-Accessibility-Overlays beheben keine Barrieren, verschlechtern regelmäßig die Nutzbarkeit mit
-assistiven Technologien und sind kein Konformitätsnachweis.
+It does not change your site and does not repair anything automatically. So-called
+accessibility overlays do not remove barriers, regularly make things worse for people using
+assistive technologies, and are not proof of conformance.
 
 == External services ==
 
-Dieses Plugin ruft einen externen Dienst auf, dessen Adresse Sie bei der Einrichtung selbst
-eintragen (Standard: barrierepruefung.de).
+This plugin calls an external service whose address you enter yourself during setup (default:
+barrierepruefung.de).
 
-Übertragen werden:
+What is transmitted:
 
-* die Adresse dieser Website,
-* das von Ihnen erzeugte API-Token,
-* die Kennung Ihrer Website im Dienst.
+* the address of this site,
+* the API token you created,
+* the ID of your site within the service.
 
-Übertragen werden **keine** Inhalte oder personenbezogenen Daten Ihrer Besucherinnen und
-Besucher. Die Übertragung erfolgt, wenn Sie eine Prüfung anstoßen, die Domain bestätigen, die
-Seite *Werkzeuge → Barrierefreiheit* aufrufen (höchstens alle fünf Minuten, danach aus dem
-Zwischenspeicher) oder die Erklärung abgerufen wird (höchstens einmal pro Stunde, danach
-ebenfalls aus dem Zwischenspeicher).
+**No** content and **no** personal data of your visitors are transmitted. Transmission happens
+when you start a scan, when you verify the domain, when the page *Tools → Accessibility* is
+opened (at most every five minutes, from the cache after that) or when the statement is
+retrieved (at most once an hour, likewise from the cache after that).
 
-Datenschutzerklärung des Dienstes: https://barrierepruefung.de/datenschutz
-Nutzungsbedingungen des Dienstes: https://barrierepruefung.de/agb
+Privacy policy of the service: https://barrierepruefung.de/datenschutz
+Terms of service: https://barrierepruefung.de/agb
 
 == Installation ==
 
-1. Plugin installieren und aktivieren.
-2. Im Konto des Dienstes unter *Websites → [Website] → Einbindung* ein API-Token für diese
-   Website erzeugen. Dort stehen zugleich die Website-Kennung und die Adresse des Dienstes.
-3. Unter *Werkzeuge → Barrierefreiheit* diese drei Angaben eintragen.
-4. Domain bestätigen — das Plugin liefert den Nachweis selbst aus, Sie brauchen keinen
-   DNS-Zugriff.
-5. Prüfung anstoßen und den Shortcode `[barrierefreiheitserklaerung]` auf einer Seite einfügen.
+1. Install and activate the plugin.
+2. In your account with the service, under *Websites → [site] → Embedding*, create an API token
+   for this site. The site ID and the service address are shown in the same place.
+3. Enter those three values under *Tools → Accessibility*.
+4. Verify the domain — the plugin serves the proof itself, you do not need DNS access.
+5. Start a scan and insert the shortcode `[barrierefreiheitserklaerung]` on a page.
 
 == Shortcode ==
 
-`[barrierefreiheitserklaerung]` gibt den Text Ihrer Erklärung zur Barrierefreiheit
-serverseitig aus. Denselben Umfang und dieselbe Einbindung bietet auch der Block „Erklärung
-zur Barrierefreiheit" — mit den Einstellungen `teil`, `stand` und `ueberschrift`.
+`[barrierefreiheitserklaerung]` outputs the text of your accessibility statement, rendered on
+the server. The block “Accessibility statement” offers the same scope and the same embedding —
+with the settings `teil`, `stand` and `ueberschrift`.
 
-Beispiel für die vollständige Erklärung:
+Example for the complete statement:
 
 `[barrierefreiheitserklaerung]`
 
-Beispiel für nur den Mängel-Abschnitt, eine Ebene tiefer eingebunden:
+Example for the non-conformance section only, embedded one level deeper:
 
 `[barrierefreiheitserklaerung teil="maengel" ueberschrift="3"]`
 
 = teil =
 
-Welcher Ausschnitt der Erklärung ausgegeben wird.
+Which excerpt of the statement is output.
 
-* `komplett` (Voreinstellung) — die vollständige Erklärung.
-* `maengel` — nur der Abschnitt zu bekannten Barrieren.
-* `kontakt` — nur der Abschnitt mit den Kontaktangaben für Rückmeldungen.
+* `komplett` (default) — the complete statement.
+* `maengel` — the section on known barriers only.
+* `kontakt` — the section with the contact details for feedback only.
 
-Ein unbekannter Wert liefert ohne Fehlermeldung die vollständige Erklärung, genau wie
-`komplett` — ebenso, wenn der gesuchte Abschnitt in der geladenen Erklärung nicht gefunden
-wird.
+An unknown value returns the complete statement without an error message, exactly like
+`komplett` — and so does the case where the requested section is not found in the statement
+that was loaded.
 
 = ueberschrift =
 
-Die Ebene, die die oberste Überschrift der Ausgabe bekommt (Voreinstellung `2`). Gemessen
-wird relativ zur obersten Überschrift, die in der Erklärung tatsächlich vorkommt — nicht fest
-an einer h1 —, damit sich der Text in die Überschriftenhierarchie Ihrer Seite einfügt.
+The level given to the topmost heading of the output (default `2`). It is measured relative to
+the topmost heading that actually occurs in the statement — not fixed to an h1 — so that the
+text fits into the heading hierarchy of your page.
 
-Zulässig sind Werte von `2` bis `4`; kleinere oder größere Werte werden ohne Fehlermeldung auf
-diesen Bereich gekappt (`1` wirkt also wie `2`, `5` wie `4`). Tiefer liegende Überschriften
-innerhalb der Erklärung werden entsprechend mitverschoben, jedoch nie über h6 hinaus.
+Values from `2` to `4` are allowed; smaller or larger values are clamped to that range without
+an error message (`1` therefore behaves like `2`, `5` like `4`). Headings further down inside
+the statement are shifted along accordingly, but never beyond h6.
 
 = stand =
 
-`ja` (Voreinstellung) hängt einen Absatz mit Versionsnummer und Datum der Erklärung an — aber
-nur, wenn die geladene Erklärung ein Datum mitbringt. Fehlt das, bleibt der Absatz auch bei
-`stand="ja"` aus. Jeder andere Wert unterdrückt den Absatz in jedem Fall.
+`ja` (default) appends a paragraph with the version number and the date of the statement — but
+only if the statement that was loaded brings a date with it. If it does not, the paragraph is
+omitted even with `stand="ja"`. Any other value suppresses the paragraph in every case.
 
 = sprache =
 
-Wird entgegengenommen, wirkt sich in dieser Version aber auf nichts aus — die Sprache der
-Ausgabe richtet sich allein nach der Sprachfassung, die im Dienst hinterlegt ist.
+Is accepted, but has no effect in this version — the language of the output follows solely the
+language version stored in the service.
 
 == Frequently Asked Questions ==
 
-= Muss ich einen DNS-Eintrag setzen? =
+= Do I have to set a DNS record? =
 
-Nein. Das Plugin liefert den Nachweis als Meta-Element und als Datei unter
-`/.well-known/a11y-site-verification.txt` selbst aus.
+No. The plugin serves the proof itself, as a meta element and as a file under
+`/.well-known/a11y-site-verification.txt`.
 
-= Was passiert, wenn der Dienst nicht erreichbar ist? =
+= What happens if the service is unreachable? =
 
-Die zuletzt erfolgreich geladene Fassung der Erklärung wird weiter ausgeliefert — mit ihrem
-ursprünglichen Stand-Datum. Eine Erklärung, die wegen einer Störung von der Website
-verschwindet, wäre für Sie ein Rechtsproblem.
+The last successfully loaded version of the statement continues to be delivered — with its
+original date. A statement that disappears from the site because of an outage would be a legal
+problem for you.
 
-= In welchen Sprachen liegt das Plugin vor? =
+= Which languages does the plugin come in? =
 
-Deutsch (Ausgangssprache) und Englisch. Die Vorlage für weitere Übersetzungen liegt dem
-Plugin unter `languages/a11y-checker.pot` bei.
+English (source language) and German. The template for further translations ships with the
+plugin under `languages/a11y-checker.pot`.
 
-= Ich habe mich beim Verbinden vertippt — wie komme ich zurück? =
+= I mistyped something while connecting — how do I get back? =
 
-Unter *Werkzeuge → Barrierefreiheit* steht die eingetragene Verbindung mit der Schaltfläche
-„Verbindung trennen". Danach erscheint das Formular wieder, und Sie können Token, Kennung
-und Adresse neu eintragen. Die Adresse des Dienstes lässt sich dort auch einzeln auf den
-Standardwert zurücksetzen. Ihr Konto bleibt davon unberührt; das Token gilt weiter und wird
-im Konto widerrufen.
+Under *Tools → Accessibility* the stored connection is shown together with a “Disconnect”
+button. The form then reappears and you can enter token, site ID and address again. The service
+address can also be reset to its default value on its own there. Your account is not affected;
+the token stays valid and is revoked in the account.
 
-= Was bleibt nach der Deinstallation zurück? =
+= What is left behind after uninstalling? =
 
-Nichts. Die Deinstallation entfernt alle Optionen und Zwischenspeicher, einschließlich des
-Tokens und der zuletzt geladenen Fassung der Erklärung — in einem Netzwerk für jede
-Unterseite einzeln.
+Nothing. Uninstalling removes all options and caches, including the token and the last loaded
+version of the statement — in a network, for every subsite individually.
 
-= Ersetzt die automatische Prüfung ein Gutachten? =
+= Does the automated scan replace an expert audit? =
 
-Nein. Automatisierte Tests decken nur einen Teil der Anforderungen ab. Der Dienst führt Sie
-durch die übrigen Prüfschritte; die Erklärung weist ausdrücklich aus, dass sie auf einer
-Selbstbewertung beruht.
+No. Automated tests cover only part of the requirements. The service guides you through the
+remaining test steps; the statement explicitly states that it is based on a self-assessment.
 
 == Changelog ==
 
 = 0.3.0 =
-* Neu: Werkzeuge → Barrierefreiheit zeigt die offenen Befunde der letzten Prüfung - je Regel
-  Schweregrad, Erfolgskriterium, Zahl der Fundstellen, ein Hinweis zur Behebung und die
-  betroffenen Seiten. Beheben lässt sich in WordPress, "Jetzt prüfen" schließt den Durchgang ab.
-* Neu: Die Seite nennt das Seitenkontingent des laufenden Abrechnungszeitraums.
-* Neu: Eine Schaltfläche "Status aktualisieren" holt Kontingent und Befunde neu. Sie ersetzt
-  bewusst ein selbsttätiges Neuladen der Seite, das für Screenreader-Nutzende störend wäre.
-* Neu: Läuft gerade eine Prüfung, sagt die Seite das, statt ein veraltetes Ergebnis zu zeigen.
-* Geändert: Zustand und Befunde liegen fünf Minuten im Zwischenspeicher; das Auslösen einer
-  Prüfung und "Status aktualisieren" verwerfen ihn.
-* Geändert: Lässt sich die Website nicht abrufen, steht jetzt der Grund des Dienstes dabei.
+* New: Tools → Accessibility shows the open findings of the last scan - for each rule the
+  severity, the success criterion, the number of occurrences, a note on how to fix it and the
+  pages affected. Fixing happens in WordPress, "Scan now" closes the round.
+* New: The page states the page quota of the current billing period.
+* New: A "Refresh status" button fetches quota and findings again. It deliberately replaces an
+  automatic page reload, which would be disruptive for screen reader users.
+* New: If a scan is currently running, the page says so instead of showing an outdated result.
+* Changed: State and findings are cached for five minutes; starting a scan and "Refresh status"
+  discard the cache.
+* Changed: If the site cannot be retrieved, the reason given by the service is now shown with it.
 
 = 0.2.1 =
-* Neu: Die eingetragene Verbindung ist unter Werkzeuge → Barrierefreiheit sichtbar und lässt
-  sich wieder trennen. Bisher blendete das Plugin das Formular aus, sobald Token und Kennung
-  einmal gespeichert waren - auch wenn sie falsch waren.
-* Neu: Die Adresse des Dienstes lässt sich einzeln auf den Standardwert zurücksetzen; das
-  Formular schlägt die zuletzt eingetragene Adresse vor statt stets den Standard.
-* Behoben: Eine verworfene Adresse blieb als leere Option stehen; jede Anfrage ging danach an
-  einen relativen Pfad. Jetzt gilt in diesem Fall wieder der Standardwert.
+* New: The stored connection is visible under Tools → Accessibility and can be undone again.
+  Until now the plugin hid the form as soon as token and site ID had been saved once - even if
+  they were wrong.
+* New: The service address can be reset to its default value on its own; the form suggests the
+  address entered last instead of always the default.
+* Fixed: A discarded address remained as an empty option; every request afterwards went to a
+  relative path. In that case the default value now applies again.
 
 = 0.2.0 =
-* Behoben: Die Überschriftenebene wird jetzt an der obersten tatsächlich ausgegebenen
-  Überschrift gemessen. Bisher blieb bei der Voreinstellung die h1 der Erklärung eine h1 -
-  mitten in einer Seite ist das selbst ein Verstoß gegen WCAG 1.3.1 -, und ein mit
-  teil="maengel" oder teil="kontakt" eingebundener Abschnitt kam eine Ebene zu tief heraus.
-  Wer die Ebenen bisher mit ueberschrift="3" von Hand ausgeglichen hat, stellt jetzt auf
-  ueberschrift="2" um (oder lässt das Attribut weg).
-* Behoben: Die Rückmeldung im Backend wurde doppelt URL-dekodiert, wodurch eine Meldung mit
-  einer wörtlichen Prozent-Sequenz (z. B. "%41") fälschlich als Zeichen ankam.
+* Fixed: The heading level is now measured against the topmost heading actually output. Until
+  now the h1 of the statement stayed an h1 at the default setting - in the middle of a page
+  that is itself a violation of WCAG 1.3.1 -, and a section embedded with teil="maengel" or
+  teil="kontakt" came out one level too deep. If you have been balancing the levels by hand
+  with ueberschrift="3", switch to ueberschrift="2" now (or leave the attribute out).
+* Fixed: The feedback message in the admin area was URL-decoded twice, which made a message
+  containing a literal percent sequence (e.g. "%41") arrive as a character.
 
 = 0.1.0 =
-* Erste Fassung: Verbindung, Domain-Bestätigung, Prüfung anstoßen, Shortcode und Block.
-* Deutsche und englische Sprachfassung, vollständige Deinstallation.
+* First release: connection, domain verification, starting a scan, shortcode and block.
+* German and English language version, complete uninstall.

@@ -30,7 +30,8 @@ Das Plugin ist noch nicht im WordPress-Verzeichnis eingereicht. Bis dahin als ZI
 dem WordPress-Verzeichnis.
 
 Einrichtung, Shortcode-Attribute und häufige Fragen stehen in [`readme.txt`](readme.txt) —
-das ist zugleich der Text im Plugin-Verzeichnis.
+das ist zugleich der Text im Plugin-Verzeichnis und deshalb als einzige Datei hier auf
+Englisch.
 
 ## Voraussetzungen
 

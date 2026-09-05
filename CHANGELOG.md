@@ -3,6 +3,28 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [Unveröffentlicht]
+
+### Geändert
+
+- `readme.txt` und das Feld `Description:` im Plugin-Kopf sind jetzt englisch. Das Plugins-Team
+  von wordpress.org verlangt das seit dem 28.07.2025; ohne diesen Schritt gäbe es keine
+  Aufnahme ins Verzeichnis.
+- Die Quellsprache der sichtbaren Zeichenketten ist von Deutsch auf Englisch gedreht. Für
+  GlotPress sind die msgids die englischen Originale — mit deutschen Sätzen darin hätten
+  Übersetzerinnen auf translate.wordpress.org Deutsch nach Deutsch übersetzen müssen. Deutsch
+  ist damit eine Übersetzung wie jede andere und steht in `languages/a11y-checker-de_DE.po`;
+  `languages/a11y-checker-en_US.po` ist entfallen. Eine deutsche Installation zeigt
+  unverändert denselben Text wie bisher.
+- `Tested up to:` steht auf 7.1, und der Plugin-Kopf nennt jetzt `Domain Path: /languages`.
+
+### Bekannte Einschränkung
+
+- Mitgeliefert ist nur die Sprachfassung `de_DE`. Installationen mit `de_AT`, `de_CH` oder
+  `de_DE_formal` laufen bis zur Aufnahme ins Verzeichnis auf Englisch — WordPress fällt
+  zwischen Locales nicht zurück. Mit der Aufnahme liefert translate.wordpress.org die
+  Sprachpakete für diese Locales nach.
+
 ## [0.3.0]
 
 ### Hinzugefügt

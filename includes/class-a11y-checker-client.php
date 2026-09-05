@@ -62,7 +62,7 @@ class A11y_Checker_Client
     private function request(string $methode, string $pfad, ?array $body, array $headers = []): array
     {
         if (! $this->is_connected()) {
-            return $this->fehler(0, __('Das Plugin ist noch nicht mit einem Konto verbunden.', 'a11y-checker'));
+            return $this->fehler(0, __('The plugin is not connected to an account yet.', 'a11y-checker'));
         }
 
         $argumente = [
@@ -91,7 +91,7 @@ class A11y_Checker_Client
 
         if ($status >= 400) {
             // Fehler kommen als problem+json; „detail" ist der lesbare Teil.
-            return $this->fehler($status, $daten['detail'] ?? $daten['title'] ?? __('Unbekannter Fehler.', 'a11y-checker'));
+            return $this->fehler($status, $daten['detail'] ?? $daten['title'] ?? __('Unknown error.', 'a11y-checker'));
         }
 
         return ['ok' => true, 'status' => $status, 'data' => $daten, 'error' => null];

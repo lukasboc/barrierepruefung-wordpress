@@ -40,7 +40,7 @@ class A11y_Checker_Shortcode
             // Eine Erklärung, die wegen eines Serverausfalls von der Website
             // verschwindet, wäre ein Rechtsproblem für die Kundin (docs/08 der
             // Dienst-Dokumentation).
-            return $this->hinweis(__('Die Erklärung zur Barrierefreiheit kann gerade nicht geladen werden.', 'a11y-checker'));
+            return $this->hinweis(__('The accessibility statement cannot be loaded at the moment.', 'a11y-checker'));
         }
 
         $html = (string) ($erklaerung['html'] ?? '');
@@ -57,8 +57,8 @@ class A11y_Checker_Shortcode
             $html .= sprintf(
                 '<p class="a11y-checker-stand">%s</p>',
                 esc_html(sprintf(
-                    /* translators: 1: Versionsnummer, 2: Datum */
-                    __('Version %1$s, Stand %2$s', 'a11y-checker'),
+                    /* translators: 1: version number, 2: date */
+                    __('Version %1$s, as of %2$s', 'a11y-checker'),
                     (string) ($erklaerung['version'] ?? '—'),
                     date_i18n(get_option('date_format'), strtotime((string) $erklaerung['published_at']))
                 ))
@@ -89,7 +89,7 @@ class A11y_Checker_Shortcode
         // nur eine Ausgabe gibt, die gepflegt werden muss.
         register_block_type('a11y-checker/erklaerung', [
             'api_version' => 3,
-            'title' => __('Erklärung zur Barrierefreiheit', 'a11y-checker'),
+            'title' => __('Accessibility statement', 'a11y-checker'),
             'category' => 'widgets',
             'attributes' => [
                 'teil' => ['type' => 'string', 'default' => 'komplett'],

@@ -253,7 +253,7 @@ final class AdminTest extends TestCase
 
         $seite = $this->seite();
 
-        $this->assertStringContainsString('42 von 500', $seite);
+        $this->assertStringContainsString('42 of 500', $seite);
         $this->assertStringContainsString('458', $seite);
     }
 
@@ -269,15 +269,15 @@ final class AdminTest extends TestCase
 
         $seite = $this->seite();
 
-        $this->assertStringContainsString('42 (unbegrenzt)', $seite);
-        $this->assertStringNotContainsString('42 von 0', $seite);
+        $this->assertStringContainsString('42 (unlimited)', $seite);
+        $this->assertStringNotContainsString('42 of 0', $seite);
     }
 
     public function test_die_seite_sagt_es_wenn_noch_kein_ergebnis_vorliegt(): void
     {
         $this->antwort(['data' => ['verified' => true, 'latest_scan' => null, 'running_scan' => null]]);
 
-        $this->assertStringContainsString('noch kein Prüfergebnis', $this->seite());
+        $this->assertStringContainsString('no scan result for this site yet', $this->seite());
     }
 
     /** Ein Ergebnis ohne Befunde ist eine gute Nachricht, keine leere Tabelle. */
@@ -290,7 +290,7 @@ final class AdminTest extends TestCase
         ]]);
         $this->antwort(['data' => [], 'meta' => []]);
 
-        $this->assertStringContainsString('keine offenen Befunde', $this->seite());
+        $this->assertStringContainsString('no open findings', $this->seite());
     }
 
     public function test_die_seite_listet_die_befunde_mit_hinweis_und_seiten(): void
@@ -318,10 +318,10 @@ final class AdminTest extends TestCase
         $this->assertStringContainsString('https://beispiel.test/pruefung/sc_1', $seite);
 
         // Der Schweregrad steht als Wort da, nicht nur als Farbe (WCAG 1.4.1).
-        $this->assertStringContainsString('kritisch', $seite);
+        $this->assertStringContainsString('critical', $seite);
 
         // Die Seitenliste ist gedeckelt; die volle Zahl darf nicht verschwinden.
-        $this->assertStringContainsString('und 24 weitere', $seite);
+        $this->assertStringContainsString('and 24 more', $seite);
     }
 
     public function test_die_seite_meldet_eine_laufende_pruefung(): void
@@ -332,7 +332,7 @@ final class AdminTest extends TestCase
             'running_scan' => ['id' => 'sc_9', 'status' => 'analyzing'],
         ]]);
 
-        $this->assertStringContainsString('Eine Prüfung läuft gerade', $this->seite());
+        $this->assertStringContainsString('A scan is currently running', $this->seite());
     }
 
     /** Beides gehört geprüft, nicht nur eines - hier die Berechtigung. */

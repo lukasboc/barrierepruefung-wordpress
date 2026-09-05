@@ -41,8 +41,8 @@ class A11y_Checker_Admin
     public function add_page(): void
     {
         add_management_page(
-            __('Barrierefreiheit', 'a11y-checker'),
-            __('Barrierefreiheit', 'a11y-checker'),
+            __('Accessibility', 'a11y-checker'),
+            __('Accessibility', 'a11y-checker'),
             self::CAPABILITY,
             'a11y-checker',
             [$this, 'render_page']
@@ -52,7 +52,7 @@ class A11y_Checker_Admin
     public function render_page(): void
     {
         if (! current_user_can(self::CAPABILITY)) {
-            wp_die(esc_html__('Sie haben keine Berechtigung für diese Seite.', 'a11y-checker'));
+            wp_die(esc_html__('You do not have permission to view this page.', 'a11y-checker'));
         }
 
         $client = new A11y_Checker_Client;
@@ -247,7 +247,7 @@ class A11y_Checker_Admin
     private function pruefe_berechtigung(string $aktion): void
     {
         if (! current_user_can(self::CAPABILITY)) {
-            wp_die(esc_html__('Sie haben keine Berechtigung für diese Aktion.', 'a11y-checker'));
+            wp_die(esc_html__('You do not have permission to perform this action.', 'a11y-checker'));
         }
 
         check_admin_referer($aktion);
