@@ -158,51 +158,6 @@ $a11y_checker_meldungen = [
                 </p>
             <?php endif; ?>
 
-            <h2><?php esc_html_e('Quota', 'a11y-checker'); ?></h2>
-
-            <?php $a11y_checker_kontingent = $site['quota'] ?? null; ?>
-            <?php if (! is_array($a11y_checker_kontingent)) : ?>
-                <p><?php esc_html_e('The quota could not be retrieved.', 'a11y-checker'); ?></p>
-            <?php else : ?>
-                <table class="widefat striped" style="max-width:40rem">
-                    <caption class="screen-reader-text"><?php esc_html_e('Pages scanned in the current billing period', 'a11y-checker'); ?></caption>
-                    <tbody>
-                        <tr>
-                            <th scope="row"><?php esc_html_e('Pages scanned in this period', 'a11y-checker'); ?></th>
-                            <td>
-                                <?php // Eine hinterlegte null bedeutet unbegrenzt und darf nicht als 0 erscheinen. ?>
-                                <?php if ($a11y_checker_kontingent['limit'] === null) : ?>
-                                    <?php printf(
-                                        /* translators: %s: number of pages scanned */
-                                        esc_html__('%s (unlimited)', 'a11y-checker'),
-                                        esc_html(number_format_i18n((int) $a11y_checker_kontingent['used']))
-                                    ); ?>
-                                <?php else : ?>
-                                    <?php printf(
-                                        /* translators: 1: pages used, 2: pages included */
-                                        esc_html__('%1$s of %2$s', 'a11y-checker'),
-                                        esc_html(number_format_i18n((int) $a11y_checker_kontingent['used'])),
-                                        esc_html(number_format_i18n((int) $a11y_checker_kontingent['limit']))
-                                    ); ?>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                        <?php if ($a11y_checker_kontingent['limit'] !== null) : ?>
-                            <tr>
-                                <th scope="row"><?php esc_html_e('Remaining', 'a11y-checker'); ?></th>
-                                <td><?php echo esc_html(number_format_i18n((int) $a11y_checker_kontingent['remaining'])); ?></td>
-                            </tr>
-                        <?php endif; ?>
-                        <?php if (! empty($a11y_checker_kontingent['period_end'])) : ?>
-                            <tr>
-                                <th scope="row"><?php esc_html_e('Period ends', 'a11y-checker'); ?></th>
-                                <td><?php echo esc_html(date_i18n(get_option('date_format'), strtotime($a11y_checker_kontingent['period_end']))); ?></td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            <?php endif; ?>
-
             <h2><?php esc_html_e('Findings', 'a11y-checker'); ?></h2>
 
             <?php
@@ -266,7 +221,36 @@ $a11y_checker_meldungen = [
                                     <?php endif; ?>
                                 </th>
                                 <td><?php echo esc_html(implode(', ', (array) ($a11y_checker_befund['success_criteria'] ?? []))); ?></td>
-                                <td><?php echo esc_html(number_format_i18n((int) ($a11y_checker_befund['occurrences'] ?? 0))); ?></td>
+                                <td>
+                                    <?php
+                                    // Ein gewoehnlicher Verweis, kein Aufklappen per Skript: die
+                                    // Fundstellen werden erst geholt, wenn jemand sie sehen will,
+                                    // und die Seite bleibt ohne JavaScript bedienbar.
+                                    $a11y_checker_regel_key = (string) ($a11y_checker_befund['rule'] ?? '');
+                                    $a11y_checker_offen = $a11y_checker_regel_key !== '' && $a11y_checker_regel_key === $regel;
+                                    $a11y_checker_anzahl = number_format_i18n((int) ($a11y_checker_befund['occurrences'] ?? 0));
+                                    ?>
+                                    <?php if ($a11y_checker_regel_key === '') : ?>
+                                        <?php echo esc_html($a11y_checker_anzahl); ?>
+                                    <?php elseif ($a11y_checker_offen) : ?>
+                                        <?php echo esc_html($a11y_checker_anzahl); ?>
+                                        <br>
+                                        <a href="<?php echo esc_url(admin_url('tools.php?page=a11y-checker')); ?>">
+                                            <?php esc_html_e('Hide occurrences', 'a11y-checker'); ?>
+                                        </a>
+                                    <?php else : ?>
+                                        <a href="<?php echo esc_url(add_query_arg(
+                                            ['page' => 'a11y-checker', 'a11y_regel' => $a11y_checker_regel_key],
+                                            admin_url('tools.php')
+                                        )).'#a11y-fundstellen'; ?>">
+                                            <?php printf(
+                                                /* translators: %s: number of occurrences */
+                                                esc_html__('Show %s occurrences', 'a11y-checker'),
+                                                esc_html($a11y_checker_anzahl)
+                                            ); ?>
+                                        </a>
+                                    <?php endif; ?>
+                                </td>
                                 <td>
                                     <?php $a11y_checker_seiten = (array) ($a11y_checker_befund['page_urls'] ?? []); ?>
                                     <?php if ($a11y_checker_seiten === []) : ?>
@@ -295,12 +279,165 @@ $a11y_checker_meldungen = [
                 </table>
             <?php endif; ?>
 
+            <?php if ($regel !== '') : ?>
+                <h3 id="a11y-fundstellen"><?php esc_html_e('Occurrences', 'a11y-checker'); ?></h3>
+
+                <?php if (! is_array($fundstellen)) : ?>
+                    <p><?php esc_html_e('The occurrences could not be retrieved.', 'a11y-checker'); ?></p>
+                <?php elseif ($fundstellen['items'] === []) : ?>
+                    <p><?php esc_html_e('This rule has no occurrences in the last scan.', 'a11y-checker'); ?></p>
+                <?php else : ?>
+                    <p>
+                        <?php printf(
+                            /* translators: 1: first occurrence shown, 2: last occurrence shown, 3: total number */
+                            esc_html__('Occurrences %1$s to %2$s of %3$s.', 'a11y-checker'),
+                            esc_html(number_format_i18n($fundstellen['offset'] + 1)),
+                            esc_html(number_format_i18n($fundstellen['offset'] + count($fundstellen['items']))),
+                            esc_html(number_format_i18n($fundstellen['total']))
+                        ); ?>
+                    </p>
+
+                    <ol>
+                        <?php foreach ($fundstellen['items'] as $a11y_checker_stelle) : ?>
+                            <li style="margin-bottom:1rem">
+                                <?php if (! empty($a11y_checker_stelle['page_url'])) : ?>
+                                    <a href="<?php echo esc_url($a11y_checker_stelle['page_url']); ?>"><?php echo esc_html($a11y_checker_stelle['page_url']); ?></a><br>
+                                <?php endif; ?>
+
+                                <?php // Ohne Selektor betrifft der Befund die Seite als Ganzes. ?>
+                                <code><?php echo esc_html(empty($a11y_checker_stelle['selector'])
+                                    ? __('the entire page', 'a11y-checker')
+                                    : $a11y_checker_stelle['selector']); ?></code>
+
+                                <?php if (! empty($a11y_checker_stelle['ui_state'])) : ?>
+                                    <p class="description">
+                                        <?php printf(
+                                            /* translators: %s: the state in which the element becomes visible */
+                                            esc_html__('Visible only after: %s', 'a11y-checker'),
+                                            esc_html($a11y_checker_stelle['ui_state'])
+                                        ); ?>
+                                    </p>
+                                <?php endif; ?>
+
+                                <?php if (! empty($a11y_checker_stelle['viewport'])) : ?>
+                                    <p class="description"><?php echo esc_html($a11y_checker_stelle['viewport']); ?></p>
+                                <?php endif; ?>
+
+                                <?php if (! empty($a11y_checker_stelle['measurements'])) : ?>
+                                    <p><?php echo esc_html(implode(' · ', (array) $a11y_checker_stelle['measurements'])); ?></p>
+                                <?php endif; ?>
+
+                                <?php // Der Hexwert steht als Text da; ein Farbfeld allein waere
+                                      // hier der falsche Bedeutungstraeger (WCAG 1.4.1). ?>
+                                <?php if (! empty($a11y_checker_stelle['colors'])) : ?>
+                                    <p>
+                                        <?php $a11y_checker_farbteile = [];
+                                        foreach ((array) $a11y_checker_stelle['colors'] as $a11y_checker_bez => $a11y_checker_hex) {
+                                            $a11y_checker_farbteile[] = $a11y_checker_bez.': '.$a11y_checker_hex;
+                                        }
+                                        echo esc_html(implode(' · ', $a11y_checker_farbteile)); ?>
+                                    </p>
+                                <?php endif; ?>
+
+                                <?php if (! empty($a11y_checker_stelle['summary'])) : ?>
+                                    <p class="description"><?php echo esc_html($a11y_checker_stelle['summary']); ?></p>
+                                <?php endif; ?>
+
+                                <?php if (! empty($a11y_checker_stelle['html_snippet'])) : ?>
+                                    <pre style="white-space:pre-wrap;overflow-x:auto"><code><?php echo esc_html($a11y_checker_stelle['html_snippet']); ?></code></pre>
+                                <?php endif; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ol>
+
+                    <?php
+                    // Blaettern als gewoehnliche Verweise - kein Skript, keine
+                    // Formularabsendung fuer einen reinen Lesevorgang.
+                    $a11y_checker_ab = $fundstellen['offset'];
+                    $a11y_checker_schritt = max(1, $fundstellen['limit']);
+                    $a11y_checker_blaettern = static function (int $ab) use ($regel) {
+                        return esc_url(add_query_arg(
+                            array_filter([
+                                'page' => 'a11y-checker',
+                                'a11y_regel' => $regel,
+                                'a11y_ab' => $ab > 0 ? $ab : null,
+                            ]),
+                            admin_url('tools.php')
+                        )).'#a11y-fundstellen';
+                    };
+                    ?>
+                    <p>
+                        <?php if ($a11y_checker_ab > 0) : ?>
+                            <a href="<?php echo $a11y_checker_blaettern(max(0, $a11y_checker_ab - $a11y_checker_schritt)); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- in der Closure bereits mit esc_url() behandelt. ?>">
+                                <?php esc_html_e('Previous occurrences', 'a11y-checker'); ?>
+                            </a>
+                        <?php endif; ?>
+                        <?php if ($a11y_checker_ab + count($fundstellen['items']) < $fundstellen['total']) : ?>
+                            <a href="<?php echo $a11y_checker_blaettern($a11y_checker_ab + $a11y_checker_schritt); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- siehe oben. ?>">
+                                <?php esc_html_e('More occurrences', 'a11y-checker'); ?>
+                            </a>
+                        <?php endif; ?>
+                    </p>
+                <?php endif; ?>
+            <?php endif; ?>
+
             <?php if (is_array($a11y_checker_lauf) && ! empty($a11y_checker_lauf['report_url'])) : ?>
+                <?php // Screenshots werden bewusst nicht hierher geholt: sie in eine
+                      // fremde Installation zu kopieren hiesse, sie dort ohne
+                      // Aufbewahrungsfrist und ohne Zugriffspruefung liegen zu haben. ?>
+                <p>
+                    <?php esc_html_e('Screenshots of the occurrences are available in the full report on the service’s website. Opening it asks you to sign in first.', 'a11y-checker'); ?>
+                </p>
                 <p>
                     <a href="<?php echo esc_url($a11y_checker_lauf['report_url']); ?>">
-                        <?php esc_html_e('Full report with all occurrences', 'a11y-checker'); ?>
+                        <?php esc_html_e('Open the full report with screenshots', 'a11y-checker'); ?>
                     </a>
                 </p>
+            <?php endif; ?>
+
+            <h2><?php esc_html_e('Quota', 'a11y-checker'); ?></h2>
+
+            <?php $a11y_checker_kontingent = $site['quota'] ?? null; ?>
+            <?php if (! is_array($a11y_checker_kontingent)) : ?>
+                <p><?php esc_html_e('The quota could not be retrieved.', 'a11y-checker'); ?></p>
+            <?php else : ?>
+                <table class="widefat striped" style="max-width:40rem">
+                    <caption class="screen-reader-text"><?php esc_html_e('Pages scanned in the current billing period', 'a11y-checker'); ?></caption>
+                    <tbody>
+                        <tr>
+                            <th scope="row"><?php esc_html_e('Pages scanned in this period', 'a11y-checker'); ?></th>
+                            <td>
+                                <?php // Eine hinterlegte null bedeutet unbegrenzt und darf nicht als 0 erscheinen. ?>
+                                <?php if ($a11y_checker_kontingent['limit'] === null) : ?>
+                                    <?php printf(
+                                        /* translators: %s: number of pages scanned */
+                                        esc_html__('%s (unlimited)', 'a11y-checker'),
+                                        esc_html(number_format_i18n((int) $a11y_checker_kontingent['used']))
+                                    ); ?>
+                                <?php else : ?>
+                                    <?php printf(
+                                        /* translators: 1: pages used, 2: pages included */
+                                        esc_html__('%1$s of %2$s', 'a11y-checker'),
+                                        esc_html(number_format_i18n((int) $a11y_checker_kontingent['used'])),
+                                        esc_html(number_format_i18n((int) $a11y_checker_kontingent['limit']))
+                                    ); ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php if ($a11y_checker_kontingent['limit'] !== null) : ?>
+                            <tr>
+                                <th scope="row"><?php esc_html_e('Remaining', 'a11y-checker'); ?></th>
+                                <td><?php echo esc_html(number_format_i18n((int) $a11y_checker_kontingent['remaining'])); ?></td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if (! empty($a11y_checker_kontingent['period_end'])) : ?>
+                            <tr>
+                                <th scope="row"><?php esc_html_e('Period ends', 'a11y-checker'); ?></th>
+                                <td><?php echo esc_html(date_i18n(get_option('date_format'), strtotime($a11y_checker_kontingent['period_end']))); ?></td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             <?php endif; ?>
         <?php endif; ?>
 

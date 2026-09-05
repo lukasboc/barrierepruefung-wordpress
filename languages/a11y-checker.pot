@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.3.1\n"
+"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/a11y-checker\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-05T17:05:33+00:00\n"
+"POT-Creation-Date: 2026-09-05T17:50:32+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: a11y-checker\n"
@@ -34,17 +34,17 @@ msgstr ""
 msgid "lubomedia"
 msgstr ""
 
-#: includes/class-a11y-checker-admin.php:44
-#: includes/class-a11y-checker-admin.php:45
+#: includes/class-a11y-checker-admin.php:47
+#: includes/class-a11y-checker-admin.php:48
 #: views/admin-page.php:27
 msgid "Accessibility"
 msgstr ""
 
-#: includes/class-a11y-checker-admin.php:55
+#: includes/class-a11y-checker-admin.php:58
 msgid "You do not have permission to view this page."
 msgstr ""
 
-#: includes/class-a11y-checker-admin.php:250
+#: includes/class-a11y-checker-admin.php:304
 msgid "You do not have permission to perform this action."
 msgstr ""
 
@@ -111,7 +111,7 @@ msgid "Create an API token for this site in your account and enter it here."
 msgstr ""
 
 #: views/admin-page.php:52
-#: views/admin-page.php:312
+#: views/admin-page.php:449
 msgid "Service address"
 msgstr ""
 
@@ -130,7 +130,7 @@ msgid "The token is valid for this site only."
 msgstr ""
 
 #: views/admin-page.php:78
-#: views/admin-page.php:316
+#: views/admin-page.php:453
 msgid "Site ID"
 msgstr ""
 
@@ -195,151 +195,198 @@ msgid "A scan is currently running. The result will be ready in a few minutes �
 msgstr ""
 
 #: views/admin-page.php:161
-msgid "Quota"
+msgid "Findings"
 msgstr ""
 
-#: views/admin-page.php:165
-msgid "The quota could not be retrieved."
+#: views/admin-page.php:169
+msgid "critical"
 msgstr ""
 
-#: views/admin-page.php:168
-msgid "Pages scanned in the current billing period"
+#: views/admin-page.php:170
+msgid "serious"
 msgstr ""
 
 #: views/admin-page.php:171
+msgid "moderate"
+msgstr ""
+
+#: views/admin-page.php:172
+msgid "minor"
+msgstr ""
+
+#: views/admin-page.php:177
+msgid "There is no scan result for this site yet. Choose “Scan now”."
+msgstr ""
+
+#: views/admin-page.php:179
+msgid "The last scan found no open findings."
+msgstr ""
+
+#. translators: %s: date of the last scan
+#: views/admin-page.php:184
+#, php-format
+msgid "Open findings from the scan on %s. Fix them in WordPress and then start a new scan."
+msgstr ""
+
+#: views/admin-page.php:186
+msgid "an unknown date"
+msgstr ""
+
+#: views/admin-page.php:192
+msgid "Open findings by rule"
+msgstr ""
+
+#: views/admin-page.php:197
+msgid "Severity"
+msgstr ""
+
+#: views/admin-page.php:198
+msgid "Finding"
+msgstr ""
+
+#: views/admin-page.php:199
+msgid "Success criterion"
+msgstr ""
+
+#: views/admin-page.php:200
+#: views/admin-page.php:283
+msgid "Occurrences"
+msgstr ""
+
+#: views/admin-page.php:201
+msgid "Affected pages"
+msgstr ""
+
+#. translators: %s: note on how to fix the finding
+#: views/admin-page.php:217
+#, php-format
+msgid "How to fix: %s"
+msgstr ""
+
+#: views/admin-page.php:239
+msgid "Hide occurrences"
+msgstr ""
+
+#. translators: %s: number of occurrences
+#: views/admin-page.php:248
+#, php-format
+msgid "Show %s occurrences"
+msgstr ""
+
+#. translators: %s: number of further affected pages
+#: views/admin-page.php:269
+#, php-format
+msgid "and %s more"
+msgstr ""
+
+#: views/admin-page.php:286
+msgid "The occurrences could not be retrieved."
+msgstr ""
+
+#: views/admin-page.php:288
+msgid "This rule has no occurrences in the last scan."
+msgstr ""
+
+#. translators: 1: first occurrence shown, 2: last occurrence shown, 3: total number
+#: views/admin-page.php:293
+#, php-format
+msgid "Occurrences %1$s to %2$s of %3$s."
+msgstr ""
+
+#: views/admin-page.php:309
+msgid "the entire page"
+msgstr ""
+
+#. translators: %s: the state in which the element becomes visible
+#: views/admin-page.php:316
+#, php-format
+msgid "Visible only after: %s"
+msgstr ""
+
+#: views/admin-page.php:372
+msgid "Previous occurrences"
+msgstr ""
+
+#: views/admin-page.php:377
+msgid "More occurrences"
+msgstr ""
+
+#: views/admin-page.php:389
+msgid "Screenshots of the occurrences are available in the full report on the service’s website. Opening it asks you to sign in first."
+msgstr ""
+
+#: views/admin-page.php:393
+msgid "Open the full report with screenshots"
+msgstr ""
+
+#: views/admin-page.php:398
+msgid "Quota"
+msgstr ""
+
+#: views/admin-page.php:402
+msgid "The quota could not be retrieved."
+msgstr ""
+
+#: views/admin-page.php:405
+msgid "Pages scanned in the current billing period"
+msgstr ""
+
+#: views/admin-page.php:408
 msgid "Pages scanned in this period"
 msgstr ""
 
 #. translators: %s: number of pages scanned
-#: views/admin-page.php:177
+#: views/admin-page.php:414
 #, php-format
 msgid "%s (unlimited)"
 msgstr ""
 
 #. translators: 1: pages used, 2: pages included
-#: views/admin-page.php:183
+#: views/admin-page.php:420
 #, php-format
 msgid "%1$s of %2$s"
 msgstr ""
 
-#: views/admin-page.php:192
+#: views/admin-page.php:429
 msgid "Remaining"
 msgstr ""
 
-#: views/admin-page.php:198
+#: views/admin-page.php:435
 msgid "Period ends"
 msgstr ""
 
-#: views/admin-page.php:206
-msgid "Findings"
-msgstr ""
-
-#: views/admin-page.php:214
-msgid "critical"
-msgstr ""
-
-#: views/admin-page.php:215
-msgid "serious"
-msgstr ""
-
-#: views/admin-page.php:216
-msgid "moderate"
-msgstr ""
-
-#: views/admin-page.php:217
-msgid "minor"
-msgstr ""
-
-#: views/admin-page.php:222
-msgid "There is no scan result for this site yet. Choose “Scan now”."
-msgstr ""
-
-#: views/admin-page.php:224
-msgid "The last scan found no open findings."
-msgstr ""
-
-#. translators: %s: date of the last scan
-#: views/admin-page.php:229
-#, php-format
-msgid "Open findings from the scan on %s. Fix them in WordPress and then start a new scan."
-msgstr ""
-
-#: views/admin-page.php:231
-msgid "an unknown date"
-msgstr ""
-
-#: views/admin-page.php:237
-msgid "Open findings by rule"
-msgstr ""
-
-#: views/admin-page.php:242
-msgid "Severity"
-msgstr ""
-
-#: views/admin-page.php:243
-msgid "Finding"
-msgstr ""
-
-#: views/admin-page.php:244
-msgid "Success criterion"
-msgstr ""
-
-#: views/admin-page.php:245
-msgid "Occurrences"
-msgstr ""
-
-#: views/admin-page.php:246
-msgid "Affected pages"
-msgstr ""
-
-#. translators: %s: note on how to fix the finding
-#: views/admin-page.php:262
-#, php-format
-msgid "How to fix: %s"
-msgstr ""
-
-#. translators: %s: number of further affected pages
-#: views/admin-page.php:285
-#, php-format
-msgid "and %s more"
-msgstr ""
-
-#: views/admin-page.php:301
-msgid "Full report with all occurrences"
-msgstr ""
-
-#: views/admin-page.php:307
+#: views/admin-page.php:444
 msgid "Connection"
 msgstr ""
 
-#: views/admin-page.php:309
+#: views/admin-page.php:446
 msgid "Stored connection"
 msgstr ""
 
-#: views/admin-page.php:324
+#: views/admin-page.php:461
 msgid "Disconnecting removes the token, the site ID and the stored text of the statement from this installation; you can then enter the details again. Nothing changes in your account — the token stays valid and is revoked there."
 msgstr ""
 
-#: views/admin-page.php:329
+#: views/admin-page.php:466
 msgid "Disconnect"
 msgstr ""
 
-#: views/admin-page.php:332
+#: views/admin-page.php:469
 msgid "Embed the statement"
 msgstr ""
 
-#: views/admin-page.php:333
+#: views/admin-page.php:470
 msgid "Add this shortcode to the page that should carry your accessibility statement:"
 msgstr ""
 
-#: views/admin-page.php:336
+#: views/admin-page.php:473
 msgid "Options: teil=\"maengel\" or teil=\"kontakt\" for a single section, stand=\"nein\" to omit the date line, ueberschrift=\"3\" to fit your heading hierarchy."
 msgstr ""
 
-#: views/admin-page.php:339
+#: views/admin-page.php:476
 msgid "Data transfer"
 msgstr ""
 
-#: views/admin-page.php:341
+#: views/admin-page.php:478
 msgid "This plugin sends the address of this site and the API token to the service configured above in order to start scans and retrieve the statement. No content belonging to your visitors is transmitted."
 msgstr ""

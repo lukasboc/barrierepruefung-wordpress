@@ -30,6 +30,7 @@ final class AdminTest extends TestCase
         $GLOBALS['wp_transients_geloescht'] = [];
         $GLOBALS['wp_antworten'] = [];
         $GLOBALS['wp_anfragen'] = [];
+        $_GET = [];
         unset($GLOBALS['wp_darf']);
     }
 
@@ -322,6 +323,173 @@ final class AdminTest extends TestCase
 
         // Die Seitenliste ist gedeckelt; die volle Zahl darf nicht verschwinden.
         $this->assertStringContainsString('and 24 more', $seite);
+    }
+
+    /**
+     * Die Befunde sind der Grund, warum jemand die Seite oeffnet; das
+     * Kontingent ist die Nebenauskunft. Deshalb stehen sie zuerst.
+     */
+    public function test_die_befunde_stehen_ueber_dem_kontingent(): void
+    {
+        $this->antwort(['data' => [
+            'verified' => true,
+            'quota' => ['metric' => 'pages', 'used' => 42, 'limit' => 500, 'remaining' => 458, 'period_end' => '2026-09-30'],
+            'latest_scan' => null,
+            'running_scan' => null,
+        ]]);
+
+        $seite = $this->seite();
+
+        // Erst belegen, dass es beide Ueberschriften gibt: strpos() gaebe
+        // sonst zweimal false zurueck und der Vergleich ginge blind durch.
+        $this->assertStringContainsString('>Findings<', $seite);
+        $this->assertStringContainsString('>Quota<', $seite);
+
+        $this->assertLessThan(
+            strpos($seite, '>Quota<'),
+            strpos($seite, '>Findings<'),
+            'Die Befunde muessen vor dem Kontingent stehen.'
+        );
+    }
+
+    /*
+     * Fundstellen. Sie werden erst geholt, wenn jemand eine Regel aufklappt -
+     * ein gewoehnlicher Verweis, kein Skript.
+     */
+
+    /** @param array<string, mixed> $stelle */
+    private function mitFundstellen(array $stelle, int $gesamt = 1, int $ab = 0): string
+    {
+        $this->antwort(['data' => [
+            'verified' => true,
+            'latest_scan' => ['id' => 'sc_1', 'status' => 'completed', 'report_url' => 'https://beispiel.test/pruefung/sc_1'],
+            'running_scan' => null,
+        ]]);
+        $this->antwort(['data' => [[
+            'rule' => 'axe.color-contrast', 'title' => 'Kontrast', 'severity' => 'serious',
+            'success_criteria' => ['1.4.3'], 'occurrences' => $gesamt, 'pages' => 1, 'page_urls' => [],
+        ]], 'meta' => []]);
+        $this->antwort([
+            'data' => [$stelle],
+            'meta' => ['rule' => 'axe.color-contrast', 'total' => $gesamt, 'limit' => 20, 'offset' => $ab],
+        ]);
+
+        $_GET['a11y_regel'] = 'axe.color-contrast';
+        if ($ab > 0) {
+            $_GET['a11y_ab'] = (string) $ab;
+        }
+
+        return $this->seite();
+    }
+
+    public function test_ohne_aufgeklappte_regel_werden_keine_fundstellen_geholt(): void
+    {
+        $this->antwort(['data' => [
+            'verified' => true,
+            'latest_scan' => ['id' => 'sc_1', 'status' => 'completed'],
+            'running_scan' => null,
+        ]]);
+        $this->antwort(['data' => [], 'meta' => []]);
+
+        $this->seite();
+
+        $this->assertSame(
+            ['/sites/st_123', '/scans/sc_1/findings?binding_only=1&state=open'],
+            $this->abgerufenePfade()
+        );
+    }
+
+    public function test_eine_aufgeklappte_regel_zeigt_ihre_fundstellen(): void
+    {
+        $seite = $this->mitFundstellen([
+            'page_url' => 'https://beispiel.test/kontakt',
+            'selector' => 'main > p.intro',
+            'ui_state' => 'Im geöffneten Hauptmenü',
+            'viewport' => 'bei 320 px Breite',
+            'measurements' => ['Kontrast 2,41:1 statt 4,5:1'],
+            'colors' => ['Vordergrund' => '#767676'],
+            'summary' => 'Element has insufficient color contrast',
+            'html_snippet' => '<p class="intro">Hallo</p>',
+            'has_screenshot' => true,
+        ]);
+
+        $this->assertStringContainsString('https://beispiel.test/kontakt', $seite);
+        $this->assertStringContainsString('main &gt; p.intro', $seite);
+        $this->assertStringContainsString('Im geöffneten Hauptmenü', $seite);
+        $this->assertStringContainsString('bei 320 px Breite', $seite);
+        $this->assertStringContainsString('Kontrast 2,41:1 statt 4,5:1', $seite);
+        $this->assertStringContainsString('Vordergrund: #767676', $seite);
+        $this->assertStringContainsString('&lt;p class=&quot;intro&quot;&gt;', $seite);
+
+        // Geholt wird genau diese eine Regel.
+        $this->assertContains(
+            '/scans/sc_1/findings/axe.color-contrast?limit=20&offset=0',
+            $this->abgerufenePfade()
+        );
+    }
+
+    /** Ohne Selektor betrifft der Befund die Seite als Ganzes. */
+    public function test_eine_fundstelle_ohne_selektor_nennt_die_ganze_seite(): void
+    {
+        $seite = $this->mitFundstellen([
+            'page_url' => 'https://beispiel.test/',
+            'selector' => null,
+            'measurements' => [],
+            'colors' => [],
+            'has_screenshot' => false,
+        ]);
+
+        $this->assertStringContainsString('the entire page', $seite);
+    }
+
+    /**
+     * Screenshots werden nicht in die fremde Installation kopiert - dort
+     * gaelte weder die Aufbewahrungsfrist noch die Zugriffspruefung. Genannt
+     * wird der Weg zu ihnen, und dass er eine Anmeldung verlangt.
+     */
+    public function test_screenshots_werden_nicht_geladen_sondern_verwiesen(): void
+    {
+        $seite = $this->mitFundstellen([
+            'page_url' => 'https://beispiel.test/',
+            'selector' => 'img',
+            'measurements' => [],
+            'colors' => [],
+            'has_screenshot' => true,
+        ]);
+
+        $this->assertStringContainsString('Screenshots of the occurrences are available', $seite);
+        $this->assertStringContainsString('sign in', $seite);
+        $this->assertStringContainsString('https://beispiel.test/pruefung/sc_1', $seite);
+
+        // Kein Bild und kein Artefaktschluessel in der Seite.
+        $this->assertStringNotContainsString('<img', $seite);
+    }
+
+    public function test_bei_vielen_fundstellen_laesst_sich_blaettern(): void
+    {
+        $seite = $this->mitFundstellen(
+            ['page_url' => 'https://beispiel.test/', 'selector' => 'img', 'measurements' => [], 'colors' => [], 'has_screenshot' => false],
+            gesamt: 30
+        );
+
+        $this->assertStringContainsString('More occurrences', $seite);
+        $this->assertStringContainsString('a11y_ab=20', $seite);
+        $this->assertStringNotContainsString('Previous occurrences', $seite);
+    }
+
+    public function test_auf_der_zweiten_seite_fuehrt_ein_weg_zurueck(): void
+    {
+        $seite = $this->mitFundstellen(
+            ['page_url' => 'https://beispiel.test/', 'selector' => 'img', 'measurements' => [], 'colors' => [], 'has_screenshot' => false],
+            gesamt: 30,
+            ab: 20
+        );
+
+        $this->assertStringContainsString('Previous occurrences', $seite);
+        $this->assertContains(
+            '/scans/sc_1/findings/axe.color-contrast?limit=20&offset=20',
+            $this->abgerufenePfade()
+        );
     }
 
     public function test_die_seite_meldet_eine_laufende_pruefung(): void

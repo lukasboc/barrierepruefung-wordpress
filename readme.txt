@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.3.1
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,8 +19,13 @@ shortcode or block.
 
 Under *Tools → Accessibility* the findings of the last scan are laid out as a work list: for
 each rule the severity, the success criterion, the number of occurrences, what needs to be done
-and which pages are affected. Along with that, the page quota of the current billing period.
-You fix things in WordPress; then you start the next scan from the same place.
+and which pages are affected. Expand a rule to see its individual occurrences — page, selector,
+the measured values and the HTML snippet — so you can find the spot in WordPress. Below that,
+the page quota of the current billing period. You fix things in WordPress; then you start the
+next scan from the same place.
+
+Screenshots of the occurrences stay on the service's website and are reachable from the link to
+the full report.
 
 The statement is embedded **server-side** — so it is fully present without JavaScript and for
 assistive technologies.
@@ -44,8 +49,9 @@ What is transmitted:
 
 **No** content and **no** personal data of your visitors are transmitted. Transmission happens
 when you start a scan, when you verify the domain, when the page *Tools → Accessibility* is
-opened (at most every five minutes, from the cache after that) or when the statement is
-retrieved (at most once an hour, likewise from the cache after that).
+opened (at most every five minutes, from the cache after that), when you expand a rule to see
+its occurrences, or when the statement is retrieved (at most once an hour, likewise from the
+cache after that).
 
 Privacy policy of the service: https://barrierepruefung.de/datenschutz
 Terms of service: https://barrierepruefung.de/agb
@@ -142,6 +148,19 @@ No. Automated tests cover only part of the requirements. The service guides you 
 remaining test steps; the statement explicitly states that it is based on a self-assessment.
 
 == Changelog ==
+
+= 0.4.0 =
+* New: Every rule in the findings list can be expanded. "Show N occurrences" fetches the
+  individual occurrences of that one rule - page, selector, measurements such as "contrast 2.41:1
+  instead of 4.5:1", colour values, the state in which the element becomes visible, the viewport
+  and the HTML snippet. Paging happens in steps of 20.
+* New: Expanding and paging are ordinary links. Still no JavaScript in the plugin, and only the
+  rule you are actually working on is fetched.
+* Changed: Findings now come before the quota. They are the reason someone opens the page.
+* Changed: Screenshots are not loaded into the WordPress admin area. The page points to the full
+  report instead and says that opening it asks you to sign in first.
+* Fixed: For signed-out users the link to the full report ended in a bare error page. The service
+  now sends signed-out visitors to the sign-in page and back to the report afterwards.
 
 = 0.3.1 =
 * Changed: The readme and the plugin description are in English now, as the WordPress Plugin

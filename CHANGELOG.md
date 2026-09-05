@@ -3,6 +3,40 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.4.0]
+
+### Hinzugefügt
+
+- Jede Regel in der Befundliste lässt sich aufklappen: „N Fundstellen anzeigen" holt die
+  einzelnen Stellen dieser einen Regel — Seite, Selektor, Messwerte wie „Kontrast 2,41:1 statt
+  4,5:1", Farbwerte, der Zustand, in dem das Element sichtbar wird, der Darstellungsfall und
+  der HTML-Ausschnitt. Damit ist die Stelle in WordPress auffindbar, ohne den Bericht zu
+  öffnen. Geblättert wird in 20er-Schritten.
+- Aufklappen und Blättern sind gewöhnliche Verweise. Es kommt weiterhin kein JavaScript ins
+  Plugin, und geholt wird nur die Regel, an der gerade gearbeitet wird.
+
+### Geändert
+
+- Die Befunde stehen jetzt **über** dem Kontingent. Sie sind der Grund, warum jemand die Seite
+  öffnet; das Kontingent ist die Nebenauskunft.
+- Screenshots werden **nicht** ins WordPress-Backend geladen. Die Seite verweist auf den
+  vollständigen Bericht und sagt dazu, dass er eine Anmeldung verlangt. Bilder in eine fremde
+  Installation zu kopieren hieße, sie dort ohne Aufbewahrungsfrist und ohne Zugriffsprüfung
+  liegen zu haben.
+
+### Behoben
+
+- Der Verweis auf den vollständigen Bericht endete für abgemeldete Nutzerinnen in einer nackten
+  Fehlerseite („403 This action is unauthorized."). Der Dienst leitet nicht angemeldete
+  Besucher jetzt zur Anmeldung und danach zurück zum Bericht. Behoben wurde das im Dienst; das
+  Plugin benennt die Anmeldung nun ausdrücklich.
+
+### Voraussetzung
+
+- Benötigt `GET /scans/{id}/findings/{rule}` der Public API v1. Ältere Stände des Dienstes
+  liefern den Endpunkt nicht; das Aufklappen meldet dann, dass die Fundstellen nicht abgerufen
+  werden konnten. Alles Übrige arbeitet weiter.
+
 ## [0.3.1]
 
 ### Geändert

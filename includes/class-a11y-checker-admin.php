@@ -27,6 +27,9 @@ class A11y_Checker_Admin
      */
     private const ZUSTAND_DAUER = 300;
 
+    /** Fundstellen je Abruf - dieselbe Schrittweite wie im Bericht. */
+    private const FUNDSTELLEN_SCHRITT = 20;
+
     public function register(): void
     {
         add_action('admin_menu', [$this, 'add_page']);
@@ -61,14 +64,65 @@ class A11y_Checker_Admin
         $befunde = [];
         $abruffehler = null;
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nur Lesen eines Anzeigeparameters, keine Zustandsaenderung.
+        $regel = isset($_GET['a11y_regel']) ? sanitize_text_field(wp_unslash($_GET['a11y_regel'])) : '';
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- wie oben.
+        $versatz = isset($_GET['a11y_ab']) ? max(0, (int) $_GET['a11y_ab']) : 0;
+
+        $fundstellen = null;
+
         if ($verbunden) {
             $zustand = $this->zustand($client);
             $site = $zustand['site'];
             $befunde = $zustand['findings'];
             $abruffehler = $zustand['error'];
+
+            if ($regel !== '' && is_array($site)) {
+                $fundstellen = $this->fundstellen($client, $site, $regel, $versatz);
+            }
         }
 
         include A11Y_CHECKER_PATH.'views/admin-page.php';
+    }
+
+    /**
+     * Die Fundstellen einer einzelnen Regel.
+     *
+     * Bewusst nicht zwischengespeichert: geholt wird nur, was jemand
+     * ausdruecklich aufklappt, und dann soll es der aktuelle Stand sein. Ein
+     * eigener Transient je Regel muesste ausserdem in die Aufraeumpfade der
+     * Deinstallation nachgetragen werden - fuer einen Abruf, der ohnehin nur
+     * auf Klick geschieht, ein schlechtes Geschaeft.
+     *
+     * @param  array<string, mixed>  $site
+     * @return array{items: list<array<string, mixed>>, total: int, offset: int, limit: int}|null
+     */
+    private function fundstellen(A11y_Checker_Client $client, array $site, string $regel, int $versatz): ?array
+    {
+        $lauf = $site['latest_scan']['id'] ?? null;
+
+        if (! is_string($lauf) || $lauf === '') {
+            return null;
+        }
+
+        $antwort = $client->get(sprintf(
+            '/scans/%s/findings/%s?limit=%d&offset=%d',
+            rawurlencode($lauf),
+            rawurlencode($regel),
+            self::FUNDSTELLEN_SCHRITT,
+            $versatz
+        ));
+
+        if (! $antwort['ok']) {
+            return null;
+        }
+
+        return [
+            'items' => (array) ($antwort['data']['data'] ?? []),
+            'total' => (int) ($antwort['data']['meta']['total'] ?? 0),
+            'offset' => (int) ($antwort['data']['meta']['offset'] ?? $versatz),
+            'limit' => (int) ($antwort['data']['meta']['limit'] ?? self::FUNDSTELLEN_SCHRITT),
+        ];
     }
 
     /**

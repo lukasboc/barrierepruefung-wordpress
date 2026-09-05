@@ -7,8 +7,13 @@ einbinden.
 
 Unter *Werkzeuge → Barrierefreiheit* stehen die Befunde der letzten Prüfung als Arbeitsliste
 — je Regel Schweregrad, Erfolgskriterium, Zahl der Fundstellen, was zu tun ist und welche
-Seiten betroffen sind. Behoben wird in WordPress, danach stößt dieselbe Seite die nächste
-Prüfung an.
+Seiten betroffen sind. Eine Regel lässt sich aufklappen: dann stehen ihre einzelnen
+Fundstellen da, mit Selektor, Messwerten und HTML-Ausschnitt, damit die Stelle in WordPress
+auffindbar ist. Darunter das Seitenkontingent. Behoben wird in WordPress, danach stößt
+dieselbe Seite die nächste Prüfung an.
+
+Screenshots bleiben auf der Website des Dienstes; die Seite verweist auf den vollständigen
+Bericht, statt Bilder in die fremde Installation zu kopieren.
 
 Die Erklärung wird **serverseitig** eingebunden — sie ist also auch ohne JavaScript und für
 assistive Technologien vollständig vorhanden.
