@@ -1,6 +1,6 @@
 === Barrierepruefung.de – Web Accessibility Checker ===
 Contributors: lukasbo
-Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
+Tags: accessibility, barrierefreiheit, check, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
