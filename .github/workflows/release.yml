@@ -16,19 +16,19 @@ jobs:
       - name: ZIP nach .distignore bauen
         run: |
           set -euo pipefail
-          mkdir -p dist/a11y-checker
-          rsync -a --exclude='/dist' --exclude-from=.distignore ./ dist/a11y-checker/
-          cd dist && zip -r a11y-checker.zip a11y-checker
+          mkdir -p dist/barrierepruefung-de-web-accessibility-checker
+          rsync -a --exclude='/dist' --exclude-from=.distignore ./ dist/barrierepruefung-de-web-accessibility-checker/
+          cd dist && zip -r barrierepruefung-de-web-accessibility-checker.zip barrierepruefung-de-web-accessibility-checker
 
       - name: Pruefen, dass nichts Fremdes im ZIP liegt
         run: |
           set -euo pipefail
-          unzip -l dist/a11y-checker.zip
-          ! unzip -l dist/a11y-checker.zip | grep -E 'vendor/|tests/|composer\.json'
+          unzip -l dist/barrierepruefung-de-web-accessibility-checker.zip
+          ! unzip -l dist/barrierepruefung-de-web-accessibility-checker.zip | grep -E 'vendor/|tests/|composer\.json'
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: dist/a11y-checker.zip
+          files: dist/barrierepruefung-de-web-accessibility-checker.zip
           generate_release_notes: true
 
   wporg:
@@ -49,5 +49,5 @@ jobs:
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          SLUG: a11y-checker
+          SLUG: barrierepruefung-de-web-accessibility-checker
           ASSETS_DIR: assets

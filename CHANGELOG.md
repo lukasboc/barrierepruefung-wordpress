@@ -3,6 +3,47 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.6.0]
+
+### Geändert
+
+- Der Slug heißt `barrierepruefung-de-web-accessibility-checker` statt `a11y-checker`, und mit
+  ihm die Text-Domain, der Ordnername im ZIP und die spätere URL im Verzeichnis. „a11y-checker"
+  ist die Abkürzung von „Accessibility Checker" — das ist als `accessibility-checker` vergeben
+  (Equalize Digital, 10.000+ Installationen), und generische Namen weist das Plugins-Team
+  zurück oder schreibt sie auf markengeführte Slugs um. Bei der Einreichung muss der neue Slug
+  ausdrücklich verlangt werden; abgeleitet würde er zu `barrierepruefungde-…`, weil
+  `sanitize_title()` den Punkt in „Barrierepruefung.de" wegwirft.
+- Mit dem Slug wandern die internen Präfixe, solange das billig ist: Optionen und Transients
+  heißen `barrierepruefung_*`, Klassen `Barrierepruefung_*`, Konstanten `BARRIEREPRUEFUNG_*`,
+  die Dateien `includes/class-barrierepruefung-*.php`. Nach der Aufnahme ins Verzeichnis wäre
+  derselbe Schritt eine Datenmigration in fremden Installationen gewesen.
+- Kurz und getrennt vom langen Slug bleiben die Bezeichner, die oft geschrieben werden: die
+  Verwaltungsseite liegt unter `?page=barrierepruefung`, der Block heißt
+  `barrierepruefung/erklaerung`, die CSS-Klassen im Frontend `barrierepruefung-erklaerung`,
+  `barrierepruefung-stand` und `barrierepruefung-hinweis`.
+- Die Deinstallation räumt zusätzlich die Optionen und Transients unter dem alten Präfix weg.
+  Wer eine Vorabfassung im Einsatz hatte, soll die Reste nicht behalten — unter ihnen liegt ein
+  Token.
+
+### Unverändert
+
+- `a11y-site-verification` als Meta-Name und Dateipfad des Domain-Nachweises. Der gehört dem
+  Dienst, nicht diesem Plugin.
+- Der Composer-Namensraum `lubomedia/barrierepruefung-wordpress`. Über ihn zieht das
+  Dienst-Repository dieses Plugin als Paket herein.
+
+### Achtung beim Aktualisieren
+
+- Der Dateiname des Plugins hat sich geändert; WordPress deaktiviert eine Vorabfassung deshalb
+  beim Austausch. Nach dem Aktivieren muss die Verbindung einmal neu eingetragen werden — die
+  Optionen liegen jetzt unter dem neuen Präfix.
+- Eine mit dem Block gesetzte Erklärung meldet „unerwarteter Inhalt": der Block-Namensraum hat
+  gewechselt. Der Shortcode `[barrierefreiheitserklaerung]` ist davon nicht betroffen.
+- Der Paritätstest im Dienst-Repository verweist auf `A11y_Checker_Shortcode` und
+  `includes/class-a11y-checker-shortcode.php`. Er zieht das Plugin über `^0.4.0` herein und
+  läuft deshalb zunächst weiter; wer dort auf `^0.6.0` hebt, muss Klassenname und Pfad mitziehen.
+
 ## [0.5.1]
 
 ### Geändert

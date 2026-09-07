@@ -11,7 +11,7 @@ if (! defined('ABSPATH')) {
  * greifen: die Domain-Verifikation läuft ohne DNS-Zugriff und ohne
  * Copy-and-paste (docs/08 der Dienst-Dokumentation).
  */
-class A11y_Checker_Verification
+class Barrierepruefung_Verification
 {
     private const META_NAME = 'a11y-site-verification';
 
@@ -26,7 +26,7 @@ class A11y_Checker_Verification
 
     public function render_meta_tag(): void
     {
-        $token = get_option('a11y_checker_verification_token', '');
+        $token = get_option('barrierepruefung_verification_token', '');
 
         if ($token === '') {
             return;
@@ -41,8 +41,8 @@ class A11y_Checker_Verification
 
     public function register_file_route(): void
     {
-        add_rewrite_rule('^'.preg_quote(self::FILE_PATH, '/').'$', 'index.php?a11y_verification=1', 'top');
-        add_rewrite_tag('%a11y_verification%', '1');
+        add_rewrite_rule('^'.preg_quote(self::FILE_PATH, '/').'$', 'index.php?barrierepruefung_verification=1', 'top');
+        add_rewrite_tag('%barrierepruefung_verification%', '1');
     }
 
     /**
@@ -53,11 +53,11 @@ class A11y_Checker_Verification
      */
     public function serve_file(): void
     {
-        if (get_query_var('a11y_verification') !== '1') {
+        if (get_query_var('barrierepruefung_verification') !== '1') {
             return;
         }
 
-        $token = get_option('a11y_checker_verification_token', '');
+        $token = get_option('barrierepruefung_verification_token', '');
 
         if ($token === '') {
             status_header(404);

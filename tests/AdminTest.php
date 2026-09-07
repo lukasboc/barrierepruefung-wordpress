@@ -12,19 +12,19 @@ use PHPUnit\Framework\TestCase;
  */
 final class AdminTest extends TestCase
 {
-    private A11y_Checker_Admin $admin;
+    private Barrierepruefung_Admin $admin;
 
     protected function setUp(): void
     {
-        $this->admin = new A11y_Checker_Admin;
+        $this->admin = new Barrierepruefung_Admin;
 
         // Globale überleben den einzelnen Test - also vor jedem zurücksetzen.
         $GLOBALS['wp_options'] = [
-            'a11y_checker_api_url' => 'https://beispiel.test/api/v1',
-            'a11y_checker_token' => '1|geheim',
-            'a11y_checker_site_id' => 'st_123',
-            'a11y_checker_verification_token' => '01JABCDEF',
-            'a11y_checker_declaration_fallback' => ['html' => '<h1>Erklärung</h1>'],
+            'barrierepruefung_api_url' => 'https://beispiel.test/api/v1',
+            'barrierepruefung_token' => '1|geheim',
+            'barrierepruefung_site_id' => 'st_123',
+            'barrierepruefung_verification_token' => '01JABCDEF',
+            'barrierepruefung_declaration_fallback' => ['html' => '<h1>Erklärung</h1>'],
         ];
         $GLOBALS['wp_transients'] = [];
         $GLOBALS['wp_transients_geloescht'] = [];
@@ -54,10 +54,10 @@ final class AdminTest extends TestCase
     {
         try {
             $this->admin->$methode();
-        } catch (A11y_Umleitung $umleitung) {
+        } catch (Barrierepruefung_Umleitung $umleitung) {
             parse_str((string) parse_url($umleitung->ziel, PHP_URL_QUERY), $abfrage);
 
-            return (string) ($abfrage['a11y_status'] ?? '');
+            return (string) ($abfrage['barrierepruefung_status'] ?? '');
         }
 
         $this->fail('Die Aktion hat nicht umgeleitet.');
@@ -68,11 +68,11 @@ final class AdminTest extends TestCase
         $status = $this->ausfuehren('handle_disconnect');
 
         $this->assertSame('getrennt', $status);
-        $this->assertArrayNotHasKey('a11y_checker_token', $GLOBALS['wp_options']);
-        $this->assertArrayNotHasKey('a11y_checker_site_id', $GLOBALS['wp_options']);
+        $this->assertArrayNotHasKey('barrierepruefung_token', $GLOBALS['wp_options']);
+        $this->assertArrayNotHasKey('barrierepruefung_site_id', $GLOBALS['wp_options']);
 
         // Danach zeigt die Seite wieder das Formular - das ist der ganze Zweck.
-        $this->assertFalse((new A11y_Checker_Client)->is_connected());
+        $this->assertFalse((new Barrierepruefung_Client)->is_connected());
     }
 
     /**
@@ -84,7 +84,7 @@ final class AdminTest extends TestCase
     {
         $this->ausfuehren('handle_disconnect');
 
-        $this->assertArrayNotHasKey('a11y_checker_verification_token', $GLOBALS['wp_options']);
+        $this->assertArrayNotHasKey('barrierepruefung_verification_token', $GLOBALS['wp_options']);
     }
 
     /**
@@ -96,8 +96,8 @@ final class AdminTest extends TestCase
     {
         $this->ausfuehren('handle_disconnect');
 
-        $this->assertArrayNotHasKey('a11y_checker_declaration_fallback', $GLOBALS['wp_options']);
-        $this->assertContains('a11y_checker_declaration', $GLOBALS['wp_transients_geloescht']);
+        $this->assertArrayNotHasKey('barrierepruefung_declaration_fallback', $GLOBALS['wp_options']);
+        $this->assertContains('barrierepruefung_declaration', $GLOBALS['wp_transients_geloescht']);
     }
 
     /**
@@ -108,7 +108,7 @@ final class AdminTest extends TestCase
     {
         $this->ausfuehren('handle_disconnect');
 
-        $this->assertSame('https://beispiel.test/api/v1', (new A11y_Checker_Client)->api_url());
+        $this->assertSame('https://beispiel.test/api/v1', (new Barrierepruefung_Client)->api_url());
     }
 
     /**
@@ -121,8 +121,8 @@ final class AdminTest extends TestCase
         $status = $this->ausfuehren('handle_reset_url');
 
         $this->assertSame('adresse_zurueckgesetzt', $status);
-        $this->assertArrayNotHasKey('a11y_checker_api_url', $GLOBALS['wp_options']);
-        $this->assertSame(A11y_Checker_Client::DEFAULT_API, (new A11y_Checker_Client)->api_url());
+        $this->assertArrayNotHasKey('barrierepruefung_api_url', $GLOBALS['wp_options']);
+        $this->assertSame(Barrierepruefung_Client::DEFAULT_API, (new Barrierepruefung_Client)->api_url());
     }
 
     /**
@@ -131,9 +131,9 @@ final class AdminTest extends TestCase
      */
     public function test_leere_adresse_faellt_auf_den_standard_zurueck(): void
     {
-        $GLOBALS['wp_options']['a11y_checker_api_url'] = '';
+        $GLOBALS['wp_options']['barrierepruefung_api_url'] = '';
 
-        $this->assertSame(A11y_Checker_Client::DEFAULT_API, (new A11y_Checker_Client)->api_url());
+        $this->assertSame(Barrierepruefung_Client::DEFAULT_API, (new Barrierepruefung_Client)->api_url());
     }
 
     /*
@@ -152,7 +152,7 @@ final class AdminTest extends TestCase
         ]]);
         $this->antwort(['data' => [['rule' => 'axe.image-alt', 'occurrences' => 2]], 'meta' => []]);
 
-        $zustand = $this->admin->zustand(new A11y_Checker_Client);
+        $zustand = $this->admin->zustand(new Barrierepruefung_Client);
 
         $this->assertSame('https://beispiel.test/', $zustand['site']['base_url']);
         $this->assertSame('axe.image-alt', $zustand['findings'][0]['rule']);
@@ -172,7 +172,7 @@ final class AdminTest extends TestCase
     {
         $this->antwort(['data' => ['verified' => true, 'latest_scan' => null, 'running_scan' => null]]);
 
-        $zustand = $this->admin->zustand(new A11y_Checker_Client);
+        $zustand = $this->admin->zustand(new Barrierepruefung_Client);
 
         $this->assertSame([], $zustand['findings']);
         $this->assertSame(['/sites/st_123'], $this->abgerufenePfade());
@@ -183,8 +183,8 @@ final class AdminTest extends TestCase
     {
         $this->antwort(['data' => ['verified' => true, 'latest_scan' => null, 'running_scan' => null]]);
 
-        $this->admin->zustand(new A11y_Checker_Client);
-        $this->admin->zustand(new A11y_Checker_Client);
+        $this->admin->zustand(new Barrierepruefung_Client);
+        $this->admin->zustand(new Barrierepruefung_Client);
 
         $this->assertCount(1, $GLOBALS['wp_anfragen']);
     }
@@ -198,8 +198,8 @@ final class AdminTest extends TestCase
         $this->antwort(['title' => 'Nicht gefunden', 'detail' => 'Unbekannt'], 404);
         $this->antwort(['data' => ['verified' => true, 'latest_scan' => null, 'running_scan' => null]]);
 
-        $erster = $this->admin->zustand(new A11y_Checker_Client);
-        $zweiter = $this->admin->zustand(new A11y_Checker_Client);
+        $erster = $this->admin->zustand(new Barrierepruefung_Client);
+        $zweiter = $this->admin->zustand(new Barrierepruefung_Client);
 
         $this->assertNull($erster['site']);
         $this->assertSame('Unbekannt', $erster['error']);
@@ -211,7 +211,7 @@ final class AdminTest extends TestCase
         $status = $this->ausfuehren('handle_refresh');
 
         $this->assertSame('aktualisiert', $status);
-        $this->assertContains('a11y_checker_status', $GLOBALS['wp_transients_geloescht']);
+        $this->assertContains('barrierepruefung_status', $GLOBALS['wp_transients_geloescht']);
     }
 
     /**
@@ -225,8 +225,8 @@ final class AdminTest extends TestCase
         $status = $this->ausfuehren('handle_scan');
 
         $this->assertSame('geprueft', $status);
-        $this->assertContains('a11y_checker_status', $GLOBALS['wp_transients_geloescht']);
-        $this->assertContains('a11y_checker_declaration', $GLOBALS['wp_transients_geloescht']);
+        $this->assertContains('barrierepruefung_status', $GLOBALS['wp_transients_geloescht']);
+        $this->assertContains('barrierepruefung_declaration', $GLOBALS['wp_transients_geloescht']);
     }
 
     /*
@@ -374,9 +374,9 @@ final class AdminTest extends TestCase
             'meta' => ['rule' => 'axe.color-contrast', 'total' => $gesamt, 'limit' => 20, 'offset' => $ab],
         ]);
 
-        $_GET['a11y_regel'] = 'axe.color-contrast';
+        $_GET['barrierepruefung_regel'] = 'axe.color-contrast';
         if ($ab > 0) {
-            $_GET['a11y_ab'] = (string) $ab;
+            $_GET['barrierepruefung_ab'] = (string) $ab;
         }
 
         return $this->seite();
@@ -473,7 +473,7 @@ final class AdminTest extends TestCase
         );
 
         $this->assertStringContainsString('More occurrences', $seite);
-        $this->assertStringContainsString('a11y_ab=20', $seite);
+        $this->assertStringContainsString('barrierepruefung_ab=20', $seite);
         $this->assertStringNotContainsString('Previous occurrences', $seite);
     }
 
@@ -558,7 +558,7 @@ final class AdminTest extends TestCase
 
     private function unverbundeneSeite(): string
     {
-        unset($GLOBALS['wp_options']['a11y_checker_token'], $GLOBALS['wp_options']['a11y_checker_site_id']);
+        unset($GLOBALS['wp_options']['barrierepruefung_token'], $GLOBALS['wp_options']['barrierepruefung_site_id']);
 
         return $this->seite();
     }
@@ -617,18 +617,18 @@ final class AdminTest extends TestCase
         $verweise = $this->admin->aktionsverweise(['deactivate' => '<a href="#">Deactivate</a>']);
 
         $this->assertCount(2, $verweise);
-        $this->assertStringContainsString('tools.php?page=a11y-checker', $verweise[0]);
+        $this->assertStringContainsString('tools.php?page=barrierepruefung', $verweise[0]);
         $this->assertStringContainsString('Settings', $verweise[0]);
     }
 
     /** Auch ohne Verbindung - sonst fehlt er genau dann, wenn er gebraucht wird. */
     public function test_die_plugin_liste_fuehrt_auch_ohne_verbindung_zur_seite(): void
     {
-        unset($GLOBALS['wp_options']['a11y_checker_token'], $GLOBALS['wp_options']['a11y_checker_site_id']);
+        unset($GLOBALS['wp_options']['barrierepruefung_token'], $GLOBALS['wp_options']['barrierepruefung_site_id']);
 
         $verweise = $this->admin->aktionsverweise([]);
 
-        $this->assertStringContainsString('tools.php?page=a11y-checker', $verweise[0]);
+        $this->assertStringContainsString('tools.php?page=barrierepruefung', $verweise[0]);
         $this->assertStringContainsString('Settings', $verweise[0]);
     }
 
@@ -642,7 +642,7 @@ final class AdminTest extends TestCase
         try {
             $this->admin->handle_disconnect();
         } finally {
-            $this->assertArrayHasKey('a11y_checker_token', $GLOBALS['wp_options']);
+            $this->assertArrayHasKey('barrierepruefung_token', $GLOBALS['wp_options']);
         }
     }
 }

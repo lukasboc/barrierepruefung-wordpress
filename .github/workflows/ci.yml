@@ -49,23 +49,23 @@ jobs:
       - name: Ausgelieferten Stand bauen
         run: |
           set -euo pipefail
-          mkdir -p dist/a11y-checker
-          rsync -a --exclude='/dist' --exclude-from=.distignore ./ dist/a11y-checker/
+          mkdir -p dist/barrierepruefung-de-web-accessibility-checker
+          rsync -a --exclude='/dist' --exclude-from=.distignore ./ dist/barrierepruefung-de-web-accessibility-checker/
 
       - uses: wordpress/plugin-check-action@v1
         with:
-          # Slug muss der Text-Domain folgen (a11y-checker), nicht dem Repo-Namen
+          # Slug muss der Text-Domain folgen (barrierepruefung-de-web-accessibility-checker), nicht dem Repo-Namen
           # (barrierepruefung-wordpress): ohne slug-/build-dir-Override leitet die Action
           # den erwarteten Slug aus basename($GITHUB_WORKSPACE) ab, bei actions/checkout@v4
           # also aus dem Repo-Namen. Der Sniff WordPress.WP.I18n.TextDomainMismatch prueft
           # dagegen und wuerde sonst bei allen 38 Textdomain-Stellen im Code einen Fehler
           # werfen. Vergibt wordpress.org beim Review einen anderen Slug, muss er hier
           # zusammen mit der Text-Domain geaendert werden (offener Punkt, siehe CLAUDE.md).
-          slug: a11y-checker
+          slug: barrierepruefung-de-web-accessibility-checker
           # build-dir zeigt auf den nach .distignore bereinigten Baum von oben - kein
           # exclude-directories mehr noetig, .distignore hat tests/vendor/assets dort
           # schon herausgefiltert, bevor plugin-check ueberhaupt zu sehen bekommt.
-          build-dir: dist/a11y-checker
+          build-dir: dist/barrierepruefung-de-web-accessibility-checker
           # Vorgemerkte Aufgaben vor der wordpress.org-Einreichung, keine wegdefinierten
           # Maengel - jeder Code hier hat einen eigenen, spaeter zu erledigenden Grund:
           # - outdated_tested_upto_header: readme.txt sagt "Tested up to: 6.8", aktuell

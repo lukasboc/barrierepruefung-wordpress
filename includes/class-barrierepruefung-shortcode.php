@@ -12,11 +12,11 @@ if (! defined('ABSPATH')) {
  * vorhanden. Ein Barrierefreiheitsprodukt darf hier keinen Kompromiss machen
  * (docs/08 der Dienst-Dokumentation).
  */
-class A11y_Checker_Shortcode
+class Barrierepruefung_Shortcode
 {
-    private const CACHE_KEY = 'a11y_checker_declaration';
+    private const CACHE_KEY = 'barrierepruefung_declaration';
 
-    private const FALLBACK_KEY = 'a11y_checker_declaration_fallback';
+    private const FALLBACK_KEY = 'barrierepruefung_declaration_fallback';
 
     public function register(): void
     {
@@ -40,7 +40,7 @@ class A11y_Checker_Shortcode
             // Eine Erklärung, die wegen eines Serverausfalls von der Website
             // verschwindet, wäre ein Rechtsproblem für die Kundin (docs/08 der
             // Dienst-Dokumentation).
-            return $this->hinweis(__('The accessibility statement cannot be loaded at the moment.', 'a11y-checker'));
+            return $this->hinweis(__('The accessibility statement cannot be loaded at the moment.', 'barrierepruefung-de-web-accessibility-checker'));
         }
 
         $html = (string) ($erklaerung['html'] ?? '');
@@ -55,10 +55,10 @@ class A11y_Checker_Shortcode
 
         if ($attribute['stand'] === 'ja' && ! empty($erklaerung['published_at'])) {
             $html .= sprintf(
-                '<p class="a11y-checker-stand">%s</p>',
+                '<p class="barrierepruefung-stand">%s</p>',
                 esc_html(sprintf(
                     /* translators: 1: version number, 2: date */
-                    __('Version %1$s, as of %2$s', 'a11y-checker'),
+                    __('Version %1$s, as of %2$s', 'barrierepruefung-de-web-accessibility-checker'),
                     (string) ($erklaerung['version'] ?? '—'),
                     date_i18n(get_option('date_format'), strtotime((string) $erklaerung['published_at']))
                 ))
@@ -73,7 +73,7 @@ class A11y_Checker_Shortcode
         }
 
         return sprintf(
-            '<div class="a11y-checker-erklaerung" lang="%s">%s</div>',
+            '<div class="barrierepruefung-erklaerung" lang="%s">%s</div>',
             esc_attr((string) ($erklaerung['locale'] ?? 'de')),
             wp_kses_post($html)
         );
@@ -87,9 +87,9 @@ class A11y_Checker_Shortcode
 
         // Serverseitig gerendert - derselbe Weg wie der Shortcode, damit es
         // nur eine Ausgabe gibt, die gepflegt werden muss.
-        register_block_type('a11y-checker/erklaerung', [
+        register_block_type('barrierepruefung/erklaerung', [
             'api_version' => 3,
-            'title' => __('Accessibility statement', 'a11y-checker'),
+            'title' => __('Accessibility statement', 'barrierepruefung-de-web-accessibility-checker'),
             'category' => 'widgets',
             'attributes' => [
                 'teil' => ['type' => 'string', 'default' => 'komplett'],
@@ -113,7 +113,7 @@ class A11y_Checker_Shortcode
             return $zwischengespeichert;
         }
 
-        $client = new A11y_Checker_Client;
+        $client = new Barrierepruefung_Client;
         $antwort = $client->get('/sites/'.$client->site_id().'/declaration');
 
         if (! $antwort['ok'] || empty($antwort['data']['declaration'])) {
@@ -185,6 +185,6 @@ class A11y_Checker_Shortcode
 
     private function hinweis(string $text): string
     {
-        return '<p class="a11y-checker-hinweis">'.esc_html($text).'</p>';
+        return '<p class="barrierepruefung-hinweis">'.esc_html($text).'</p>';
     }
 }

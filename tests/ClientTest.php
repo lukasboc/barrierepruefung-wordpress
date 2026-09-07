@@ -17,9 +17,9 @@ final class ClientTest extends TestCase
 
     public function test_die_kontoadresse_schneidet_den_api_teil_ab(): void
     {
-        $GLOBALS['wp_options']['a11y_checker_api_url'] = 'https://beispiel.test/api/v1';
+        $GLOBALS['wp_options']['barrierepruefung_api_url'] = 'https://beispiel.test/api/v1';
 
-        $client = new A11y_Checker_Client;
+        $client = new Barrierepruefung_Client;
 
         $this->assertSame('https://beispiel.test', $client->account_url());
         $this->assertSame('https://beispiel.test/register', $client->account_url('register'));
@@ -28,11 +28,11 @@ final class ClientTest extends TestCase
     /** Eine Instanz in einem Unterverzeichnis behaelt ihren Pfad. */
     public function test_die_kontoadresse_behaelt_ein_unterverzeichnis(): void
     {
-        $GLOBALS['wp_options']['a11y_checker_api_url'] = 'https://beispiel.test/pruefer/api/v1';
+        $GLOBALS['wp_options']['barrierepruefung_api_url'] = 'https://beispiel.test/pruefer/api/v1';
 
         $this->assertSame(
             'https://beispiel.test/pruefer/register',
-            (new A11y_Checker_Client)->account_url('register')
+            (new Barrierepruefung_Client)->account_url('register')
         );
     }
 
@@ -41,7 +41,7 @@ final class ClientTest extends TestCase
     {
         $this->assertSame(
             'https://barrierepruefung.de/register',
-            (new A11y_Checker_Client)->account_url('register')
+            (new Barrierepruefung_Client)->account_url('register')
         );
     }
 
@@ -52,11 +52,11 @@ final class ClientTest extends TestCase
      */
     public function test_eine_unbrauchbare_adresse_faellt_auf_den_standard_zurueck(): void
     {
-        $GLOBALS['wp_options']['a11y_checker_api_url'] = 'kaputt';
+        $GLOBALS['wp_options']['barrierepruefung_api_url'] = 'kaputt';
 
         $this->assertSame(
             'https://barrierepruefung.de/register',
-            (new A11y_Checker_Client)->account_url('register')
+            (new Barrierepruefung_Client)->account_url('register')
         );
     }
 }

@@ -17,7 +17,14 @@ if (! defined('WP_UNINSTALL_PLUGIN')) {
 }
 
 /** Alle Optionen, die dieses Plugin je schreibt. */
-const A11Y_CHECKER_OPTIONS = [
+const BARRIEREPRUEFUNG_OPTIONS = [
+    'barrierepruefung_api_url',
+    'barrierepruefung_token',
+    'barrierepruefung_site_id',
+    'barrierepruefung_verification_token',
+    'barrierepruefung_declaration_fallback',
+    // Das Praefix vor 0.6.0. Wer eine Vorabfassung im Einsatz hatte, soll die
+    // Reste nicht behalten - das Token darunter ist ein Geheimnis.
     'a11y_checker_api_url',
     'a11y_checker_token',
     'a11y_checker_site_id',
@@ -26,19 +33,23 @@ const A11Y_CHECKER_OPTIONS = [
 ];
 
 /** Alle Transients, die dieses Plugin je schreibt. */
-const A11Y_CHECKER_TRANSIENTS = [
+const BARRIEREPRUEFUNG_TRANSIENTS = [
+    'barrierepruefung_declaration',
+    'barrierepruefung_status',
+    'barrierepruefung_hinweis',
+    // Wie oben: das Praefix vor 0.6.0.
     'a11y_checker_declaration',
     'a11y_checker_status',
     'a11y_checker_hinweis',
 ];
 
-function a11y_checker_purge_site(): void
+function barrierepruefung_purge_site(): void
 {
-    foreach (A11Y_CHECKER_OPTIONS as $option) {
+    foreach (BARRIEREPRUEFUNG_OPTIONS as $option) {
         delete_option($option);
     }
 
-    foreach (A11Y_CHECKER_TRANSIENTS as $transient) {
+    foreach (BARRIEREPRUEFUNG_TRANSIENTS as $transient) {
         delete_transient($transient);
     }
 }
@@ -49,13 +60,13 @@ function a11y_checker_purge_site(): void
  * Token aller anderen zurück.
  */
 if (is_multisite()) {
-    $a11y_checker_seiten = get_sites(['fields' => 'ids', 'number' => 0]);
+    $barrierepruefung_seiten = get_sites(['fields' => 'ids', 'number' => 0]);
 
-    foreach ($a11y_checker_seiten as $a11y_checker_seiten_id) {
-        switch_to_blog((int) $a11y_checker_seiten_id);
-        a11y_checker_purge_site();
+    foreach ($barrierepruefung_seiten as $barrierepruefung_seiten_id) {
+        switch_to_blog((int) $barrierepruefung_seiten_id);
+        barrierepruefung_purge_site();
         restore_current_blog();
     }
 } else {
-    a11y_checker_purge_site();
+    barrierepruefung_purge_site();
 }

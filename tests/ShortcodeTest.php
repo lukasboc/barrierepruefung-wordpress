@@ -12,11 +12,11 @@ use PHPUnit\Framework\TestCase;
  */
 final class ShortcodeTest extends TestCase
 {
-    private A11y_Checker_Shortcode $shortcode;
+    private Barrierepruefung_Shortcode $shortcode;
 
     protected function setUp(): void
     {
-        $this->shortcode = new A11y_Checker_Shortcode;
+        $this->shortcode = new Barrierepruefung_Shortcode;
 
         // Globale überleben den einzelnen Test - also vor jedem zurücksetzen.
         unset($GLOBALS['wp_erklaerung']);
@@ -24,7 +24,7 @@ final class ShortcodeTest extends TestCase
 
     private function aufrufen(string $methode, mixed ...$argumente): mixed
     {
-        $reflexion = new ReflectionMethod(A11y_Checker_Shortcode::class, $methode);
+        $reflexion = new ReflectionMethod(Barrierepruefung_Shortcode::class, $methode);
         $reflexion->setAccessible(true);
 
         return $reflexion->invoke($this->shortcode, ...$argumente);

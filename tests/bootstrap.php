@@ -6,12 +6,12 @@ if (! defined('ABSPATH')) {
     define('ABSPATH', __DIR__.'/');
 }
 
-if (! defined('A11Y_CHECKER_PATH')) {
-    define('A11Y_CHECKER_PATH', __DIR__.'/../');
+if (! defined('BARRIEREPRUEFUNG_PATH')) {
+    define('BARRIEREPRUEFUNG_PATH', __DIR__.'/../');
 }
 
-if (! defined('A11Y_CHECKER_BASENAME')) {
-    define('A11Y_CHECKER_BASENAME', 'a11y-checker/a11y-checker.php');
+if (! defined('BARRIEREPRUEFUNG_BASENAME')) {
+    define('BARRIEREPRUEFUNG_BASENAME', 'barrierepruefung-de-web-accessibility-checker/barrierepruefung-de-web-accessibility-checker.php');
 }
 
 if (! defined('DAY_IN_SECONDS')) {
@@ -30,7 +30,7 @@ $GLOBALS['wp_stubs'] = [
     // Der Zwischenspeicher ist die erste Rückfallebene von fetch() - über ihn
     // lässt sich die Antwort der API einspeisen, ohne sie abzurufen. Für alle
     // anderen Schlüssel zählt, was set_transient hinterlegt hat.
-    'get_transient' => static fn ($key) => $key === 'a11y_checker_declaration'
+    'get_transient' => static fn ($key) => $key === 'barrierepruefung_declaration'
         ? ($GLOBALS['wp_erklaerung'] ?? false)
         : ($GLOBALS['wp_transients'][$key] ?? false),
 ];
@@ -49,7 +49,7 @@ function get_transient(...$a) { return ($GLOBALS['wp_stubs']['get_transient'])(.
  */
 
 /** Wird anstelle der Umleitung geworfen; sonst beendete exit() den Testlauf. */
-final class A11y_Umleitung extends RuntimeException
+final class Barrierepruefung_Umleitung extends RuntimeException
 {
     public function __construct(public readonly string $ziel)
     {
@@ -135,7 +135,7 @@ $GLOBALS['wp_stubs'] += [
     'current_user_can' => static fn ($faehigkeit) => $GLOBALS['wp_darf'] ?? true,
     'check_admin_referer' => static fn ($aktion) => true,
     'wp_die' => static function ($text) { throw new RuntimeException('wp_die: '.$text); },
-    'wp_safe_redirect' => static function ($ziel) { throw new A11y_Umleitung($ziel); },
+    'wp_safe_redirect' => static function ($ziel) { throw new Barrierepruefung_Umleitung($ziel); },
     'add_query_arg' => static fn ($argumente, $url) => $url.'?'.http_build_query($argumente),
     'admin_url' => static fn ($pfad = '') => 'https://beispiel.test/wp-admin/'.$pfad,
     'untrailingslashit' => static fn ($wert) => rtrim((string) $wert, '/'),

@@ -11,12 +11,12 @@ if (! defined('ABSPATH')) {
  * Ergebnis sehen. Ein Plugin, das alles kann, wird nicht gepflegt und nicht
  * freigegeben (docs/08 der Dienst-Dokumentation).
  */
-class A11y_Checker_Admin
+class Barrierepruefung_Admin
 {
     private const CAPABILITY = 'manage_options';
 
     /** Zwischenspeicher fuer Website, Kontingent und Befunde. */
-    private const ZUSTAND = 'a11y_checker_status';
+    private const ZUSTAND = 'barrierepruefung_status';
 
     /**
      * Haltbarkeit des Zwischenspeichers in Sekunden.
@@ -36,7 +36,7 @@ class A11y_Checker_Admin
      * Ein Transient und keine Option: er soll von selbst verschwinden, auch
      * wenn ihn niemand je zu Gesicht bekommt.
      */
-    private const HINWEIS = 'a11y_checker_hinweis';
+    private const HINWEIS = 'barrierepruefung_hinweis';
 
     /** Wie lange der Hinweis nach der Aktivierung auf seinen Auftritt wartet. */
     private const HINWEIS_DAUER = DAY_IN_SECONDS;
@@ -45,13 +45,13 @@ class A11y_Checker_Admin
     {
         add_action('admin_menu', [$this, 'add_page']);
         add_action('admin_notices', [$this, 'hinweis']);
-        add_filter('plugin_action_links_'.A11Y_CHECKER_BASENAME, [$this, 'aktionsverweise']);
-        add_action('admin_post_a11y_checker_connect', [$this, 'handle_connect']);
-        add_action('admin_post_a11y_checker_verify', [$this, 'handle_verify']);
-        add_action('admin_post_a11y_checker_scan', [$this, 'handle_scan']);
-        add_action('admin_post_a11y_checker_refresh', [$this, 'handle_refresh']);
-        add_action('admin_post_a11y_checker_disconnect', [$this, 'handle_disconnect']);
-        add_action('admin_post_a11y_checker_reset_url', [$this, 'handle_reset_url']);
+        add_filter('plugin_action_links_'.BARRIEREPRUEFUNG_BASENAME, [$this, 'aktionsverweise']);
+        add_action('admin_post_barrierepruefung_connect', [$this, 'handle_connect']);
+        add_action('admin_post_barrierepruefung_verify', [$this, 'handle_verify']);
+        add_action('admin_post_barrierepruefung_scan', [$this, 'handle_scan']);
+        add_action('admin_post_barrierepruefung_refresh', [$this, 'handle_refresh']);
+        add_action('admin_post_barrierepruefung_disconnect', [$this, 'handle_disconnect']);
+        add_action('admin_post_barrierepruefung_reset_url', [$this, 'handle_reset_url']);
     }
 
     /**
@@ -83,11 +83,11 @@ class A11y_Checker_Admin
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nur die Frage, ob wir bereits auf der eigenen Seite stehen; keine Zustandsaenderung.
         $seite = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
 
-        if ($seite === 'a11y-checker') {
+        if ($seite === 'barrierepruefung') {
             return;
         }
 
-        if ((new A11y_Checker_Client)->is_connected()) {
+        if ((new Barrierepruefung_Client)->is_connected()) {
             delete_transient(self::HINWEIS);
 
             return;
@@ -97,9 +97,9 @@ class A11y_Checker_Admin
 
         printf(
             '<div class="notice notice-info"><p>%s</p><p><a class="button button-primary" href="%s">%s</a></p></div>',
-            esc_html__('The accessibility checker is active but not yet connected to an account. The setup — account, API token, first scan — is explained step by step on its page.', 'a11y-checker'),
-            esc_url(admin_url('tools.php?page=a11y-checker')),
-            esc_html__('Set up the accessibility checker', 'a11y-checker')
+            esc_html__('The accessibility checker is active but not yet connected to an account. The setup — account, API token, first scan — is explained step by step on its page.', 'barrierepruefung-de-web-accessibility-checker'),
+            esc_url(admin_url('tools.php?page=barrierepruefung')),
+            esc_html__('Set up the accessibility checker', 'barrierepruefung-de-web-accessibility-checker')
         );
     }
 
@@ -122,8 +122,8 @@ class A11y_Checker_Admin
     {
         array_unshift($verweise, sprintf(
             '<a href="%s">%s</a>',
-            esc_url(admin_url('tools.php?page=a11y-checker')),
-            esc_html__('Settings', 'a11y-checker')
+            esc_url(admin_url('tools.php?page=barrierepruefung')),
+            esc_html__('Settings', 'barrierepruefung-de-web-accessibility-checker')
         ));
 
         return $verweise;
@@ -132,10 +132,10 @@ class A11y_Checker_Admin
     public function add_page(): void
     {
         add_management_page(
-            __('Accessibility', 'a11y-checker'),
-            __('Accessibility', 'a11y-checker'),
+            __('Accessibility', 'barrierepruefung-de-web-accessibility-checker'),
+            __('Accessibility', 'barrierepruefung-de-web-accessibility-checker'),
             self::CAPABILITY,
-            'a11y-checker',
+            'barrierepruefung',
             [$this, 'render_page']
         );
     }
@@ -143,19 +143,19 @@ class A11y_Checker_Admin
     public function render_page(): void
     {
         if (! current_user_can(self::CAPABILITY)) {
-            wp_die(esc_html__('You do not have permission to view this page.', 'a11y-checker'));
+            wp_die(esc_html__('You do not have permission to view this page.', 'barrierepruefung-de-web-accessibility-checker'));
         }
 
-        $client = new A11y_Checker_Client;
+        $client = new Barrierepruefung_Client;
         $verbunden = $client->is_connected();
         $site = null;
         $befunde = [];
         $abruffehler = null;
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nur Lesen eines Anzeigeparameters, keine Zustandsaenderung.
-        $regel = isset($_GET['a11y_regel']) ? sanitize_text_field(wp_unslash($_GET['a11y_regel'])) : '';
+        $regel = isset($_GET['barrierepruefung_regel']) ? sanitize_text_field(wp_unslash($_GET['barrierepruefung_regel'])) : '';
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- wie oben.
-        $versatz = isset($_GET['a11y_ab']) ? max(0, (int) $_GET['a11y_ab']) : 0;
+        $versatz = isset($_GET['barrierepruefung_ab']) ? max(0, (int) $_GET['barrierepruefung_ab']) : 0;
 
         $fundstellen = null;
 
@@ -170,7 +170,7 @@ class A11y_Checker_Admin
             }
         }
 
-        include A11Y_CHECKER_PATH.'views/admin-page.php';
+        include BARRIEREPRUEFUNG_PATH.'views/admin-page.php';
     }
 
     /**
@@ -185,7 +185,7 @@ class A11y_Checker_Admin
      * @param  array<string, mixed>  $site
      * @return array{items: list<array<string, mixed>>, total: int, offset: int, limit: int}|null
      */
-    private function fundstellen(A11y_Checker_Client $client, array $site, string $regel, int $versatz): ?array
+    private function fundstellen(Barrierepruefung_Client $client, array $site, string $regel, int $versatz): ?array
     {
         $lauf = $site['latest_scan']['id'] ?? null;
 
@@ -227,7 +227,7 @@ class A11y_Checker_Admin
      *
      * @return array{site: array<string, mixed>|null, findings: list<array<string, mixed>>, error: string|null}
      */
-    public function zustand(A11y_Checker_Client $client): array
+    public function zustand(Barrierepruefung_Client $client): array
     {
         $gespeichert = get_transient(self::ZUSTAND);
 
@@ -259,22 +259,22 @@ class A11y_Checker_Admin
 
     public function handle_connect(): void
     {
-        $this->pruefe_berechtigung('a11y_checker_connect');
+        $this->pruefe_berechtigung('barrierepruefung_connect');
 
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce wird bereits oben in pruefe_berechtigung() per check_admin_referer() geprueft; der Sniff sieht nicht ueber Methodengrenzen hinweg.
-        update_option('a11y_checker_api_url', esc_url_raw(wp_unslash($_POST['api_url'] ?? '')));
+        update_option('barrierepruefung_api_url', esc_url_raw(wp_unslash($_POST['api_url'] ?? '')));
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- siehe oben.
-        update_option('a11y_checker_token', sanitize_text_field(wp_unslash($_POST['token'] ?? '')));
+        update_option('barrierepruefung_token', sanitize_text_field(wp_unslash($_POST['token'] ?? '')));
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- siehe oben.
-        update_option('a11y_checker_site_id', sanitize_text_field(wp_unslash($_POST['site_id'] ?? '')));
+        update_option('barrierepruefung_site_id', sanitize_text_field(wp_unslash($_POST['site_id'] ?? '')));
 
         // Nachweise holen und selbst ausliefern - dafür braucht die Kundin
         // keinen DNS-Zugriff (docs/08 der Dienst-Dokumentation).
-        $client = new A11y_Checker_Client;
+        $client = new Barrierepruefung_Client;
         $antwort = $client->get('/sites/'.$client->site_id().'/verification');
 
         if ($antwort['ok']) {
-            update_option('a11y_checker_verification_token',
+            update_option('barrierepruefung_verification_token',
                 sanitize_text_field($antwort['data']['data']['meta_tag']['content'] ?? ''));
             flush_rewrite_rules();
         }
@@ -284,9 +284,9 @@ class A11y_Checker_Admin
 
     public function handle_verify(): void
     {
-        $this->pruefe_berechtigung('a11y_checker_verify');
+        $this->pruefe_berechtigung('barrierepruefung_verify');
 
-        $client = new A11y_Checker_Client;
+        $client = new Barrierepruefung_Client;
         $antwort = $client->post('/sites/'.$client->site_id().'/verify', ['method' => 'meta_tag']);
 
         $bestaetigt = $antwort['ok'] && ! empty($antwort['data']['data']['verified']);
@@ -299,14 +299,14 @@ class A11y_Checker_Admin
 
     public function handle_scan(): void
     {
-        $this->pruefe_berechtigung('a11y_checker_scan');
+        $this->pruefe_berechtigung('barrierepruefung_scan');
 
-        $client = new A11y_Checker_Client;
+        $client = new Barrierepruefung_Client;
         $antwort = $client->post('/sites/'.$client->site_id().'/scans');
 
         if ($antwort['ok']) {
             // Der Text kann sich durch die neue Prüfung ändern.
-            delete_transient('a11y_checker_declaration');
+            delete_transient('barrierepruefung_declaration');
 
             // Ohne das zeigte die Seite bis zu fünf Minuten weiter „keine
             // laufende Prüfung", obwohl gerade eine gestartet wurde.
@@ -326,7 +326,7 @@ class A11y_Checker_Admin
      */
     public function handle_refresh(): void
     {
-        $this->pruefe_berechtigung('a11y_checker_refresh');
+        $this->pruefe_berechtigung('barrierepruefung_refresh');
 
         delete_transient(self::ZUSTAND);
 
@@ -353,13 +353,13 @@ class A11y_Checker_Admin
      */
     public function handle_disconnect(): void
     {
-        $this->pruefe_berechtigung('a11y_checker_disconnect');
+        $this->pruefe_berechtigung('barrierepruefung_disconnect');
 
-        foreach (['a11y_checker_token', 'a11y_checker_site_id', 'a11y_checker_verification_token', 'a11y_checker_declaration_fallback'] as $option) {
+        foreach (['barrierepruefung_token', 'barrierepruefung_site_id', 'barrierepruefung_verification_token', 'barrierepruefung_declaration_fallback'] as $option) {
             delete_option($option);
         }
 
-        foreach (['a11y_checker_declaration', self::ZUSTAND] as $transient) {
+        foreach (['barrierepruefung_declaration', self::ZUSTAND] as $transient) {
             delete_transient($transient);
         }
 
@@ -372,15 +372,15 @@ class A11y_Checker_Admin
      * Als eigene Aktion und nicht als zweiter Absenden-Knopf im Formular: das
      * Feld ist "required", ein Formular mit leerem Feld liesse sich gar nicht
      * abschicken. Geloescht wird die Option, nicht der Standardwert
-     * hineingeschrieben - A11y_Checker_Client::api_url() faellt von selbst
+     * hineingeschrieben - Barrierepruefung_Client::api_url() faellt von selbst
      * darauf zurueck, und so wandert eine spaetere Aenderung des Standards von
      * allein in bestehende Installationen.
      */
     public function handle_reset_url(): void
     {
-        $this->pruefe_berechtigung('a11y_checker_reset_url');
+        $this->pruefe_berechtigung('barrierepruefung_reset_url');
 
-        delete_option('a11y_checker_api_url');
+        delete_option('barrierepruefung_api_url');
 
         $this->zurueck('adresse_zurueckgesetzt');
     }
@@ -389,7 +389,7 @@ class A11y_Checker_Admin
     private function pruefe_berechtigung(string $aktion): void
     {
         if (! current_user_can(self::CAPABILITY)) {
-            wp_die(esc_html__('You do not have permission to perform this action.', 'a11y-checker'));
+            wp_die(esc_html__('You do not have permission to perform this action.', 'barrierepruefung-de-web-accessibility-checker'));
         }
 
         check_admin_referer($aktion);
@@ -399,9 +399,9 @@ class A11y_Checker_Admin
     {
         wp_safe_redirect(add_query_arg(
             array_filter([
-                'page' => 'a11y-checker',
-                'a11y_status' => $status,
-                'a11y_meldung' => $meldung ? rawurlencode(substr($meldung, 0, 200)) : null,
+                'page' => 'barrierepruefung',
+                'barrierepruefung_status' => $status,
+                'barrierepruefung_meldung' => $meldung ? rawurlencode(substr($meldung, 0, 200)) : null,
             ]),
             admin_url('tools.php')
         ));

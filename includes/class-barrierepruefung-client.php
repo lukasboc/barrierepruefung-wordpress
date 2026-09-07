@@ -10,7 +10,7 @@ if (! defined('ABSPATH')) {
  * Nutzt ausschließlich wp_remote_* — eigene HTTP-Bibliotheken sind im
  * Plugin-Verzeichnis nicht zugelassen und wären hier auch überflüssig.
  */
-class A11y_Checker_Client
+class Barrierepruefung_Client
 {
     public const DEFAULT_API = 'https://barrierepruefung.de/api/v1';
 
@@ -21,12 +21,12 @@ class A11y_Checker_Client
 
     public function token(): string
     {
-        return (string) get_option('a11y_checker_token', '');
+        return (string) get_option('barrierepruefung_token', '');
     }
 
     public function site_id(): string
     {
-        return (string) get_option('a11y_checker_site_id', '');
+        return (string) get_option('barrierepruefung_site_id', '');
     }
 
     public function api_url(): string
@@ -35,7 +35,7 @@ class A11y_Checker_Client
         // fehlt - nicht, wenn sie leer ist. Genau das hinterlaesst eine
         // Adresse, die esc_url_raw() verworfen hat, und jede Anfrage ginge
         // danach an einen relativen Pfad.
-        $gespeichert = trim((string) get_option('a11y_checker_api_url', ''));
+        $gespeichert = trim((string) get_option('barrierepruefung_api_url', ''));
 
         return untrailingslashit($gespeichert !== '' ? $gespeichert : self::DEFAULT_API);
     }
@@ -87,7 +87,7 @@ class A11y_Checker_Client
     private function request(string $methode, string $pfad, ?array $body, array $headers = []): array
     {
         if (! $this->is_connected()) {
-            return $this->fehler(0, __('The plugin is not connected to an account yet.', 'a11y-checker'));
+            return $this->fehler(0, __('The plugin is not connected to an account yet.', 'barrierepruefung-de-web-accessibility-checker'));
         }
 
         $argumente = [
@@ -116,7 +116,7 @@ class A11y_Checker_Client
 
         if ($status >= 400) {
             // Fehler kommen als problem+json; „detail" ist der lesbare Teil.
-            return $this->fehler($status, $daten['detail'] ?? $daten['title'] ?? __('Unknown error.', 'a11y-checker'));
+            return $this->fehler($status, $daten['detail'] ?? $daten['title'] ?? __('Unknown error.', 'barrierepruefung-de-web-accessibility-checker'));
         }
 
         return ['ok' => true, 'status' => $status, 'data' => $daten, 'error' => null];

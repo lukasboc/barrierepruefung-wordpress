@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, check, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.5.1
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -139,7 +139,7 @@ problem for you.
 = Which languages does the plugin come in? =
 
 English (source language) and German. The template for further translations ships with the
-plugin under `languages/a11y-checker.pot`.
+plugin under `languages/barrierepruefung-de-web-accessibility-checker.pot`.
 
 = I mistyped something while connecting — how do I get back? =
 
@@ -159,6 +159,23 @@ No. Automated tests cover only part of the requirements. The service guides you 
 remaining test steps; the statement explicitly states that it is based on a self-assessment.
 
 == Changelog ==
+
+= 0.6.0 =
+* Changed: The plugin slug - and with it the text domain, the folder name in the ZIP and the
+  future directory URL - is now "barrierepruefung-de-web-accessibility-checker" instead of
+  "a11y-checker". The old one was the abbreviation of a name already taken by another plugin.
+* Changed: Internal prefixes moved along while that is still cheap: options and transients are
+  "barrierepruefung_*", classes "Barrierepruefung_*", files "includes/class-barrierepruefung-*.php".
+* Changed: The admin page now lives at "?page=barrierepruefung", the block is
+  "barrierepruefung/erklaerung", and the front-end CSS classes are "barrierepruefung-erklaerung",
+  "barrierepruefung-stand" and "barrierepruefung-hinweis".
+* Changed: Uninstalling now also removes the options and transients written under the old prefix.
+* Unchanged: the proof of domain ownership ("a11y-site-verification") - that name belongs to the
+  service, not to this plugin.
+* Upgrade notice: the plugin file was renamed, so WordPress deactivates a pre-release copy when
+  you replace it. Enter the connection again after activating. A statement placed with the block
+  reports "unexpected content" because the block namespace changed; the shortcode
+  [barrierefreiheitserklaerung] is unaffected.
 
 = 0.5.1 =
 * Changed: The link in the plugins list is now labelled "Settings" throughout - the label that sits
@@ -202,7 +219,7 @@ remaining test steps; the statement explicitly states that it is based on a self
 * Changed: The readme and the plugin description are in English now, as the WordPress Plugin
   Directory requires.
 * Changed: English is now the source language of the plugin's own strings. German ships as a
-  translation in languages/a11y-checker-de_DE.po - a German installation shows exactly the same
+  translation in languages/barrierepruefung-de-web-accessibility-checker-de_DE.po - a German installation shows exactly the same
   text as before.
 * Changed: Tested up to WordPress 7.1.
 * Known limitation: only the de_DE translation is bundled. Installations running de_AT, de_CH or
