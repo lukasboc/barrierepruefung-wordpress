@@ -376,6 +376,35 @@ final class AdminTest extends TestCase
 
         // Die Seitenliste ist gedeckelt; die volle Zahl darf nicht verschwinden.
         $this->assertStringContainsString('and 24 more', $seite);
+
+        $this->assertStringContainsString('Show 12 occurrences', $seite);
+    }
+
+    /**
+     * Genau eine Fundstelle ist der haeufige Fall am Ende einer Aufraeumrunde -
+     * und war bis 0.6.3 „Show 1 occurrences“.
+     */
+    public function test_eine_einzelne_fundstelle_steht_in_der_einzahl(): void
+    {
+        $this->antwort(['data' => [
+            'verified' => true,
+            'latest_scan' => ['id' => 'sc_1', 'status' => 'completed', 'finished_at' => '2026-09-05T08:14:00Z'],
+            'running_scan' => null,
+        ]]);
+        $this->antwort(['data' => [[
+            'rule' => 'axe.document-title',
+            'title' => 'Seite ohne Titel',
+            'severity' => 'critical',
+            'success_criteria' => ['2.4.2'],
+            'occurrences' => 1,
+            'pages' => 1,
+            'page_urls' => ['https://beispiel.test/'],
+        ]], 'meta' => []]);
+
+        $seite = $this->seite();
+
+        $this->assertStringContainsString('Show 1 occurrence', $seite);
+        $this->assertStringNotContainsString('Show 1 occurrences', $seite);
     }
 
     /**

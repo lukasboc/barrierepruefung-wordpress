@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.6.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/barrierepruefung-"
 "de-web-accessibility-checker\n"
-"POT-Creation-Date: 2026-09-07T16:00:54+00:00\n"
+"POT-Creation-Date: 2026-09-07T19:01:28+00:00\n"
 "PO-Revision-Date: 2026-09-07T17:13:11+0200\n"
 "Last-Translator: Lukas Bock\n"
 "Language-Team: Deutsch\n"
@@ -224,7 +224,7 @@ msgstr ""
 "Domain bestätigen — ein Klick, den Nachweis liefert das Plugin selbst aus, "
 "Sie brauchen keinen Zugriff auf das DNS — und die erste Prüfung starten."
 
-#: views/admin-page.php:101 views/admin-page.php:533
+#: views/admin-page.php:101 views/admin-page.php:539
 msgid "Service address"
 msgstr "Adresse des Dienstes"
 
@@ -243,7 +243,7 @@ msgid "Paste it complete, including the number and the vertical bar in front."
 msgstr ""
 "Vollständig einfügen, mitsamt der Nummer und dem senkrechten Strich davor."
 
-#: views/admin-page.php:131 views/admin-page.php:537
+#: views/admin-page.php:131 views/admin-page.php:543
 msgid "Site ID"
 msgstr "Website-Kennung"
 
@@ -393,7 +393,7 @@ msgstr "Befund"
 msgid "Success criterion"
 msgstr "Erfolgskriterium"
 
-#: views/admin-page.php:284 views/admin-page.php:367
+#: views/admin-page.php:284 views/admin-page.php:373
 msgid "Occurrences"
 msgstr "Fundstellen"
 
@@ -407,55 +407,57 @@ msgstr "Betroffene Seiten"
 msgid "How to fix: %s"
 msgstr "Behebung: %s"
 
-#: views/admin-page.php:323
+#: views/admin-page.php:324
 msgid "Hide occurrences"
 msgstr "Fundstellen ausblenden"
 
 #. translators: %s: number of occurrences
-#: views/admin-page.php:332
+#: views/admin-page.php:333
 #, php-format
-msgid "Show %s occurrences"
-msgstr "%s Fundstellen anzeigen"
+msgid "Show %s occurrence"
+msgid_plural "Show %s occurrences"
+msgstr[0] "%s Fundstelle anzeigen"
+msgstr[1] "%s Fundstellen anzeigen"
 
 #. translators: %s: number of further affected pages
-#: views/admin-page.php:353
+#: views/admin-page.php:359
 #, php-format
 msgid "and %s more"
 msgstr "und %s weitere"
 
-#: views/admin-page.php:370
+#: views/admin-page.php:376
 msgid "The occurrences could not be retrieved."
 msgstr "Die Fundstellen konnten nicht abgerufen werden."
 
-#: views/admin-page.php:372
+#: views/admin-page.php:378
 msgid "This rule has no occurrences in the last scan."
 msgstr "Zu dieser Regel gibt es in der letzten Prüfung keine Fundstellen."
 
 #. translators: 1: first occurrence shown, 2: last occurrence shown, 3: total number
-#: views/admin-page.php:377
+#: views/admin-page.php:383
 #, php-format
 msgid "Occurrences %1$s to %2$s of %3$s."
 msgstr "Fundstellen %1$s bis %2$s von %3$s."
 
-#: views/admin-page.php:393
+#: views/admin-page.php:399
 msgid "the entire page"
 msgstr "die gesamte Seite"
 
 #. translators: %s: the state in which the element becomes visible
-#: views/admin-page.php:400
+#: views/admin-page.php:406
 #, php-format
 msgid "Visible only after: %s"
 msgstr "Sichtbar erst nach: %s"
 
-#: views/admin-page.php:456
+#: views/admin-page.php:462
 msgid "Previous occurrences"
 msgstr "Vorherige Fundstellen"
 
-#: views/admin-page.php:461
+#: views/admin-page.php:467
 msgid "More occurrences"
 msgstr "Weitere Fundstellen"
 
-#: views/admin-page.php:473
+#: views/admin-page.php:479
 msgid ""
 "Screenshots of the occurrences are available in the full report on the "
 "service’s website. Opening it asks you to sign in first."
@@ -463,55 +465,55 @@ msgstr ""
 "Screenshots der Fundstellen stehen im vollständigen Bericht auf der Website "
 "des Dienstes. Beim Öffnen werden Sie zuerst zur Anmeldung geführt."
 
-#: views/admin-page.php:477
+#: views/admin-page.php:483
 msgid "Open the full report with screenshots"
 msgstr "Vollständigen Bericht mit Screenshots öffnen"
 
-#: views/admin-page.php:482
+#: views/admin-page.php:488
 msgid "Quota"
 msgstr "Kontingent"
 
-#: views/admin-page.php:486
+#: views/admin-page.php:492
 msgid "The quota could not be retrieved."
 msgstr "Das Kontingent konnte nicht abgerufen werden."
 
-#: views/admin-page.php:489
+#: views/admin-page.php:495
 msgid "Pages scanned in the current billing period"
 msgstr "Geprüfte Seiten im laufenden Abrechnungszeitraum"
 
-#: views/admin-page.php:492
+#: views/admin-page.php:498
 msgid "Pages scanned in this period"
 msgstr "Geprüfte Seiten in diesem Zeitraum"
 
 #. translators: %s: number of pages scanned
-#: views/admin-page.php:498
+#: views/admin-page.php:504
 #, php-format
 msgid "%s (unlimited)"
 msgstr "%s (unbegrenzt)"
 
 #. translators: 1: pages used, 2: pages included
-#: views/admin-page.php:504
+#: views/admin-page.php:510
 #, php-format
 msgid "%1$s of %2$s"
 msgstr "%1$s von %2$s"
 
-#: views/admin-page.php:513
+#: views/admin-page.php:519
 msgid "Remaining"
 msgstr "Verbleibend"
 
-#: views/admin-page.php:519
+#: views/admin-page.php:525
 msgid "Period ends"
 msgstr "Zeitraum bis"
 
-#: views/admin-page.php:528
+#: views/admin-page.php:534
 msgid "Connection"
 msgstr "Verbindung"
 
-#: views/admin-page.php:530
+#: views/admin-page.php:536
 msgid "Stored connection"
 msgstr "Eingetragene Verbindung"
 
-#: views/admin-page.php:545
+#: views/admin-page.php:551
 msgid ""
 "Disconnecting removes the token, the site ID and the stored text of the "
 "statement from this installation; you can then enter the details again. "
@@ -522,15 +524,15 @@ msgstr ""
 "eintragen. Im Konto bleibt alles bestehen, das Token gilt weiter — "
 "widerrufen wird es dort."
 
-#: views/admin-page.php:550
+#: views/admin-page.php:556
 msgid "Disconnect"
 msgstr "Verbindung trennen"
 
-#: views/admin-page.php:553
+#: views/admin-page.php:559
 msgid "Embed the statement"
 msgstr "Erklärung einbinden"
 
-#: views/admin-page.php:554
+#: views/admin-page.php:560
 msgid ""
 "Add this shortcode to the page that should carry your accessibility "
 "statement:"
@@ -538,7 +540,7 @@ msgstr ""
 "Fügen Sie diesen Shortcode auf der Seite ein, die Ihre Erklärung zur "
 "Barrierefreiheit tragen soll:"
 
-#: views/admin-page.php:557
+#: views/admin-page.php:563
 msgid ""
 "Options: teil=\"maengel\" or teil=\"kontakt\" for a single section, "
 "stand=\"nein\" to omit the date line, ueberschrift=\"3\" to fit your heading "
@@ -548,11 +550,11 @@ msgstr ""
 "Abschnitt, stand=\"nein\" ohne Datumszeile, ueberschrift=\"3\" zum Einpassen "
 "in Ihre Überschriftenhierarchie."
 
-#: views/admin-page.php:560
+#: views/admin-page.php:566
 msgid "Data transfer"
 msgstr "Datenübertragung"
 
-#: views/admin-page.php:562
+#: views/admin-page.php:568
 msgid ""
 "This plugin sends the address of this site and the API token to the service "
 "configured above in order to start scans and retrieve the statement. No "

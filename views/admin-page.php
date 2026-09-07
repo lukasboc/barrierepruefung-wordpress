@@ -312,7 +312,8 @@ $barrierepruefung_meldungen = [
                                     // und die Seite bleibt ohne JavaScript bedienbar.
                                     $barrierepruefung_regel_key = (string) ($barrierepruefung_befund['rule'] ?? '');
                                     $barrierepruefung_offen = $barrierepruefung_regel_key !== '' && $barrierepruefung_regel_key === $regel;
-                                    $barrierepruefung_anzahl = number_format_i18n((int) ($barrierepruefung_befund['occurrences'] ?? 0));
+                                    $barrierepruefung_roh = (int) ($barrierepruefung_befund['occurrences'] ?? 0);
+                                    $barrierepruefung_anzahl = number_format_i18n($barrierepruefung_roh);
                                     ?>
                                     <?php if ($barrierepruefung_regel_key === '') : ?>
                                         <?php echo esc_html($barrierepruefung_anzahl); ?>
@@ -329,7 +330,12 @@ $barrierepruefung_meldungen = [
                                         )).'#barrierepruefung-fundstellen'; ?>">
                                             <?php printf(
                                                 /* translators: %s: number of occurrences */
-                                                esc_html__('Show %s occurrences', 'barrierepruefung-de-web-accessibility-checker'),
+                                                esc_html(_n(
+                                                    'Show %s occurrence',
+                                                    'Show %s occurrences',
+                                                    $barrierepruefung_roh,
+                                                    'barrierepruefung-de-web-accessibility-checker'
+                                                )),
                                                 esc_html($barrierepruefung_anzahl)
                                             ); ?>
                                         </a>

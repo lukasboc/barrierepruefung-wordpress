@@ -3,6 +3,15 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.6.3]
+
+### Behoben
+
+- „1 Fundstellen anzeigen“ stand in der Befundliste, sobald eine Regel genau eine Fundstelle
+  hatte. Die Zeichenkette kannte keine Einzahl. Sie liegt jetzt als `_n()` in beiden Formen vor,
+  englisch wie deutsch — Sprachen mit anderen Pluralregeln bekommen damit ebenfalls den Platz,
+  den sie brauchen.
+
 ## [0.6.2]
 
 ### Behoben

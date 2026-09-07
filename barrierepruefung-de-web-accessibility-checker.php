@@ -3,7 +3,7 @@
  * Plugin Name:       Barrierepruefung.de – Web Accessibility Checker
  * Plugin URI:        https://github.com/lukasboc/barrierepruefung-wordpress
  * Description:       Scans this site for accessibility barriers and embeds your accessibility statement via shortcode.
- * Version:           0.6.2
+ * Version:           0.6.3
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Lukas Bock
@@ -21,7 +21,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('BARRIEREPRUEFUNG_VERSION', '0.6.2');
+define('BARRIEREPRUEFUNG_VERSION', '0.6.3');
 define('BARRIEREPRUEFUNG_PATH', plugin_dir_path(__FILE__));
 define('BARRIEREPRUEFUNG_BASENAME', plugin_basename(__FILE__));
 

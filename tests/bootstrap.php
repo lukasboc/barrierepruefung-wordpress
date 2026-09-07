@@ -23,6 +23,7 @@ $GLOBALS['wp_stubs'] = [
     'esc_attr' => static fn ($t) => htmlspecialchars((string) $t, ENT_QUOTES),
     'wp_kses_post' => static fn ($t) => $t,
     '__' => static fn ($t, $d = null) => $t,
+    '_n' => static fn ($einzahl, $mehrzahl, $anzahl, $d = null) => 1 === (int) $anzahl ? $einzahl : $mehrzahl,
     'shortcode_atts' => static fn ($paare, $atts, $name = '') => array_merge(
         $paare,
         array_intersect_key((array) $atts, $paare)
@@ -39,6 +40,7 @@ function esc_html(...$a) { return ($GLOBALS['wp_stubs']['esc_html'])(...$a); }
 function esc_attr(...$a) { return ($GLOBALS['wp_stubs']['esc_attr'])(...$a); }
 function wp_kses_post(...$a) { return ($GLOBALS['wp_stubs']['wp_kses_post'])(...$a); }
 function __(...$a) { return ($GLOBALS['wp_stubs']['__'])(...$a); }
+function _n(...$a) { return ($GLOBALS['wp_stubs']['_n'])(...$a); }
 function shortcode_atts(...$a) { return ($GLOBALS['wp_stubs']['shortcode_atts'])(...$a); }
 function get_transient(...$a) { return ($GLOBALS['wp_stubs']['get_transient'])(...$a); }
 

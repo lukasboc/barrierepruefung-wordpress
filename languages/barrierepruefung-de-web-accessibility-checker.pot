@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.6.2\n"
+"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.6.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/barrierepruefung-de-web-accessibility-checker\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-07T16:00:54+00:00\n"
+"POT-Creation-Date: 2026-09-07T19:01:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: barrierepruefung-de-web-accessibility-checker\n"
@@ -174,7 +174,7 @@ msgid "Two steps follow after connecting, both from this page: verify the domain
 msgstr ""
 
 #: views/admin-page.php:101
-#: views/admin-page.php:533
+#: views/admin-page.php:539
 msgid "Service address"
 msgstr ""
 
@@ -193,7 +193,7 @@ msgid "Paste it complete, including the number and the vertical bar in front."
 msgstr ""
 
 #: views/admin-page.php:131
-#: views/admin-page.php:537
+#: views/admin-page.php:543
 msgid "Site ID"
 msgstr ""
 
@@ -328,7 +328,7 @@ msgid "Success criterion"
 msgstr ""
 
 #: views/admin-page.php:284
-#: views/admin-page.php:367
+#: views/admin-page.php:373
 msgid "Occurrences"
 msgstr ""
 
@@ -342,130 +342,132 @@ msgstr ""
 msgid "How to fix: %s"
 msgstr ""
 
-#: views/admin-page.php:323
+#: views/admin-page.php:324
 msgid "Hide occurrences"
 msgstr ""
 
 #. translators: %s: number of occurrences
-#: views/admin-page.php:332
+#: views/admin-page.php:333
 #, php-format
-msgid "Show %s occurrences"
-msgstr ""
+msgid "Show %s occurrence"
+msgid_plural "Show %s occurrences"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: %s: number of further affected pages
-#: views/admin-page.php:353
+#: views/admin-page.php:359
 #, php-format
 msgid "and %s more"
 msgstr ""
 
-#: views/admin-page.php:370
+#: views/admin-page.php:376
 msgid "The occurrences could not be retrieved."
 msgstr ""
 
-#: views/admin-page.php:372
+#: views/admin-page.php:378
 msgid "This rule has no occurrences in the last scan."
 msgstr ""
 
 #. translators: 1: first occurrence shown, 2: last occurrence shown, 3: total number
-#: views/admin-page.php:377
+#: views/admin-page.php:383
 #, php-format
 msgid "Occurrences %1$s to %2$s of %3$s."
 msgstr ""
 
-#: views/admin-page.php:393
+#: views/admin-page.php:399
 msgid "the entire page"
 msgstr ""
 
 #. translators: %s: the state in which the element becomes visible
-#: views/admin-page.php:400
+#: views/admin-page.php:406
 #, php-format
 msgid "Visible only after: %s"
 msgstr ""
 
-#: views/admin-page.php:456
+#: views/admin-page.php:462
 msgid "Previous occurrences"
 msgstr ""
 
-#: views/admin-page.php:461
+#: views/admin-page.php:467
 msgid "More occurrences"
 msgstr ""
 
-#: views/admin-page.php:473
+#: views/admin-page.php:479
 msgid "Screenshots of the occurrences are available in the full report on the service’s website. Opening it asks you to sign in first."
 msgstr ""
 
-#: views/admin-page.php:477
+#: views/admin-page.php:483
 msgid "Open the full report with screenshots"
 msgstr ""
 
-#: views/admin-page.php:482
+#: views/admin-page.php:488
 msgid "Quota"
 msgstr ""
 
-#: views/admin-page.php:486
+#: views/admin-page.php:492
 msgid "The quota could not be retrieved."
 msgstr ""
 
-#: views/admin-page.php:489
+#: views/admin-page.php:495
 msgid "Pages scanned in the current billing period"
 msgstr ""
 
-#: views/admin-page.php:492
+#: views/admin-page.php:498
 msgid "Pages scanned in this period"
 msgstr ""
 
 #. translators: %s: number of pages scanned
-#: views/admin-page.php:498
+#: views/admin-page.php:504
 #, php-format
 msgid "%s (unlimited)"
 msgstr ""
 
 #. translators: 1: pages used, 2: pages included
-#: views/admin-page.php:504
+#: views/admin-page.php:510
 #, php-format
 msgid "%1$s of %2$s"
 msgstr ""
 
-#: views/admin-page.php:513
+#: views/admin-page.php:519
 msgid "Remaining"
 msgstr ""
 
-#: views/admin-page.php:519
+#: views/admin-page.php:525
 msgid "Period ends"
 msgstr ""
 
-#: views/admin-page.php:528
+#: views/admin-page.php:534
 msgid "Connection"
 msgstr ""
 
-#: views/admin-page.php:530
+#: views/admin-page.php:536
 msgid "Stored connection"
 msgstr ""
 
-#: views/admin-page.php:545
+#: views/admin-page.php:551
 msgid "Disconnecting removes the token, the site ID and the stored text of the statement from this installation; you can then enter the details again. Nothing changes in your account — the token stays valid and is revoked there."
 msgstr ""
 
-#: views/admin-page.php:550
+#: views/admin-page.php:556
 msgid "Disconnect"
 msgstr ""
 
-#: views/admin-page.php:553
+#: views/admin-page.php:559
 msgid "Embed the statement"
 msgstr ""
 
-#: views/admin-page.php:554
+#: views/admin-page.php:560
 msgid "Add this shortcode to the page that should carry your accessibility statement:"
 msgstr ""
 
-#: views/admin-page.php:557
+#: views/admin-page.php:563
 msgid "Options: teil=\"maengel\" or teil=\"kontakt\" for a single section, stand=\"nein\" to omit the date line, ueberschrift=\"3\" to fit your heading hierarchy."
 msgstr ""
 
-#: views/admin-page.php:560
+#: views/admin-page.php:566
 msgid "Data transfer"
 msgstr ""
 
-#: views/admin-page.php:562
+#: views/admin-page.php:568
 msgid "This plugin sends the address of this site and the API token to the service configured above in order to start scans and retrieve the statement. No content belonging to your visitors is transmitted."
 msgstr ""
