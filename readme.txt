@@ -1,10 +1,10 @@
 === Barrierepruefung.de – Web Accessibility Checker ===
 Contributors: lukasbo
-Tags: accessibility, barrierefreiheit, check, bitv, bfsg, wcag
+Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.6.2
+Stable tag: 0.6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -158,7 +158,21 @@ version of the statement — in a network, for every subsite individually.
 No. Automated tests cover only part of the requirements. The service guides you through the
 remaining test steps; the statement explicitly states that it is based on a self-assessment.
 
+== Screenshots ==
+
+1. Setup under *Tools → Accessibility*: the page explains where account, API token and site ID
+   come from before it asks for them.
+2. After connecting: the status of the site, the page quota of the current billing period, the
+   stored connection and the shortcode for the statement.
+3. After a scan: the open findings as a work list — severity, success criterion, number of
+   occurrences and the pages affected. Each rule can be expanded to its individual occurrences.
+
 == Changelog ==
+
+= 0.6.3 =
+* Fixed: A rule with exactly one occurrence offered "Show 1 occurrences". The string had no
+  singular form. It now ships in both forms, in English and in German - and languages with other
+  plural rules get the room they need as well.
 
 = 0.6.2 =
 * Fixed: After verifying the domain the page reported "The domain is verified" at the top and kept
