@@ -492,7 +492,14 @@ final class AdminTest extends TestCase
         );
     }
 
-    public function test_die_seite_meldet_eine_laufende_pruefung(): void
+    /**
+     * Waehrend eines Laufs ist Aktualisieren die einzige sinnvolle Handlung.
+     *
+     * Vorher war sie der graue Knopf neben dem blauen "Website pruefen" und der
+     * Hinweis stand darunter - wer eine Pruefung angestossen hatte, sah nicht,
+     * wie er an das Ergebnis kommt.
+     */
+    public function test_waehrend_einer_pruefung_fuehrt_der_hervorgehobene_knopf_zum_ergebnis(): void
     {
         $this->antwort(['data' => [
             'verified' => true,
@@ -500,7 +507,102 @@ final class AdminTest extends TestCase
             'running_scan' => ['id' => 'sc_9', 'status' => 'analyzing'],
         ]]);
 
-        $this->assertStringContainsString('A scan is currently running', $this->seite());
+        $seite = $this->seite();
+
+        $this->assertStringContainsString('A scan is running', $seite);
+        $this->assertStringContainsString('Check whether the scan has finished', $seite);
+
+        // Ein zweiter Lauf verbrauchte nur Kontingent.
+        $this->assertStringNotContainsString('Scan now', $seite);
+        $this->assertStringNotContainsString('Refresh status', $seite);
+    }
+
+    /** Ohne laufende Pruefung bleibt "Website pruefen" der hervorgehobene Knopf. */
+    public function test_ohne_laufende_pruefung_steht_der_start_im_vordergrund(): void
+    {
+        $this->antwort(['data' => [
+            'verified' => true,
+            'latest_scan' => null,
+            'running_scan' => null,
+        ]]);
+
+        $seite = $this->seite();
+
+        $this->assertStringContainsString('Scan now', $seite);
+        $this->assertStringContainsString('Refresh status', $seite);
+        $this->assertStringNotContainsString('Check whether the scan has finished', $seite);
+    }
+
+    /**
+     * Der erste Lauf laeuft noch: der Verweis auf "Website pruefen" waere hier
+     * ein Verweis auf einen Knopf, den es in dem Moment gar nicht gibt.
+     */
+    public function test_ohne_ergebnis_aber_mit_laufender_pruefung_wird_nicht_zum_start_geschickt(): void
+    {
+        $this->antwort(['data' => [
+            'verified' => true,
+            'latest_scan' => null,
+            'running_scan' => ['id' => 'sc_9', 'status' => 'queued'],
+        ]]);
+
+        $seite = $this->seite();
+
+        $this->assertStringContainsString('The first scan is running', $seite);
+        $this->assertStringNotContainsString('There is no scan result for this site yet', $seite);
+    }
+
+    /*
+     * Die Anleitung beim ersten Einrichten. Ohne sie stand dort nur "Legen Sie
+     * im Konto ein API-Token an" - und nicht, wo dieses Konto ist.
+     */
+
+    private function unverbundeneSeite(): string
+    {
+        unset($GLOBALS['wp_options']['a11y_checker_token'], $GLOBALS['wp_options']['a11y_checker_site_id']);
+
+        return $this->seite();
+    }
+
+    public function test_ohne_verbindung_erklaert_die_seite_den_weg_zum_token(): void
+    {
+        $seite = $this->unverbundeneSeite();
+
+        // Warum ueberhaupt ein Konto noetig ist.
+        $this->assertStringContainsString('The plugin does not scan on its own', $seite);
+
+        // Und der Weg dorthin, Schritt fuer Schritt.
+        $this->assertStringContainsString('Create an account at', $seite);
+        $this->assertStringContainsString('Websites → your site → Embedding', $seite);
+        $this->assertStringContainsString('Create token', $seite);
+        $this->assertStringContainsString('the token is shown this one time only', $seite);
+
+        // Und was danach kommt.
+        $this->assertStringContainsString('verify the domain', $seite);
+    }
+
+    /**
+     * Die eigene Adresse steht in der Anleitung.
+     *
+     * Wird beim Dienst eine andere Adresse hinterlegt, schlaegt spaeter der
+     * Domain-Nachweis fehl - und niemand sieht, warum.
+     */
+    public function test_die_anleitung_nennt_die_adresse_dieser_installation(): void
+    {
+        $this->assertStringContainsString('https://kundin.test/', $this->unverbundeneSeite());
+    }
+
+    /**
+     * Der Verweis folgt der eingetragenen Adresse des Dienstes.
+     *
+     * Wer eine eigene Instanz betreibt, soll nicht auf barrierepruefung.de
+     * geschickt werden.
+     */
+    public function test_der_verweis_aufs_konto_folgt_der_adresse_des_dienstes(): void
+    {
+        $seite = $this->unverbundeneSeite();
+
+        $this->assertStringContainsString('https://beispiel.test/register', $seite);
+        $this->assertStringNotContainsString('https://barrierepruefung.de/register', $seite);
     }
 
     /** Beides gehört geprüft, nicht nur eines - hier die Berechtigung. */

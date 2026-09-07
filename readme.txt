@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, check, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.4.0
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,12 +58,16 @@ Terms of service: https://barrierepruefung.de/agb
 
 == Installation ==
 
-1. Install and activate the plugin.
-2. In your account with the service, under *Websites → [site] → Embedding*, create an API token
-   for this site. The site ID and the service address are shown in the same place.
-3. Enter those three values under *Tools → Accessibility*.
-4. Verify the domain — the plugin serves the proof itself, you do not need DNS access.
-5. Start a scan and insert the shortcode `[barrierefreiheitserklaerung]` on a page.
+1. Install and activate the plugin. Open *Tools → Accessibility* — the page explains every step
+   below, including where each value comes from.
+2. Create an account at barrierepruefung.de, or sign in if you already have one.
+3. Add this site there, using exactly the address of this WordPress installation. If a different
+   address is stored, the domain cannot be verified in step 6.
+4. Under *Websites → [site] → Embedding*, section *WordPress plugin and API*, choose *Create
+   token*. The API token and the site ID are shown once, in that place.
+5. Enter both under *Tools → Accessibility* and leave the service address as it is.
+6. Verify the domain — the plugin serves the proof itself, you do not need DNS access.
+7. Start a scan and insert the shortcode `[barrierefreiheitserklaerung]` on a page.
 
 == Shortcode ==
 
@@ -119,6 +123,13 @@ language version stored in the service.
 No. The plugin serves the proof itself, as a meta element and as a file under
 `/.well-known/a11y-site-verification.txt`.
 
+= I started a scan — where is the result? =
+
+A scan takes a few minutes. The page does not update on its own, because an automatic reload
+would move the focus and interrupt screen reader users (WCAG 2.2.2). While a scan is running,
+*Tools → Accessibility* says so and offers “Check whether the scan has finished” as its main
+button.
+
 = What happens if the service is unreachable? =
 
 The last successfully loaded version of the statement continues to be delivered — with its
@@ -148,6 +159,26 @@ No. Automated tests cover only part of the requirements. The service guides you 
 remaining test steps; the statement explicitly states that it is based on a self-assessment.
 
 == Changelog ==
+
+= 0.5.0 =
+* New: The page explains the setup on first use - that the plugin does not scan on its own but is
+  the way into the service, that the token is valid for this one site, and then step by step where
+  account, token and site ID come from (*Websites -> your site -> Embedding*, section *WordPress
+  plugin and API*). It used to be one sentence that assumed an account nobody knew about yet.
+* New: The instructions state the address of this installation. If a different one is stored with
+  the service, domain verification fails later without a visible reason.
+* New: After activation a one-time notice points to the page, and the plugins list carries a "Set
+  up" link.
+* New: The token field says that the number and the vertical bar in front belong to the token.
+* Changed: While a scan is running, "Check whether the scan has finished" is the primary button and
+  the running-scan notice sits above the buttons instead of below them. Previously the grey
+  "Refresh status" button was lost next to the blue "Scan now", so whoever had started a scan could
+  not see how to get to the result.
+* Changed: "Scan now" is hidden while a scan is running - a second run would only use up quota.
+* Changed: While the first scan is still running the findings section says so, instead of pointing
+  at a button that does not exist at that moment.
+* Changed: The page now also says *why* it does not update on its own: an automatic reload would
+  move the focus and interrupt screen reader users (WCAG 2.2.2).
 
 = 0.4.0 =
 * New: Every rule in the findings list can be expanded. "Show N occurrences" fetches the

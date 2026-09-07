@@ -30,15 +30,102 @@ class A11y_Checker_Admin
     /** Fundstellen je Abruf - dieselbe Schrittweite wie im Bericht. */
     private const FUNDSTELLEN_SCHRITT = 20;
 
+    /**
+     * Merker fuer den einmaligen Hinweis nach der Aktivierung.
+     *
+     * Ein Transient und keine Option: er soll von selbst verschwinden, auch
+     * wenn ihn niemand je zu Gesicht bekommt.
+     */
+    private const HINWEIS = 'a11y_checker_hinweis';
+
+    /** Wie lange der Hinweis nach der Aktivierung auf seinen Auftritt wartet. */
+    private const HINWEIS_DAUER = DAY_IN_SECONDS;
+
     public function register(): void
     {
         add_action('admin_menu', [$this, 'add_page']);
+        add_action('admin_notices', [$this, 'hinweis']);
+        add_filter('plugin_action_links_'.A11Y_CHECKER_BASENAME, [$this, 'aktionsverweise']);
         add_action('admin_post_a11y_checker_connect', [$this, 'handle_connect']);
         add_action('admin_post_a11y_checker_verify', [$this, 'handle_verify']);
         add_action('admin_post_a11y_checker_scan', [$this, 'handle_scan']);
         add_action('admin_post_a11y_checker_refresh', [$this, 'handle_refresh']);
         add_action('admin_post_a11y_checker_disconnect', [$this, 'handle_disconnect']);
         add_action('admin_post_a11y_checker_reset_url', [$this, 'handle_reset_url']);
+    }
+
+    /**
+     * Wird bei der Aktivierung gerufen und merkt den Hinweis vor.
+     *
+     * Ohne ihn endet die Aktivierung im Nichts: das Plugin legt keine Seite an,
+     * die von selbst auffiele, und "Werkzeuge -> Barrierefreiheit" findet nur,
+     * wer weiss, dass es sie gibt.
+     */
+    public static function activate(): void
+    {
+        set_transient(self::HINWEIS, 1, self::HINWEIS_DAUER);
+    }
+
+    /**
+     * Der Hinweis nach der Aktivierung - einmal, und nur solange nichts
+     * verbunden ist.
+     *
+     * Er verweist auf die Seite, statt selbst zu erklaeren: die Anleitung steht
+     * dort, und zwei Fassungen davon liefen auseinander. Auf der Seite selbst
+     * erscheint er nicht, dort steht die Anleitung ja schon.
+     */
+    public function hinweis(): void
+    {
+        if (! current_user_can(self::CAPABILITY) || ! get_transient(self::HINWEIS)) {
+            return;
+        }
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nur die Frage, ob wir bereits auf der eigenen Seite stehen; keine Zustandsaenderung.
+        $seite = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+
+        if ($seite === 'a11y-checker') {
+            return;
+        }
+
+        if ((new A11y_Checker_Client)->is_connected()) {
+            delete_transient(self::HINWEIS);
+
+            return;
+        }
+
+        delete_transient(self::HINWEIS);
+
+        printf(
+            '<div class="notice notice-info"><p>%s</p><p><a class="button button-primary" href="%s">%s</a></p></div>',
+            esc_html__('The accessibility checker is active but not yet connected to an account. The setup — account, API token, first scan — is explained step by step on its page.', 'a11y-checker'),
+            esc_url(admin_url('tools.php?page=a11y-checker')),
+            esc_html__('Set up the accessibility checker', 'a11y-checker')
+        );
+    }
+
+    /**
+     * Der Verweis in der Plugin-Liste.
+     *
+     * Die Stelle, an der nach dem Aktivieren tatsaechlich gesucht wird - und
+     * das einzige Mittel, das auch dann noch traegt, wenn der einmalige Hinweis
+     * laengst weggeklickt ist.
+     *
+     * @param  array<int|string, string>  $verweise
+     * @return array<int|string, string>
+     */
+    public function aktionsverweise(array $verweise): array
+    {
+        $eigener = sprintf(
+            '<a href="%s">%s</a>',
+            esc_url(admin_url('tools.php?page=a11y-checker')),
+            (new A11y_Checker_Client)->is_connected()
+                ? esc_html__('Settings', 'a11y-checker')
+                : esc_html__('Set up', 'a11y-checker')
+        );
+
+        array_unshift($verweise, $eigener);
+
+        return $verweise;
     }
 
     public function add_page(): void

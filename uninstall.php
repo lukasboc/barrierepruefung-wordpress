@@ -29,6 +29,7 @@ const A11Y_CHECKER_OPTIONS = [
 const A11Y_CHECKER_TRANSIENTS = [
     'a11y_checker_declaration',
     'a11y_checker_status',
+    'a11y_checker_hinweis',
 ];
 
 function a11y_checker_purge_site(): void

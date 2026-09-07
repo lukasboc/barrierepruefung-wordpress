@@ -3,6 +3,35 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.5.0]
+
+### Hinzugefügt
+
+- Die Seite erklärt beim ersten Einrichten, was zu tun ist und warum: dass das Plugin nicht
+  selbst prüft, sondern der Zugang zum Dienst ist, dass das Token nur für diese eine Website
+  gilt — und dann Schritt für Schritt, wo Konto, Token und Website-Kennung herkommen
+  (*Websites → Ihre Website → Einbindung*, Abschnitt *WordPress-Plugin und API*). Vorher stand
+  dort ein Satz, der ein Konto voraussetzte, von dem noch niemand wusste.
+- Die Anleitung nennt die Adresse dieser Installation. Wird beim Dienst eine andere hinterlegt,
+  schlägt später der Domain-Nachweis fehl, ohne dass jemand den Grund sähe.
+- Nach der Aktivierung führt ein einmaliger Hinweis zur Seite, und in der Plugin-Liste steht ein
+  Verweis *Einrichten*. Eine Aktivierung, die im Nichts endet, ist keine.
+- Das Feld für das Token sagt, dass Nummer und senkrechter Strich davor mitgehören. Wer nur den
+  Teil dahinter einfügt, bekam bisher eine Fehlermeldung ohne erkennbaren Grund.
+
+### Geändert
+
+- Während einer laufenden Prüfung ist *Nachsehen, ob die Prüfung fertig ist* der hervorgehobene
+  Knopf, und der Hinweis auf den laufenden Lauf steht darüber statt darunter. Vorher ging der
+  graue *Aktualisieren*-Knopf neben dem blauen *Website prüfen* unter — wer eine Prüfung
+  angestoßen hatte, sah nicht, wie er an das Ergebnis kommt.
+- *Website prüfen* fällt weg, solange eine Prüfung läuft: ein zweiter Lauf verbrauchte nur
+  Kontingent.
+- Läuft die erste Prüfung noch, sagt die Befundliste das, statt auf einen Knopf zu verweisen,
+  den es in dem Moment gar nicht gibt.
+- Die Seite sagt bei laufender Prüfung auch, *warum* sie sich nicht von selbst aktualisiert: ein
+  automatisches Neuladen verschöbe den Fokus und unterbräche Screenreader-Nutzende (WCAG 2.2.2).
+
 ## [0.4.0]
 
 ### Hinzugefügt

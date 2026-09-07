@@ -41,6 +41,31 @@ class A11y_Checker_Client
     }
 
     /**
+     * Eine Adresse im Konto beim Dienst, abgeleitet aus der Adresse der API.
+     *
+     * Die Anleitung beim Verbinden muss auf Registrierung und Website-Liste
+     * zeigen koennen. Ein fest eingetragenes barrierepruefung.de waere dort
+     * falsch, sobald jemand eine andere Adresse eingetragen hat - eine
+     * Testinstanz etwa. Abgeschnitten wird deshalb nur der API-Teil des Pfades.
+     *
+     * Steht in der Option etwas, das gar keine Adresse ist, faellt es auf den
+     * Standard zurueck: ein Verweis ins Leere waere schlimmer als einer auf den
+     * Dienst, fuer den dieses Plugin geschrieben ist.
+     */
+    public function account_url(string $pfad = ''): string
+    {
+        $basis = (string) preg_replace('#/api(/v[0-9]+)?/?$#', '', $this->api_url());
+
+        if (! preg_match('#^https?://[^/]#i', $basis)) {
+            $basis = (string) preg_replace('#/api(/v[0-9]+)?/?$#', '', self::DEFAULT_API);
+        }
+
+        $basis = untrailingslashit($basis);
+
+        return $pfad === '' ? $basis : $basis.'/'.ltrim($pfad, '/');
+    }
+
+    /**
      * @return array{ok: bool, status: int, data: array<string, mixed>, error: string|null}
      */
     public function get(string $pfad, array $headers = []): array

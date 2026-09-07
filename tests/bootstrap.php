@@ -10,6 +10,14 @@ if (! defined('A11Y_CHECKER_PATH')) {
     define('A11Y_CHECKER_PATH', __DIR__.'/../');
 }
 
+if (! defined('A11Y_CHECKER_BASENAME')) {
+    define('A11Y_CHECKER_BASENAME', 'a11y-checker/a11y-checker.php');
+}
+
+if (! defined('DAY_IN_SECONDS')) {
+    define('DAY_IN_SECONDS', 86400);
+}
+
 $GLOBALS['wp_stubs'] = [
     'esc_html' => static fn ($t) => htmlspecialchars((string) $t, ENT_QUOTES),
     'esc_attr' => static fn ($t) => htmlspecialchars((string) $t, ENT_QUOTES),
@@ -92,6 +100,8 @@ $GLOBALS['wp_stubs'] += [
         echo '<button>'.$text.'</button>';
     },
     'date_i18n' => static fn ($format, $zeit = null) => date('Y-m-d', $zeit ?: time()),
+    'home_url' => static fn ($pfad = '') => 'https://kundin.test'.$pfad,
+    'wp_parse_url' => static fn ($url, $teil = -1) => $teil === -1 ? parse_url($url) : parse_url($url, $teil),
 ];
 
 /** Minimale Nachbildung; gebraucht wird nur is_wp_error(). */
@@ -161,3 +171,5 @@ function sanitize_key(...$a) { return ($GLOBALS['wp_stubs']['sanitize_key'])(...
 function wp_nonce_field(...$a) { return ($GLOBALS['wp_stubs']['wp_nonce_field'])(...$a); }
 function submit_button(...$a) { return ($GLOBALS['wp_stubs']['submit_button'])(...$a); }
 function date_i18n(...$a) { return ($GLOBALS['wp_stubs']['date_i18n'])(...$a); }
+function home_url(...$a) { return ($GLOBALS['wp_stubs']['home_url'])(...$a); }
+function wp_parse_url(...$a) { return ($GLOBALS['wp_stubs']['wp_parse_url'])(...$a); }

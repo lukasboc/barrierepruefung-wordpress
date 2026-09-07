@@ -15,6 +15,11 @@ dieselbe Seite die nächste Prüfung an.
 Screenshots bleiben auf der Website des Dienstes; die Seite verweist auf den vollständigen
 Bericht, statt Bilder in die fremde Installation zu kopieren.
 
+Solange nichts verbunden ist, steht auf derselben Seite die Einrichtung: warum es ein Konto
+braucht, wo Token und Website-Kennung herkommen und was nach dem Verbinden noch fehlt. Nach der
+Aktivierung führt ein einmaliger Hinweis dorthin, dauerhaft der Verweis *Einrichten* in der
+Plugin-Liste.
+
 Die Erklärung wird **serverseitig** eingebunden — sie ist also auch ohne JavaScript und für
 assistive Technologien vollständig vorhanden.
 

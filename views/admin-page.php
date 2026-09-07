@@ -16,7 +16,7 @@ $a11y_checker_meldungen = [
     'verbunden' => [__('Connected. Please verify the domain now.', 'a11y-checker'), 'success'],
     'bestaetigt' => [__('The domain is verified.', 'a11y-checker'), 'success'],
     'nicht_bestaetigt' => [__('The domain could not be verified.', 'a11y-checker'), 'warning'],
-    'geprueft' => [__('The scan has started. The result will be ready in a few minutes.', 'a11y-checker'), 'success'],
+    'geprueft' => [__('The scan has started. It usually takes a few minutes.', 'a11y-checker'), 'success'],
     'aktualisiert' => [__('The status has been refreshed.', 'a11y-checker'), 'success'],
     'getrennt' => [__('The connection has been removed. Token, site ID and the stored text of the statement were deleted.', 'a11y-checker'), 'success'],
     'adresse_zurueckgesetzt' => [__('The service address is back to its default value.', 'a11y-checker'), 'success'],
@@ -39,8 +39,60 @@ $a11y_checker_meldungen = [
 
     <?php if (! $verbunden) : ?>
         <h2><?php esc_html_e('Connect to your account', 'a11y-checker'); ?></h2>
+
+        <?php
+        // Die Anleitung steht ausgeschrieben da und nicht hinter einem
+        // Aufklapper: es ist der erste Bildschirm nach der Aktivierung, und wer
+        // hier landet, weiss noch nicht, dass es ueberhaupt ein Konto gibt.
+        // Die Adressen kommen aus der eingetragenen Adresse des Dienstes, damit
+        // eine eigene Instanz nicht auf barrierepruefung.de verwiesen wird.
+        $a11y_checker_konto = $client->account_url('register');
+        $a11y_checker_dienst = wp_parse_url($client->account_url(), PHP_URL_HOST) ?: $client->account_url();
+        ?>
+
         <p>
-            <?php esc_html_e('Create an API token for this site in your account and enter it here.', 'a11y-checker'); ?>
+            <?php esc_html_e('The plugin does not scan on its own. The scan, the findings and the text of your accessibility statement come from the service; this WordPress installation only fetches them and displays them. To do that it needs an API token from your account there.', 'a11y-checker'); ?>
+        </p>
+        <p>
+            <?php esc_html_e('The token is valid for this one site: with it the plugin may start scans and read results and the statement — nothing else. It is stored in this WordPress installation only.', 'a11y-checker'); ?>
+        </p>
+
+        <h3><?php esc_html_e('Where to get the three values', 'a11y-checker'); ?></h3>
+
+        <ol>
+            <li>
+                <?php printf(
+                    /* translators: %s: link to the service, its host name as the link text */
+                    esc_html__('Create an account at %s — or sign in there if you already have one.', 'a11y-checker'),
+                    '<a href="'.esc_url($a11y_checker_konto).'" rel="external">'.esc_html($a11y_checker_dienst).'</a>'
+                ); ?>
+            </li>
+            <li>
+                <?php printf(
+                    /* translators: %s: address of this WordPress installation */
+                    esc_html__('Add this site to your account there. Enter exactly the address of this WordPress installation: %s. If a different address is stored, the domain cannot be verified later.', 'a11y-checker'),
+                    '<code>'.esc_html(home_url('/')).'</code>'
+                ); ?>
+            </li>
+            <li>
+                <?php printf(
+                    /* translators: 1: path within the service, 2: name of the section there, 3: label of the button there */
+                    esc_html__('Open %1$s in your account and choose %3$s in the section %2$s.', 'a11y-checker'),
+                    '<em>'.esc_html__('Websites → your site → Embedding', 'a11y-checker').'</em>',
+                    '<em>'.esc_html__('WordPress plugin and API', 'a11y-checker').'</em>',
+                    '<em>'.esc_html__('Create token', 'a11y-checker').'</em>'
+                ); ?>
+            </li>
+            <li>
+                <?php esc_html_e('The service now shows the API token and the site ID. Copy both into the form below — the token is shown this one time only. If it gets lost, create a new one in the same place; the old one can be revoked there.', 'a11y-checker'); ?>
+            </li>
+            <li>
+                <?php esc_html_e('Leave the service address as it is. It only needs changing if you run the service yourself.', 'a11y-checker'); ?>
+            </li>
+        </ol>
+
+        <p>
+            <?php esc_html_e('Two steps follow after connecting, both from this page: verify the domain — one click, the plugin serves the proof itself, so you need no access to DNS — and start the first scan.', 'a11y-checker'); ?>
         </p>
 
         <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
@@ -68,15 +120,25 @@ $a11y_checker_meldungen = [
                 <tr>
                     <th scope="row"><label for="token"><?php esc_html_e('API token', 'a11y-checker'); ?></label></th>
                     <td>
-                        <input id="token" name="token" type="password" class="regular-text" required autocomplete="off">
-                        <p class="description">
-                            <?php esc_html_e('The token is valid for this site only.', 'a11y-checker'); ?>
+                        <input id="token" name="token" type="password" class="regular-text" required
+                               autocomplete="off" aria-describedby="token_hinweis">
+                        <?php // Der Hinweis auf den senkrechten Strich ist keine Spitzfindigkeit:
+                              // das Token traegt vorn seine Nummer, und wer nur den Teil
+                              // dahinter kopiert, bekommt eine Fehlermeldung ohne Grund. ?>
+                        <p class="description" id="token_hinweis">
+                            <?php esc_html_e('Paste it complete, including the number and the vertical bar in front.', 'a11y-checker'); ?>
                         </p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="site_id"><?php esc_html_e('Site ID', 'a11y-checker'); ?></label></th>
-                    <td><input id="site_id" name="site_id" type="text" class="regular-text" required></td>
+                    <td>
+                        <input id="site_id" name="site_id" type="text" class="regular-text" required
+                               autocomplete="off" aria-describedby="site_id_hinweis">
+                        <p class="description" id="site_id_hinweis">
+                            <?php esc_html_e('The service shows it next to the token, in the same place.', 'a11y-checker'); ?>
+                        </p>
+                    </td>
                 </tr>
             </table>
 
@@ -128,6 +190,25 @@ $a11y_checker_meldungen = [
                 </tbody>
             </table>
 
+            <?php
+            // Waehrend eines Laufs ist Aktualisieren die einzige sinnvolle
+            // Handlung. Der Hinweis steht deshalb vor den Knoepfen, der Knopf
+            // dazu ist der hervorgehobene, und "Website pruefen" faellt weg:
+            // ein zweiter Lauf verbrauchte nur Kontingent. Vorher ging der
+            // graue Knopf neben dem blauen unter, und der Hinweis stand darunter
+            // - genau die Stelle, an der niemand nach dem Weg sucht.
+            $a11y_checker_laeuft = ! empty($site['running_scan']);
+            ?>
+
+            <?php if ($a11y_checker_laeuft) : ?>
+                <div class="notice notice-info inline" role="status">
+                    <p><strong><?php esc_html_e('A scan is running. It usually takes a few minutes.', 'a11y-checker'); ?></strong></p>
+                    <p>
+                        <?php esc_html_e('This page does not update on its own: an automatic reload would move the focus and interrupt people using a screen reader (WCAG 2.2.2). Use the button below to fetch the current state.', 'a11y-checker'); ?>
+                    </p>
+                </div>
+            <?php endif; ?>
+
             <p>
                 <?php if (empty($site['verified'])) : ?>
                     <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="display:inline">
@@ -135,7 +216,7 @@ $a11y_checker_meldungen = [
                         <input type="hidden" name="action" value="a11y_checker_verify">
                         <?php submit_button(__('Verify domain now', 'a11y-checker'), 'primary', 'submit', false); ?>
                     </form>
-                <?php else : ?>
+                <?php elseif (! $a11y_checker_laeuft) : ?>
                     <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="display:inline">
                         <?php wp_nonce_field('a11y_checker_scan'); ?>
                         <input type="hidden" name="action" value="a11y_checker_scan">
@@ -144,19 +225,23 @@ $a11y_checker_meldungen = [
                 <?php endif; ?>
 
                 <?php // Verwirft den Zwischenspeicher; ein selbsttätiges Neuladen
-                      // der Seite waere ein automatischer Kontextwechsel (WCAG 2.2.2). ?>
+                      // der Seite waere ein automatischer Kontextwechsel (WCAG 2.2.2).
+                      // Waehrend eines Laufs sagt die Aufschrift, wozu der Knopf
+                      // gerade da ist - "Aktualisieren" allein beantwortet die
+                      // Frage nicht, die man in dem Moment hat. ?>
                 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="display:inline">
                     <?php wp_nonce_field('a11y_checker_refresh'); ?>
                     <input type="hidden" name="action" value="a11y_checker_refresh">
-                    <?php submit_button(__('Refresh status', 'a11y-checker'), 'secondary', 'submit', false); ?>
+                    <?php submit_button(
+                        $a11y_checker_laeuft
+                            ? __('Check whether the scan has finished', 'a11y-checker')
+                            : __('Refresh status', 'a11y-checker'),
+                        $a11y_checker_laeuft ? 'primary' : 'secondary',
+                        'submit',
+                        false
+                    ); ?>
                 </form>
             </p>
-
-            <?php if (! empty($site['running_scan'])) : ?>
-                <p role="status">
-                    <?php esc_html_e('A scan is currently running. The result will be ready in a few minutes — then choose “Refresh status”.', 'a11y-checker'); ?>
-                </p>
-            <?php endif; ?>
 
             <h2><?php esc_html_e('Findings', 'a11y-checker'); ?></h2>
 
@@ -173,7 +258,9 @@ $a11y_checker_meldungen = [
             ];
             ?>
 
-            <?php if (! is_array($a11y_checker_lauf)) : ?>
+            <?php if (! is_array($a11y_checker_lauf) && $a11y_checker_laeuft) : ?>
+                <p><?php esc_html_e('The first scan is running. Once it has finished, the findings appear here.', 'a11y-checker'); ?></p>
+            <?php elseif (! is_array($a11y_checker_lauf)) : ?>
                 <p><?php esc_html_e('There is no scan result for this site yet. Choose “Scan now”.', 'a11y-checker'); ?></p>
             <?php elseif (empty($befunde)) : ?>
                 <p><?php esc_html_e('The last scan found no open findings.', 'a11y-checker'); ?></p>
