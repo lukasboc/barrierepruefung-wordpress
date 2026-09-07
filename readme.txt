@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, check, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.6.0
+Stable tag: 0.6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,6 +159,12 @@ No. Automated tests cover only part of the requirements. The service guides you 
 remaining test steps; the statement explicitly states that it is based on a self-assessment.
 
 == Changelog ==
+
+= 0.6.1 =
+* Changed: The setup instructions no longer explain what the token is allowed to do and where it
+  is stored - at that point you are looking for the token, not for its permissions.
+* Changed: The last step now says what the service address is - where the plugin sends its
+  requests - instead of advising whether to change it.
 
 = 0.6.0 =
 * Changed: The plugin slug - and with it the text domain, the folder name in the ZIP and the

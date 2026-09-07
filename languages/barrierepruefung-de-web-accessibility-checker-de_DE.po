@@ -3,11 +3,11 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.6.0\n"
+"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.6.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/barrierepruefung-"
 "de-web-accessibility-checker\n"
-"POT-Creation-Date: 2026-09-07T14:59:23+00:00\n"
-"PO-Revision-Date: 2026-09-07T16:59:23+0200\n"
+"POT-Creation-Date: 2026-09-07T15:13:11+00:00\n"
+"PO-Revision-Date: 2026-09-07T17:13:11+0200\n"
 "Last-Translator: Lukas Bock\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -152,21 +152,11 @@ msgstr ""
 "beim Dienst."
 
 #: views/admin-page.php:57
-msgid ""
-"The token is valid for this one site: with it the plugin may start scans and "
-"read results and the statement — nothing else. It is stored in this "
-"WordPress installation only."
-msgstr ""
-"Das Token gilt für genau diese eine Website: Damit darf das Plugin Prüfungen "
-"starten und Ergebnisse und die Erklärung lesen — mehr nicht. Gespeichert "
-"wird es allein in dieser WordPress-Installation."
-
-#: views/admin-page.php:60
 msgid "Where to get the three values"
 msgstr "Woher die drei Angaben kommen"
 
 #. translators: %s: link to the service, its host name as the link text
-#: views/admin-page.php:66
+#: views/admin-page.php:63
 #, php-format
 msgid "Create an account at %s — or sign in there if you already have one."
 msgstr ""
@@ -174,7 +164,7 @@ msgstr ""
 "schon eines haben."
 
 #. translators: %s: address of this WordPress installation
-#: views/admin-page.php:73
+#: views/admin-page.php:70
 #, php-format
 msgid ""
 "Add this site to your account there. Enter exactly the address of this "
@@ -186,26 +176,26 @@ msgstr ""
 "Domain später nicht bestätigen."
 
 #. translators: 1: path within the service, 2: name of the section there, 3: label of the button there
-#: views/admin-page.php:80
+#: views/admin-page.php:77
 #, php-format
 msgid "Open %1$s in your account and choose %3$s in the section %2$s."
 msgstr ""
 "Öffnen Sie im Konto %1$s und wählen Sie im Abschnitt %2$s die Schaltfläche "
 "%3$s."
 
-#: views/admin-page.php:81
+#: views/admin-page.php:78
 msgid "Websites → your site → Embedding"
 msgstr "Websites → Ihre Website → Einbindung"
 
-#: views/admin-page.php:82
+#: views/admin-page.php:79
 msgid "WordPress plugin and API"
 msgstr "WordPress-Plugin und API"
 
-#: views/admin-page.php:83
+#: views/admin-page.php:80
 msgid "Create token"
 msgstr "Token erzeugen"
 
-#: views/admin-page.php:87
+#: views/admin-page.php:84
 msgid ""
 "The service now shows the API token and the site ID. Copy both into the form "
 "below — the token is shown this one time only. If it gets lost, create a new "
@@ -216,15 +206,15 @@ msgstr ""
 "angezeigt. Geht es verloren, erzeugen Sie an derselben Stelle ein neues; das "
 "alte lässt sich dort zurückziehen."
 
-#: views/admin-page.php:90
+#: views/admin-page.php:87
 msgid ""
-"Leave the service address as it is. It only needs changing if you run the "
-"service yourself."
+"The service address is the third value: it says where the plugin sends its "
+"requests. It is already filled in below."
 msgstr ""
-"Die Adresse des Dienstes bleibt, wie sie ist. Sie zu ändern lohnt nur, wenn "
-"Sie den Dienst selbst betreiben."
+"Die Adresse des Dienstes ist die dritte Angabe: Sie sagt, wohin das Plugin "
+"seine Anfragen schickt. Sie steht unten bereits im Formular."
 
-#: views/admin-page.php:95
+#: views/admin-page.php:92
 msgid ""
 "Two steps follow after connecting, both from this page: verify the domain — "
 "one click, the plugin serves the proof itself, so you need no access to DNS "
@@ -234,84 +224,84 @@ msgstr ""
 "Domain bestätigen — ein Klick, den Nachweis liefert das Plugin selbst aus, "
 "Sie brauchen keinen Zugriff auf das DNS — und die erste Prüfung starten."
 
-#: views/admin-page.php:104 views/admin-page.php:536
+#: views/admin-page.php:101 views/admin-page.php:533
 msgid "Service address"
 msgstr "Adresse des Dienstes"
 
 #. translators: %s: default address of the service
-#: views/admin-page.php:114
+#: views/admin-page.php:111
 #, php-format
 msgid "Default: %s"
 msgstr "Standard: %s"
 
-#: views/admin-page.php:121
+#: views/admin-page.php:118
 msgid "API token"
 msgstr "API-Token"
 
-#: views/admin-page.php:129
+#: views/admin-page.php:126
 msgid "Paste it complete, including the number and the vertical bar in front."
 msgstr ""
 "Vollständig einfügen, mitsamt der Nummer und dem senkrechten Strich davor."
 
-#: views/admin-page.php:134 views/admin-page.php:540
+#: views/admin-page.php:131 views/admin-page.php:537
 msgid "Site ID"
 msgstr "Website-Kennung"
 
-#: views/admin-page.php:139
+#: views/admin-page.php:136
 msgid "The service shows it next to the token, in the same place."
 msgstr "Der Dienst zeigt sie an derselben Stelle neben dem Token an."
 
-#: views/admin-page.php:145
+#: views/admin-page.php:142
 msgid "Connect"
 msgstr "Verbinden"
 
-#: views/admin-page.php:154
+#: views/admin-page.php:151
 msgid "Reset address to the default value"
 msgstr "Adresse auf den Standardwert zurücksetzen"
 
-#: views/admin-page.php:158
+#: views/admin-page.php:155
 msgid "Status"
 msgstr "Status"
 
-#: views/admin-page.php:161
+#: views/admin-page.php:158
 msgid ""
 "The site could not be retrieved. Please check the token and the site ID."
 msgstr ""
 "Die Website konnte nicht abgerufen werden. Prüfen Sie Token und Kennung."
 
-#: views/admin-page.php:168
+#: views/admin-page.php:165
 msgid "Status of this site"
 msgstr "Status dieser Website"
 
-#: views/admin-page.php:171
+#: views/admin-page.php:168
 msgid "Address"
 msgstr "Adresse"
 
-#: views/admin-page.php:175
+#: views/admin-page.php:172
 msgid "Domain verified"
 msgstr "Domain bestätigt"
 
-#: views/admin-page.php:178
+#: views/admin-page.php:175
 msgid "no"
 msgstr "nein"
 
-#: views/admin-page.php:179
+#: views/admin-page.php:176
 msgid "yes"
 msgstr "ja"
 
-#: views/admin-page.php:183
+#: views/admin-page.php:180
 msgid "Next scan"
 msgstr "Nächste Prüfung"
 
-#: views/admin-page.php:186
+#: views/admin-page.php:183
 msgid "not scheduled"
 msgstr "nicht geplant"
 
-#: views/admin-page.php:205
+#: views/admin-page.php:202
 msgid "A scan is running. It usually takes a few minutes."
 msgstr "Eine Prüfung läuft. Sie dauert in der Regel einige Minuten."
 
-#: views/admin-page.php:207
+#: views/admin-page.php:204
 msgid ""
 "This page does not update on its own: an automatic reload would move the "
 "focus and interrupt people using a screen reader (WCAG 2.2.2). Use the "
@@ -321,60 +311,60 @@ msgstr ""
 "würde den Fokus verschieben und Screenreader-Nutzende unterbrechen (WCAG "
 "2.2.2). Holen Sie den aktuellen Stand mit der Schaltfläche unten."
 
-#: views/admin-page.php:217
+#: views/admin-page.php:214
 msgid "Verify domain now"
 msgstr "Domain jetzt bestätigen"
 
-#: views/admin-page.php:223
+#: views/admin-page.php:220
 msgid "Scan now"
 msgstr "Jetzt prüfen"
 
-#: views/admin-page.php:237
+#: views/admin-page.php:234
 msgid "Check whether the scan has finished"
 msgstr "Nachsehen, ob die Prüfung fertig ist"
 
-#: views/admin-page.php:238
+#: views/admin-page.php:235
 msgid "Refresh status"
 msgstr "Status aktualisieren"
 
-#: views/admin-page.php:246
+#: views/admin-page.php:243
 msgid "Findings"
 msgstr "Befunde"
 
-#: views/admin-page.php:254
+#: views/admin-page.php:251
 msgid "critical"
 msgstr "kritisch"
 
-#: views/admin-page.php:255
+#: views/admin-page.php:252
 msgid "serious"
 msgstr "schwer"
 
-#: views/admin-page.php:256
+#: views/admin-page.php:253
 msgid "moderate"
 msgstr "mittel"
 
-#: views/admin-page.php:257
+#: views/admin-page.php:254
 msgid "minor"
 msgstr "gering"
 
-#: views/admin-page.php:262
+#: views/admin-page.php:259
 msgid ""
 "The first scan is running. Once it has finished, the findings appear here."
 msgstr ""
 "Die erste Prüfung läuft. Sobald sie fertig ist, stehen die Befunde hier."
 
-#: views/admin-page.php:264
+#: views/admin-page.php:261
 msgid "There is no scan result for this site yet. Choose “Scan now”."
 msgstr ""
 "Für diese Website liegt noch kein Prüfergebnis vor. Wählen Sie „Jetzt "
 "prüfen\"."
 
-#: views/admin-page.php:266
+#: views/admin-page.php:263
 msgid "The last scan found no open findings."
 msgstr "Die letzte Prüfung hat keine offenen Befunde ergeben."
 
 #. translators: %s: date of the last scan
-#: views/admin-page.php:271
+#: views/admin-page.php:268
 #, php-format
 msgid ""
 "Open findings from the scan on %s. Fix them in WordPress and then start a "
@@ -383,89 +373,89 @@ msgstr ""
 "Offene Befunde der Prüfung vom %s. Beheben Sie sie in WordPress und starten "
 "Sie danach eine neue Prüfung."
 
-#: views/admin-page.php:273
+#: views/admin-page.php:270
 msgid "an unknown date"
 msgstr "unbekannten Datum"
 
-#: views/admin-page.php:279
+#: views/admin-page.php:276
 msgid "Open findings by rule"
 msgstr "Offene Befunde je Regel"
 
-#: views/admin-page.php:284
+#: views/admin-page.php:281
 msgid "Severity"
 msgstr "Schweregrad"
 
-#: views/admin-page.php:285
+#: views/admin-page.php:282
 msgid "Finding"
 msgstr "Befund"
 
-#: views/admin-page.php:286
+#: views/admin-page.php:283
 msgid "Success criterion"
 msgstr "Erfolgskriterium"
 
-#: views/admin-page.php:287 views/admin-page.php:370
+#: views/admin-page.php:284 views/admin-page.php:367
 msgid "Occurrences"
 msgstr "Fundstellen"
 
-#: views/admin-page.php:288
+#: views/admin-page.php:285
 msgid "Affected pages"
 msgstr "Betroffene Seiten"
 
 #. translators: %s: note on how to fix the finding
-#: views/admin-page.php:304
+#: views/admin-page.php:301
 #, php-format
 msgid "How to fix: %s"
 msgstr "Behebung: %s"
 
-#: views/admin-page.php:326
+#: views/admin-page.php:323
 msgid "Hide occurrences"
 msgstr "Fundstellen ausblenden"
 
 #. translators: %s: number of occurrences
-#: views/admin-page.php:335
+#: views/admin-page.php:332
 #, php-format
 msgid "Show %s occurrences"
 msgstr "%s Fundstellen anzeigen"
 
 #. translators: %s: number of further affected pages
-#: views/admin-page.php:356
+#: views/admin-page.php:353
 #, php-format
 msgid "and %s more"
 msgstr "und %s weitere"
 
-#: views/admin-page.php:373
+#: views/admin-page.php:370
 msgid "The occurrences could not be retrieved."
 msgstr "Die Fundstellen konnten nicht abgerufen werden."
 
-#: views/admin-page.php:375
+#: views/admin-page.php:372
 msgid "This rule has no occurrences in the last scan."
 msgstr "Zu dieser Regel gibt es in der letzten Prüfung keine Fundstellen."
 
 #. translators: 1: first occurrence shown, 2: last occurrence shown, 3: total number
-#: views/admin-page.php:380
+#: views/admin-page.php:377
 #, php-format
 msgid "Occurrences %1$s to %2$s of %3$s."
 msgstr "Fundstellen %1$s bis %2$s von %3$s."
 
-#: views/admin-page.php:396
+#: views/admin-page.php:393
 msgid "the entire page"
 msgstr "die gesamte Seite"
 
 #. translators: %s: the state in which the element becomes visible
-#: views/admin-page.php:403
+#: views/admin-page.php:400
 #, php-format
 msgid "Visible only after: %s"
 msgstr "Sichtbar erst nach: %s"
 
-#: views/admin-page.php:459
+#: views/admin-page.php:456
 msgid "Previous occurrences"
 msgstr "Vorherige Fundstellen"
 
-#: views/admin-page.php:464
+#: views/admin-page.php:461
 msgid "More occurrences"
 msgstr "Weitere Fundstellen"
 
-#: views/admin-page.php:476
+#: views/admin-page.php:473
 msgid ""
 "Screenshots of the occurrences are available in the full report on the "
 "service’s website. Opening it asks you to sign in first."
@@ -473,55 +463,55 @@ msgstr ""
 "Screenshots der Fundstellen stehen im vollständigen Bericht auf der Website "
 "des Dienstes. Beim Öffnen werden Sie zuerst zur Anmeldung geführt."
 
-#: views/admin-page.php:480
+#: views/admin-page.php:477
 msgid "Open the full report with screenshots"
 msgstr "Vollständigen Bericht mit Screenshots öffnen"
 
-#: views/admin-page.php:485
+#: views/admin-page.php:482
 msgid "Quota"
 msgstr "Kontingent"
 
-#: views/admin-page.php:489
+#: views/admin-page.php:486
 msgid "The quota could not be retrieved."
 msgstr "Das Kontingent konnte nicht abgerufen werden."
 
-#: views/admin-page.php:492
+#: views/admin-page.php:489
 msgid "Pages scanned in the current billing period"
 msgstr "Geprüfte Seiten im laufenden Abrechnungszeitraum"
 
-#: views/admin-page.php:495
+#: views/admin-page.php:492
 msgid "Pages scanned in this period"
 msgstr "Geprüfte Seiten in diesem Zeitraum"
 
 #. translators: %s: number of pages scanned
-#: views/admin-page.php:501
+#: views/admin-page.php:498
 #, php-format
 msgid "%s (unlimited)"
 msgstr "%s (unbegrenzt)"
 
 #. translators: 1: pages used, 2: pages included
-#: views/admin-page.php:507
+#: views/admin-page.php:504
 #, php-format
 msgid "%1$s of %2$s"
 msgstr "%1$s von %2$s"
 
-#: views/admin-page.php:516
+#: views/admin-page.php:513
 msgid "Remaining"
 msgstr "Verbleibend"
 
-#: views/admin-page.php:522
+#: views/admin-page.php:519
 msgid "Period ends"
 msgstr "Zeitraum bis"
 
-#: views/admin-page.php:531
+#: views/admin-page.php:528
 msgid "Connection"
 msgstr "Verbindung"
 
-#: views/admin-page.php:533
+#: views/admin-page.php:530
 msgid "Stored connection"
 msgstr "Eingetragene Verbindung"
 
-#: views/admin-page.php:548
+#: views/admin-page.php:545
 msgid ""
 "Disconnecting removes the token, the site ID and the stored text of the "
 "statement from this installation; you can then enter the details again. "
@@ -532,15 +522,15 @@ msgstr ""
 "eintragen. Im Konto bleibt alles bestehen, das Token gilt weiter — "
 "widerrufen wird es dort."
 
-#: views/admin-page.php:553
+#: views/admin-page.php:550
 msgid "Disconnect"
 msgstr "Verbindung trennen"
 
-#: views/admin-page.php:556
+#: views/admin-page.php:553
 msgid "Embed the statement"
 msgstr "Erklärung einbinden"
 
-#: views/admin-page.php:557
+#: views/admin-page.php:554
 msgid ""
 "Add this shortcode to the page that should carry your accessibility "
 "statement:"
@@ -548,7 +538,7 @@ msgstr ""
 "Fügen Sie diesen Shortcode auf der Seite ein, die Ihre Erklärung zur "
 "Barrierefreiheit tragen soll:"
 
-#: views/admin-page.php:560
+#: views/admin-page.php:557
 msgid ""
 "Options: teil=\"maengel\" or teil=\"kontakt\" for a single section, "
 "stand=\"nein\" to omit the date line, ueberschrift=\"3\" to fit your heading "
@@ -558,11 +548,11 @@ msgstr ""
 "Abschnitt, stand=\"nein\" ohne Datumszeile, ueberschrift=\"3\" zum Einpassen "
 "in Ihre Überschriftenhierarchie."
 
-#: views/admin-page.php:563
+#: views/admin-page.php:560
 msgid "Data transfer"
 msgstr "Datenübertragung"
 
-#: views/admin-page.php:565
+#: views/admin-page.php:562
 msgid ""
 "This plugin sends the address of this site and the API token to the service "
 "configured above in order to start scans and retrieve the statement. No "

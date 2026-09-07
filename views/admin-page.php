@@ -53,9 +53,6 @@ $barrierepruefung_meldungen = [
         <p>
             <?php esc_html_e('The plugin does not scan on its own. The scan, the findings and the text of your accessibility statement come from the service; this WordPress installation only fetches them and displays them. To do that it needs an API token from your account there.', 'barrierepruefung-de-web-accessibility-checker'); ?>
         </p>
-        <p>
-            <?php esc_html_e('The token is valid for this one site: with it the plugin may start scans and read results and the statement — nothing else. It is stored in this WordPress installation only.', 'barrierepruefung-de-web-accessibility-checker'); ?>
-        </p>
 
         <h3><?php esc_html_e('Where to get the three values', 'barrierepruefung-de-web-accessibility-checker'); ?></h3>
 
@@ -87,7 +84,7 @@ $barrierepruefung_meldungen = [
                 <?php esc_html_e('The service now shows the API token and the site ID. Copy both into the form below — the token is shown this one time only. If it gets lost, create a new one in the same place; the old one can be revoked there.', 'barrierepruefung-de-web-accessibility-checker'); ?>
             </li>
             <li>
-                <?php esc_html_e('Leave the service address as it is. It only needs changing if you run the service yourself.', 'barrierepruefung-de-web-accessibility-checker'); ?>
+                <?php esc_html_e('The service address is the third value: it says where the plugin sends its requests. It is already filled in below.', 'barrierepruefung-de-web-accessibility-checker'); ?>
             </li>
         </ol>
 

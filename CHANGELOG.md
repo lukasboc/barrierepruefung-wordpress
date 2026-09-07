@@ -3,6 +3,17 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.6.1]
+
+### Geändert
+
+- Der Absatz über das Token in der Einrichtungsanleitung ist gestrichen. Was das Token darf und
+  wo es liegt, beantwortet dort eine Frage, die noch niemand gestellt hat — an dieser Stelle
+  sucht man den Weg zum Token, nicht seine Rechte.
+- Der letzte Schritt sagt jetzt, was die Adresse des Dienstes *ist* — wohin das Plugin seine
+  Anfragen schickt —, statt zu raten, ob man sie ändern sollte. Dass sich das nur beim
+  Selbstbetrieb lohnt, ist keine Auskunft, die beim Einrichten gebraucht wird.
+
 ## [0.6.0]
 
 ### Geändert
