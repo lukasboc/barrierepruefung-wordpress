@@ -279,9 +279,30 @@ class Barrierepruefung_Admin
             flush_rewrite_rules();
         }
 
+        // Der Zwischenspeicher gehoert zu einer Verbindung. Wer eine neue
+        // eintraegt, darf nicht den Stand der alten zu sehen bekommen.
+        delete_transient(self::ZUSTAND);
+
         $this->zurueck($antwort['ok'] ? 'verbunden' : 'fehler', $antwort['error']);
     }
 
+    /**
+     * Bestaetigt die Domain.
+     *
+     * Der Zwischenspeicher muss danach weg. Ohne das meldete die Seite oben
+     * „Die Domain ist bestaetigt" und zeigte darunter weiter „Domain
+     * bestaetigt: nein" samt dem Knopf, der das gerade erledigt hatte - bis zu
+     * fuenf Minuten lang, und nur „Status aktualisieren" kam dagegen an. Ein
+     * Widerspruch auf einem Bildschirm ist schlimmer als eine langsame Seite.
+     *
+     * Die Antwort traegt zwar den frischen Stammsatz der Website, aber ohne
+     * Kontingent und ohne Prueflaeufe - verify() ist im Dienst eine Rueckmeldung
+     * zum Nachweis, kein Statusbericht. Ihn in den Zwischenspeicher zu schreiben
+     * hiesse, „Kontingent nicht abrufbar" gegen einen zweiten Abruf zu tauschen.
+     *
+     * Bei einem gescheiterten Versuch bleibt er stehen: dann hat sich beim
+     * Dienst nichts geaendert, und der Zwischenspeicher ist weiterhin richtig.
+     */
     public function handle_verify(): void
     {
         $this->pruefe_berechtigung('barrierepruefung_verify');
@@ -290,6 +311,10 @@ class Barrierepruefung_Admin
         $antwort = $client->post('/sites/'.$client->site_id().'/verify', ['method' => 'meta_tag']);
 
         $bestaetigt = $antwort['ok'] && ! empty($antwort['data']['data']['verified']);
+
+        if ($bestaetigt) {
+            delete_transient(self::ZUSTAND);
+        }
 
         $this->zurueck(
             $bestaetigt ? 'bestaetigt' : 'nicht_bestaetigt',
@@ -381,6 +406,9 @@ class Barrierepruefung_Admin
         $this->pruefe_berechtigung('barrierepruefung_reset_url');
 
         delete_option('barrierepruefung_api_url');
+
+        // Der abgelegte Stand kam von der alten Adresse.
+        delete_transient(self::ZUSTAND);
 
         $this->zurueck('adresse_zurueckgesetzt');
     }

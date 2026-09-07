@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, check, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.6.1
+Stable tag: 0.6.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,6 +159,15 @@ No. Automated tests cover only part of the requirements. The service guides you 
 remaining test steps; the statement explicitly states that it is based on a self-assessment.
 
 == Changelog ==
+
+= 0.6.2 =
+* Fixed: After verifying the domain the page reported "The domain is verified" at the top and kept
+  showing "Domain verified: no" below it, together with the button that had just done the job -
+  for up to five minutes, and only "Refresh status" got past it. Verifying now discards the cached
+  state, the way starting a scan already did. A failed attempt leaves the cache alone: nothing
+  changed at the service then.
+* Fixed: Entering a new connection, and resetting the service address, discard the cached state as
+  well. It belongs to one connection and one address.
 
 = 0.6.1 =
 * Changed: The setup instructions no longer explain what the token is allowed to do and where it

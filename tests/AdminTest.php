@@ -229,6 +229,59 @@ final class AdminTest extends TestCase
         $this->assertContains('barrierepruefung_declaration', $GLOBALS['wp_transients_geloescht']);
     }
 
+    /**
+     * Nach einer bestaetigten Domain muss der Zwischenspeicher weg.
+     *
+     * Ohne das meldete die Seite oben "Die Domain ist bestaetigt" und zeigte
+     * darunter weiter "Domain bestaetigt: nein" samt dem Knopf, der das gerade
+     * erledigt hatte - bis zu fuenf Minuten lang.
+     */
+    public function test_eine_bestaetigte_domain_verwirft_den_zwischenspeicher(): void
+    {
+        $this->antwort(['data' => ['verified' => true, 'method' => 'meta_tag', 'failure_reason' => null]]);
+
+        $status = $this->ausfuehren('handle_verify');
+
+        $this->assertSame('bestaetigt', $status);
+        $this->assertContains('barrierepruefung_status', $GLOBALS['wp_transients_geloescht']);
+    }
+
+    /**
+     * Ein gescheiterter Versuch laesst ihn stehen.
+     *
+     * Beim Dienst hat sich dann nichts geaendert; ihn trotzdem zu verwerfen
+     * kostete zwei Abrufe fuer eine Auskunft, die schon vorlag.
+     */
+    public function test_ein_gescheiterter_versuch_laesst_den_zwischenspeicher_stehen(): void
+    {
+        $this->antwort(['data' => ['verified' => false, 'method' => 'meta_tag', 'failure_reason' => 'Meta-Element nicht gefunden']]);
+
+        $status = $this->ausfuehren('handle_verify');
+
+        $this->assertSame('nicht_bestaetigt', $status);
+        $this->assertNotContains('barrierepruefung_status', $GLOBALS['wp_transients_geloescht']);
+    }
+
+    /** Der Zwischenspeicher gehoert zu einer Verbindung, nicht zur Installation. */
+    public function test_eine_neue_verbindung_verwirft_den_zwischenspeicher(): void
+    {
+        $_POST = ['api_url' => 'https://beispiel.test/api/v1', 'token' => '2|neu', 'site_id' => 'st_999'];
+        $this->antwort(['data' => ['meta_tag' => ['name' => 'a11y-site-verification', 'content' => '01JXYZ']]]);
+
+        $this->ausfuehren('handle_connect');
+
+        $this->assertContains('barrierepruefung_status', $GLOBALS['wp_transients_geloescht']);
+    }
+
+    /** Der abgelegte Stand kam von der alten Adresse. */
+    public function test_das_zuruecksetzen_der_adresse_verwirft_den_zwischenspeicher(): void
+    {
+        $status = $this->ausfuehren('handle_reset_url');
+
+        $this->assertSame('adresse_zurueckgesetzt', $status);
+        $this->assertContains('barrierepruefung_status', $GLOBALS['wp_transients_geloescht']);
+    }
+
     /*
      * Die Seite selbst. Gerendert wird sie mit Attrappen, damit auffaellt,
      * wenn ein Anzeigezustand gar nicht erreichbar ist - eine leere Tabelle

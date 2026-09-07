@@ -3,6 +3,20 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.6.2]
+
+### Behoben
+
+- Nach dem Bestätigen der Domain meldete die Seite oben „Die Domain ist bestätigt" und zeigte
+  darunter weiter „Domain bestätigt: nein" — samt dem Knopf, der das gerade erledigt hatte. Bis
+  zu fünf Minuten lang, und nur „Status aktualisieren" kam dagegen an. Der Grund war der
+  Zwischenspeicher, den das Bestätigen als einzige Aktion nicht verworfen hat; das Auslösen
+  einer Prüfung tat es längst. Ein gescheiterter Versuch lässt ihn weiterhin stehen: dann hat
+  sich beim Dienst nichts geändert.
+- Dieselbe Lücke an zwei weiteren Stellen: Eine neu eingetragene Verbindung und das
+  Zurücksetzen der Adresse verwerfen den Zwischenspeicher jetzt ebenfalls. Er gehört zu einer
+  Verbindung und zu einer Adresse, nicht zur Installation.
+
 ## [0.6.1]
 
 ### Geändert
