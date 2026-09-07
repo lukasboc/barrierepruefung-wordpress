@@ -1,13 +1,13 @@
 # Deutsche Fassung des Barrierefreiheits-Checkers.
-# Copyright (C) 2026 lubomedia
+# Copyright (C) 2026 Lukas Bock
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.5.0\n"
+"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/a11y-checker\n"
-"POT-Creation-Date: 2026-09-07T14:36:56+00:00\n"
-"PO-Revision-Date: 2026-09-07T16:37:49+0200\n"
-"Last-Translator: lubomedia\n"
+"POT-Creation-Date: 2026-09-07T14:43:54+00:00\n"
+"PO-Revision-Date: 2026-09-07T16:43:54+0200\n"
+"Last-Translator: Lukas Bock\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,12 @@ msgstr ""
 
 #. Author of the plugin
 #: a11y-checker.php
-msgid "lubomedia"
+msgid "Lukas Bock"
+msgstr ""
+
+#. Author URI of the plugin
+#: a11y-checker.php
+msgid "https://barrierepruefung.de"
 msgstr ""
 
 #: includes/class-a11y-checker-admin.php:100
@@ -54,24 +59,20 @@ msgstr ""
 msgid "Set up the accessibility checker"
 msgstr "Barrierefreiheits-Prüfung einrichten"
 
-#: includes/class-a11y-checker-admin.php:122
+#: includes/class-a11y-checker-admin.php:126
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: includes/class-a11y-checker-admin.php:123
-msgid "Set up"
-msgstr "Einrichten"
-
-#: includes/class-a11y-checker-admin.php:134
-#: includes/class-a11y-checker-admin.php:135 views/admin-page.php:27
+#: includes/class-a11y-checker-admin.php:135
+#: includes/class-a11y-checker-admin.php:136 views/admin-page.php:27
 msgid "Accessibility"
 msgstr "Barrierefreiheit"
 
-#: includes/class-a11y-checker-admin.php:145
+#: includes/class-a11y-checker-admin.php:146
 msgid "You do not have permission to view this page."
 msgstr "Sie haben keine Berechtigung für diese Seite."
 
-#: includes/class-a11y-checker-admin.php:391
+#: includes/class-a11y-checker-admin.php:392
 msgid "You do not have permission to perform this action."
 msgstr "Sie haben keine Berechtigung für diese Aktion."
 
@@ -569,21 +570,3 @@ msgstr ""
 "Dieses Plugin überträgt die Adresse dieser Website sowie das API-Token an "
 "den oben eingetragenen Dienst, um Prüfungen auszulösen und die Erklärung "
 "abzurufen. Es werden keine Inhalte Ihrer Nutzerinnen und Nutzer übermittelt."
-
-#~ msgid ""
-#~ "A scan is currently running. The result will be ready in a few minutes — "
-#~ "then choose “Refresh status”."
-#~ msgstr ""
-#~ "Eine Prüfung läuft gerade. Das Ergebnis steht in wenigen Minuten bereit — "
-#~ "wählen Sie dann „Status aktualisieren\"."
-
-#~ msgid "Create an API token for this site in your account and enter it here."
-#~ msgstr ""
-#~ "Legen Sie im Konto ein API-Token für diese Website an und tragen Sie es "
-#~ "hier ein."
-
-#~ msgid "Full report with all occurrences"
-#~ msgstr "Vollständiger Bericht mit allen Fundstellen"
-
-#~ msgid "The token is valid for this site only."
-#~ msgstr "Das Token gilt nur für diese Website."

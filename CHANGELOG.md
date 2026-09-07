@@ -3,6 +3,20 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.5.1]
+
+### Geändert
+
+- Der Verweis in der Plugin-Liste heißt jetzt durchgehend *Einstellungen* — die Aufschrift, die
+  neben jedem anderen Plugin steht und nach der deshalb gesucht wird. Vorher stand dort
+  *Einrichten*, solange nichts verbunden war.
+- Als Autor steht *Lukas Bock* im Plugin-Kopf, verlinkt auf barrierepruefung.de. Der
+  Composer-Namensraum `lubomedia/barrierepruefung-wordpress` bleibt, wie er ist: über ihn zieht
+  das Dienst-Repository dieses Plugin als Paket.
+- `languages/`: Der Autor ist Teil des Kopfes und damit der Übersetzungsdateien. Planmäßig
+  untersetzt sind jetzt vier Einträge statt drei — Plugin-Name, Plugin-URI, Author und der neu
+  dazugekommene Author-URI.
+
 ## [0.5.0]
 
 ### Hinzugefügt

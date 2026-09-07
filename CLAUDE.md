@@ -71,7 +71,8 @@ msgfmt --check -o languages/a11y-checker-de_DE.mo languages/a11y-checker-de_DE.p
 
 Eine englische msgid ohne deutschen msgstr fällt nicht auf: die Seite zeigt dann englischen
 Text in einer deutschen Installation, ohne Fehler. `msgfmt --statistics` nennt die Zahl der
-untersetzten Einträge — drei sind es planmäßig (Plugin-Name, Plugin-URI, Author).
+untersetzten Einträge — vier sind es planmäßig (Plugin-Name, Plugin-URI, Author,
+Author-URI).
 
 Auch `*.mo` gehört ins Repository. Solange das Plugin nicht im Verzeichnis ist, gibt es keine
 Sprachpakete von translate.wordpress.org, und ohne die mitgelieferte `.mo` läuft jede deutsche

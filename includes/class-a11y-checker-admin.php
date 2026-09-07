@@ -110,20 +110,21 @@ class A11y_Checker_Admin
      * das einzige Mittel, das auch dann noch traegt, wenn der einmalige Hinweis
      * laengst weggeklickt ist.
      *
+     * "Einstellungen" heisst er unabhaengig davon, ob schon etwas verbunden
+     * ist. Es ist die Aufschrift, die neben jedem anderen Plugin steht, und
+     * danach wird gesucht - eine wechselnde Beschriftung waere hier eine
+     * Genauigkeit, die niemand bestellt hat. Er steht vorn, vor "Deaktivieren".
+     *
      * @param  array<int|string, string>  $verweise
      * @return array<int|string, string>
      */
     public function aktionsverweise(array $verweise): array
     {
-        $eigener = sprintf(
+        array_unshift($verweise, sprintf(
             '<a href="%s">%s</a>',
             esc_url(admin_url('tools.php?page=a11y-checker')),
-            (new A11y_Checker_Client)->is_connected()
-                ? esc_html__('Settings', 'a11y-checker')
-                : esc_html__('Set up', 'a11y-checker')
-        );
-
-        array_unshift($verweise, $eigener);
+            esc_html__('Settings', 'a11y-checker')
+        ));
 
         return $verweise;
     }

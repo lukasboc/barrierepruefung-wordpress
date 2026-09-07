@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, check, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.5.0
+Stable tag: 0.5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,6 +159,11 @@ No. Automated tests cover only part of the requirements. The service guides you 
 remaining test steps; the statement explicitly states that it is based on a self-assessment.
 
 == Changelog ==
+
+= 0.5.1 =
+* Changed: The link in the plugins list is now labelled "Settings" throughout - the label that sits
+  next to every other plugin and is therefore what people look for.
+* Changed: The plugin is credited to Lukas Bock, linked to barrierepruefung.de.
 
 = 0.5.0 =
 * New: The page explains the setup on first use - that the plugin does not scan on its own but is

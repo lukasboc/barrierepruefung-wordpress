@@ -605,6 +605,33 @@ final class AdminTest extends TestCase
         $this->assertStringNotContainsString('https://barrierepruefung.de/register', $seite);
     }
 
+    /**
+     * Der Weg zur Seite aus der Plugin-Liste.
+     *
+     * Ohne ihn steht neben dem Plugin nur "Deaktivieren", und die Seite unter
+     * Werkzeuge findet nur, wer weiss, dass es sie gibt. Die Aufschrift ist
+     * dieselbe wie bei jedem anderen Plugin - danach wird gesucht.
+     */
+    public function test_die_plugin_liste_fuehrt_zur_seite(): void
+    {
+        $verweise = $this->admin->aktionsverweise(['deactivate' => '<a href="#">Deactivate</a>']);
+
+        $this->assertCount(2, $verweise);
+        $this->assertStringContainsString('tools.php?page=a11y-checker', $verweise[0]);
+        $this->assertStringContainsString('Settings', $verweise[0]);
+    }
+
+    /** Auch ohne Verbindung - sonst fehlt er genau dann, wenn er gebraucht wird. */
+    public function test_die_plugin_liste_fuehrt_auch_ohne_verbindung_zur_seite(): void
+    {
+        unset($GLOBALS['wp_options']['a11y_checker_token'], $GLOBALS['wp_options']['a11y_checker_site_id']);
+
+        $verweise = $this->admin->aktionsverweise([]);
+
+        $this->assertStringContainsString('tools.php?page=a11y-checker', $verweise[0]);
+        $this->assertStringContainsString('Settings', $verweise[0]);
+    }
+
     /** Beides gehört geprüft, nicht nur eines - hier die Berechtigung. */
     public function test_ohne_berechtigung_wird_nichts_getrennt(): void
     {
