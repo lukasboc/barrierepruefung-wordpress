@@ -1,7 +1,7 @@
 # Grafiken für das Plugin-Verzeichnis
 
 Sie gehören nicht ins Plugin-ZIP (`.distignore` schließt `assets/` aus); der Deploy-Workflow
-lädt sie in das SVN-Verzeichnis `assets/`.
+lädt die PNGs in das SVN-Verzeichnis `assets/` — diese Datei nicht.
 
 | Datei | Maße | Zweck |
 |---|---|---|

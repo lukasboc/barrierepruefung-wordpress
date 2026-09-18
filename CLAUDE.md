@@ -46,20 +46,18 @@ deshalb besondere Sorgfalt von Hand.
 
 ## wordpress.org
 
-Der Slug — und mit ihm die Text-Domain, der Ordnername im ZIP und die spätere URL im
-Verzeichnis — ist `barrierepruefung-de-web-accessibility-checker`. Er ist die Marke
+Der Slug — und mit ihm die Text-Domain, der Ordnername im ZIP und die URL im Verzeichnis
+(<https://wordpress.org/plugins/barrierepruefung-de-web-accessibility-checker/>) — ist
+`barrierepruefung-de-web-accessibility-checker`. Er ist die Marke
 „Barrierepruefung.de" samt Zusatz, in der einzigen Schreibweise, die ein Slug erlaubt. Kürzer
 wäre er nicht besser: „a11y-checker" hieß er bis 0.6.0 und wäre genau der Fall, den das
 Plugins-Team ausschließt — „Accessibility Checker" ist als `accessibility-checker` vergeben,
 und das Team schreibt generische Namen ohnehin auf markengeführte Slugs um (`checkbarriere`,
 `kipphard-accessibility-audit`, `accessgo-barrierefreiheit`).
 
-**Bei der Einreichung muss dieser Slug ausdrücklich verlangt werden.** Wordpress.org leitet ihn
-sonst aus dem Plugin-Namen ab, und `sanitize_title()` wirft den Punkt in
-„Barrierepruefung.de" ersatzlos weg — herauskäme `barrierepruefungde-web-accessibility-checker`.
-Wird trotzdem ein anderer vergeben, müssen Text-Domain, `phpcs.xml.dist`, beide Workflows und
-die Dateinamen unter `languages/` mit; sonst laden die Übersetzungen von
-translate.wordpress.org still nicht.
+Vergeben ist er seit dem 16.09.2026, und ein Slug lässt sich im Verzeichnis nicht mehr ändern.
+Text-Domain, `phpcs.xml.dist`, beide Workflows und die Dateinamen unter `languages/` hängen an
+ihm; weicht eines davon ab, laden die Übersetzungen von translate.wordpress.org still nicht.
 
 Kurz gehalten sind bewusst drei Dinge, die nicht die Text-Domain sind: der Slug der
 Verwaltungsseite (`?page=barrierepruefung`), der Block-Namensraum
@@ -97,17 +95,27 @@ Text in einer deutschen Installation, ohne Fehler. `msgfmt --statistics` nennt d
 untersetzten Einträge — vier sind es planmäßig (Plugin-Name, Plugin-URI, Author,
 Author-URI).
 
-Auch `*.mo` gehört ins Repository. Solange das Plugin nicht im Verzeichnis ist, gibt es keine
-Sprachpakete von translate.wordpress.org, und ohne die mitgelieferte `.mo` läuft jede deutsche
-Installation auf Englisch. Nach der Aufnahme gewinnen die Sprachpakete aus `WP_LANG_DIR`
-ohnehin. Mitgeliefert ist nur `de_DE`; `de_AT`, `de_CH` und `de_DE_formal` sehen bis zur
-Aufnahme Englisch — WordPress hat keinen Rückfall zwischen Locales.
+Auch `*.mo` gehört ins Repository. Solange translate.wordpress.org für eine Sprache kein
+Sprachpaket gebaut hat, läuft ohne die mitgelieferte `.mo` jede deutsche Installation auf
+Englisch. Gibt es eins, gewinnt es aus `WP_LANG_DIR` ohnehin. Mitgeliefert ist nur `de_DE`;
+`de_AT`, `de_CH` und `de_DE_formal` sehen bis zu ihrem Sprachpaket Englisch — WordPress hat
+keinen Rückfall zwischen Locales.
 
 Nicht übersetzt werden Shortcode-Name und Attribute (`teil`, `stand`, `ueberschrift`, `sprache`
 samt Werten `komplett`, `maengel`, `kontakt`) — das sind Bezeichner, keine Prosa. Der
 Änderungsverlauf in der `readme.txt` ist die englische Fassung von `CHANGELOG.md`, nicht dessen
 Kopie.
 
-Offen bis zur Einreichung: die Grafiken in `assets/` samt `== Screenshots ==` in der
-`readme.txt`. Der Slug ist entschieden (siehe oben) — er muss beim Einreichen nur ausdrücklich
-verlangt werden.
+### Veröffentlichen
+
+Eine Version erscheint, indem ihr Tag `vX.Y.Z` gepusht wird. `release.yml` baut daraus einmal
+den Baum nach `.distignore` und gibt ihn zweimal aus: als ZIP im GitHub-Release und als
+`trunk/` samt `tags/X.Y.Z/` im SVN (<https://plugins.svn.wordpress.org/barrierepruefung-de-web-accessibility-checker>).
+Vorher müssen `Version:` im Plugin-Kopf, `Stable tag:` in der `readme.txt` und das Tag
+übereinstimmen — der Workflow bricht sonst ab, denn das Verzeichnis liefert den Stable tag aus,
+nicht das neueste Tag.
+
+Der SVN-Teil läuft nur bei der Repository-Variable `WPORG_DEPLOY=true`; die Zugangsdaten liegen
+im Environment `wordpress-org`, das nur Tags `v*` zulässt. SVN ist ein Auslieferungsweg, kein
+Arbeitsstand: dort landet nur, was fertig ist. 0.6.3 ging am 18.09.2026 als erste Version von
+Hand hinein.

@@ -17,7 +17,7 @@ Bericht, statt Bilder in die fremde Installation zu kopieren.
 
 Solange nichts verbunden ist, steht auf derselben Seite die Einrichtung: warum es ein Konto
 braucht, wo Token und Website-Kennung herkommen und was nach dem Verbinden noch fehlt. Nach der
-Aktivierung führt ein einmaliger Hinweis dorthin, dauerhaft der Verweis *Einrichten* in der
+Aktivierung führt ein einmaliger Hinweis dorthin, dauerhaft der Verweis *Einstellungen* in der
 Plugin-Liste.
 
 Die Erklärung wird **serverseitig** eingebunden — sie ist also auch ohne JavaScript und für
@@ -35,9 +35,10 @@ Prüf-Engine.
 
 ## Installation
 
-Das Plugin ist noch nicht im WordPress-Verzeichnis eingereicht. Bis dahin als ZIP aus den
-[Releases](https://github.com/lukasboc/barrierepruefung-wordpress/releases); künftig auch aus
-dem WordPress-Verzeichnis.
+Aus dem [WordPress-Verzeichnis](https://wordpress.org/plugins/barrierepruefung-de-web-accessibility-checker/):
+im Backend unter *Plugins → Neues Plugin hinzufügen* nach „Barrierepruefung.de“ suchen. Das ZIP
+jeder Version liegt außerdem unter den
+[Releases](https://github.com/lukasboc/barrierepruefung-wordpress/releases).
 
 Einrichtung, Shortcode-Attribute und häufige Fragen stehen in [`readme.txt`](readme.txt) —
 das ist zugleich der Text im Plugin-Verzeichnis und deshalb als einzige Datei hier auf
