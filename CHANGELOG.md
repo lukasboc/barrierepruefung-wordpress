@@ -3,6 +3,18 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.6.4]
+
+### Behoben
+
+- Im Hinweis vor der ersten Prüfung schloss „Jetzt prüfen“ in der deutschen Übersetzung mit
+  einem geraden Anführungszeichen statt mit dem deutschen.
+
+### Geändert
+
+- Neue Versionen gehen per Tag ins Plugin-Verzeichnis, und zwar als genau das Paket, das auch
+  am GitHub-Release hängt. 0.6.4 ist die erste Version auf diesem Weg.
+
 ## [0.6.3]
 
 ### Behoben

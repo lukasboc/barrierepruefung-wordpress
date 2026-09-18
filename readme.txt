@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.6.3
+Stable tag: 0.6.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -168,6 +168,12 @@ remaining test steps; the statement explicitly states that it is based on a self
    occurrences and the pages affected. Each rule can be expanded to its individual occurrences.
 
 == Changelog ==
+
+= 0.6.4 =
+* Fixed: In the German translation, the hint shown before the first scan closed the quoted
+  button label with a straight quotation mark instead of the German one.
+* Changed: New versions are deployed to the plugin directory from the tagged GitHub release, so
+  both carry the identical package.
 
 = 0.6.3 =
 * Fixed: A rule with exactly one occurrence offered "Show 1 occurrences". The string had no
