@@ -357,7 +357,7 @@ msgstr ""
 msgid "There is no scan result for this site yet. Choose “Scan now”."
 msgstr ""
 "Für diese Website liegt noch kein Prüfergebnis vor. Wählen Sie „Jetzt "
-"prüfen\"."
+"prüfen“."
 
 #: views/admin-page.php:263
 msgid "The last scan found no open findings."
