@@ -29,7 +29,7 @@ $barrierepruefung_gruppe = Barrierepruefung_Erklaerung::feld_id('services');
     <?php wp_nonce_field('barrierepruefung_betroffenheit'); ?>
     <input type="hidden" name="action" value="barrierepruefung_betroffenheit">
 
-    <fieldset id="<?php echo esc_attr($barrierepruefung_gruppe); ?>" aria-describedby="<?php echo esc_attr($barrierepruefung_gruppe.'-hinweis'); ?>">
+    <fieldset style="min-width:0" id="<?php echo esc_attr($barrierepruefung_gruppe); ?>" aria-describedby="<?php echo esc_attr($barrierepruefung_gruppe.'-hinweis'); ?>">
         <legend><strong><?php echo esc_html((string) ($daten['services']['question'] ?? '')); ?></strong></legend>
         <p class="description" id="<?php echo esc_attr($barrierepruefung_gruppe.'-hinweis'); ?>"><?php echo esc_html((string) ($daten['services']['hint'] ?? '')); ?></p>
 
@@ -52,7 +52,7 @@ $barrierepruefung_gruppe = Barrierepruefung_Erklaerung::feld_id('services');
     </fieldset>
 
     <?php // Ohne Skript lässt sich die Frage nicht erst nach einem Haken oben einblenden. Sie steht deshalb da und sagt, wann sie zählt. ?>
-    <fieldset id="<?php echo esc_attr(Barrierepruefung_Erklaerung::feld_id('micro_enterprise')); ?>">
+    <fieldset style="min-width:0" id="<?php echo esc_attr(Barrierepruefung_Erklaerung::feld_id('micro_enterprise')); ?>">
         <legend><strong><?php esc_html_e('Only if you ticked a service above:', 'barrierepruefung-de-web-accessibility-checker'); ?></strong></legend>
         <p>
             <input type="checkbox" name="micro_enterprise" value="1" id="barrierepruefung-kleinstunternehmen"

@@ -23,7 +23,10 @@ $barrierepruefung_gruende = (array) ($rueckmeldung['gruende'] ?? []);
 <?php if ($rueckmeldung['art'] === 'fehler') : ?>
     <div class="notice notice-error barrierepruefung-fehlerliste" role="alert">
         <h2><?php esc_html_e('There is a problem', 'barrierepruefung-de-web-accessibility-checker'); ?></h2>
-        <p><?php echo esc_html((string) ($rueckmeldung['text'] ?? '')); ?></p>
+        <?php // Gibt es Meldungen je Feld, sagen sie alles - der Sammeltext wiederholte sie nur. ?>
+        <?php if ($barrierepruefung_fehler === []) : ?>
+            <p><?php echo esc_html((string) ($rueckmeldung['text'] ?? '')); ?></p>
+        <?php endif; ?>
 
         <?php if ($barrierepruefung_fehler !== []) : ?>
             <ul>

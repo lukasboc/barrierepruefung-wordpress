@@ -76,7 +76,7 @@ $barrierepruefung_version = (int) ($entwurf['next_version'] ?? 1);
             <input type="checkbox" name="abweichen" value="1" id="barrierepruefung-abweichen">
             <label for="barrierepruefung-abweichen"><?php esc_html_e('I want to publish a different conformance statement', 'barrierepruefung-de-web-accessibility-checker'); ?></label>
         </p>
-        <fieldset id="<?php echo esc_attr(Barrierepruefung_Erklaerung::feld_id('conformance_status')); ?>">
+        <fieldset style="min-width:0" id="<?php echo esc_attr(Barrierepruefung_Erklaerung::feld_id('conformance_status')); ?>">
             <legend><?php esc_html_e('Conformance statement', 'barrierepruefung-de-web-accessibility-checker'); ?></legend>
             <?php foreach ((array) ($barrierepruefung_aussage['choices'] ?? []) as $barrierepruefung_wahl) : ?>
                 <label style="display:block;margin:.25rem 0">

@@ -143,6 +143,31 @@ final class ErklaerungTest extends TestCase
         $this->assertMatchesRegularExpression('#schritt=freigabe">\s*Review and publish the statement#', $this->rendern());
     }
 
+    /** Ist die veröffentlichte Fassung aktuell, lädt nichts zu einer inhaltsgleichen neuen Version ein. */
+    public function test_eine_aktuelle_fassung_wird_nicht_erneut_zur_freigabe_angeboten(): void
+    {
+        $this->antwort($this->weg(['next' => null, 'published' => [
+            'version' => 2, 'published_at' => '2026-09-21T10:00:00Z', 'outdated' => false,
+            'public_url' => 'https://beispiel.test/e/x', 'pdf_url' => 'https://beispiel.test/e/x.pdf',
+        ]]));
+
+        $html = $this->rendern();
+
+        $this->assertStringNotContainsString('Review and publish the statement', $html);
+        $this->assertStringContainsString('Review the draft again', $html);
+        $this->assertStringNotContainsString('button-primary" href="https://beispiel.test/wp-admin/tools.php?page=barrierepruefung&ansicht=erklaerung&schritt=freigabe', $html);
+    }
+
+    public function test_eine_veraltete_fassung_fuehrt_zur_neuen_version(): void
+    {
+        $this->antwort($this->weg(['next' => null, 'published' => [
+            'version' => 2, 'published_at' => '2026-09-21T10:00:00Z', 'outdated' => true,
+            'public_url' => 'https://beispiel.test/e/x', 'pdf_url' => 'https://beispiel.test/e/x.pdf',
+        ]]));
+
+        $this->assertMatchesRegularExpression('#button-primary" href="[^"]*schritt=freigabe">\s*Release a new version#', $this->rendern());
+    }
+
     /**
      * Ein Schritt, den der Dienst nach dieser Fassung eingeführt hat, fehlt
      * nicht - er führt dorthin, wo er sich erledigen lässt.
@@ -217,6 +242,8 @@ final class ErklaerungTest extends TestCase
         $seite = array_values($GLOBALS['wp_neue_beitraege'])[0];
 
         $this->assertSame('draft', $seite['post_status']);
+        // Nicht noch einmal der Titel der Erklärung - der folgt als deren eigene Überschrift.
+        $this->assertSame('Accessibility', $seite['post_title']);
         $this->assertSame('page', $seite['post_type']);
         $this->assertStringContainsString('wp:barrierepruefung/erklaerung', $seite['post_content']);
     }

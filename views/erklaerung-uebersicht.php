@@ -107,9 +107,18 @@ foreach ($schritte as $barrierepruefung_eintrag) {
                 esc_html((string) ($barrierepruefung_naechster['title'] ?? ''))
             ); ?>
         </a>
-    <?php else : ?>
+    <?php elseif ($barrierepruefung_veroeffentlicht === null) : ?>
         <a class="button button-primary" href="<?php echo esc_url(Barrierepruefung_Erklaerung::url('freigabe')); ?>">
             <?php esc_html_e('Review and publish the statement', 'barrierepruefung-de-web-accessibility-checker'); ?>
+        </a>
+    <?php elseif (! empty($barrierepruefung_veroeffentlicht['outdated'])) : ?>
+        <a class="button button-primary" href="<?php echo esc_url(Barrierepruefung_Erklaerung::url('freigabe')); ?>">
+            <?php esc_html_e('Release a new version', 'barrierepruefung-de-web-accessibility-checker'); ?>
+        </a>
+    <?php else : ?>
+        <?php // Die veröffentlichte Fassung ist aktuell. Eine hervorgehobene Freigabe lüde zu einer inhaltsgleichen neuen Version ein - der nächste Schritt ist jetzt das Einbinden weiter unten. ?>
+        <a href="<?php echo esc_url(Barrierepruefung_Erklaerung::url('freigabe')); ?>">
+            <?php esc_html_e('Review the draft again', 'barrierepruefung-de-web-accessibility-checker'); ?>
         </a>
     <?php endif; ?>
 </p>

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.6.4\n"
+"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.7.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/barrierepruefung-de-web-accessibility-checker\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-21T16:24:13+00:00\n"
+"POT-Creation-Date: 2026-09-21T16:39:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: barrierepruefung-de-web-accessibility-checker\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #. Description of the plugin
 #: barrierepruefung-de-web-accessibility-checker.php
-msgid "Scans this site for accessibility barriers and embeds your accessibility statement via shortcode."
+msgid "Scans this site for accessibility barriers, prepares and publishes your accessibility statement and embeds it via shortcode."
 msgstr ""
 
 #. Author of the plugin
@@ -53,6 +53,7 @@ msgstr ""
 
 #: includes/class-barrierepruefung-admin.php:135
 #: includes/class-barrierepruefung-admin.php:136
+#: includes/class-barrierepruefung-erklaerung.php:403
 #: views/admin-page.php:8
 #: views/erklaerung-seite.php:10
 msgid "Accessibility"
@@ -64,7 +65,7 @@ msgstr ""
 
 #: includes/class-barrierepruefung-admin.php:433
 #: includes/class-barrierepruefung-erklaerung.php:393
-#: includes/class-barrierepruefung-erklaerung.php:552
+#: includes/class-barrierepruefung-erklaerung.php:556
 msgid "You do not have permission to perform this action."
 msgstr ""
 
@@ -88,27 +89,21 @@ msgstr ""
 msgid "Version %s of your accessibility statement is published."
 msgstr ""
 
-#: includes/class-barrierepruefung-erklaerung.php:399
-#: includes/class-barrierepruefung-shortcode.php:92
-#: views/reiter.php:18
-msgid "Accessibility statement"
-msgstr ""
-
-#: includes/class-barrierepruefung-erklaerung.php:406
+#: includes/class-barrierepruefung-erklaerung.php:410
 msgid "The page could not be created."
 msgstr ""
 
-#: includes/class-barrierepruefung-erklaerung.php:411
+#: includes/class-barrierepruefung-erklaerung.php:415
 msgid "A draft page with your accessibility statement has been created. Check it, publish it and link to it from every page - usually in the footer."
 msgstr ""
 
 #. translators: %s: title of the next step
-#: includes/class-barrierepruefung-erklaerung.php:451
+#: includes/class-barrierepruefung-erklaerung.php:455
 #, php-format
 msgid "Saved. Next step: %s"
 msgstr ""
 
-#: includes/class-barrierepruefung-erklaerung.php:461
+#: includes/class-barrierepruefung-erklaerung.php:465
 msgid "Saved."
 msgstr ""
 
@@ -120,6 +115,11 @@ msgstr ""
 #: includes/class-barrierepruefung-shortcode.php:61
 #, php-format
 msgid "Version %1$s, as of %2$s"
+msgstr ""
+
+#: includes/class-barrierepruefung-shortcode.php:92
+#: views/reiter.php:18
+msgid "Accessibility statement"
 msgstr ""
 
 #: views/admin-page.php:17
@@ -478,6 +478,10 @@ msgstr ""
 msgid "This plugin sends the address of this site and the API token to the service configured above in order to start scans and retrieve the statement. No content belonging to your visitors is transmitted."
 msgstr ""
 
+#: views/admin-page.php:547
+msgid "When you prepare or publish the statement from the tab “Accessibility statement”, your answers and details are sent as well, together with your display name. The service records it as evidence of who released a version."
+msgstr ""
+
 #: views/erklaerung-freigabe.php:24
 #: views/erklaerung-schritt.php:24
 msgid "← Back to the overview"
@@ -578,16 +582,16 @@ msgstr ""
 msgid "There is a problem"
 msgstr ""
 
-#: views/erklaerung-rueckmeldung.php:54
+#: views/erklaerung-rueckmeldung.php:57
 msgid "Fix this in the service"
 msgstr ""
 
-#: views/erklaerung-rueckmeldung.php:66
+#: views/erklaerung-rueckmeldung.php:69
 #: views/erklaerung-uebersicht.php:50
 msgid "View the published statement"
 msgstr ""
 
-#: views/erklaerung-rueckmeldung.php:74
+#: views/erklaerung-rueckmeldung.php:77
 msgid "Edit the new page"
 msgstr ""
 
@@ -686,36 +690,30 @@ msgstr ""
 msgid "No machine can fully assess these requirements. Go through them once; your answers flow into the statement."
 msgstr ""
 
-#. translators: 1: open checks, 2: total number of checks
-#: views/erklaerung-schritt-pruefschritte.php:28
-#, php-format
-msgid "%1$s of %2$s still open."
-msgstr ""
-
-#: views/erklaerung-schritt-pruefschritte.php:39
-#: views/erklaerung-schritt-pruefschritte.php:100
+#: views/erklaerung-schritt-pruefschritte.php:30
+#: views/erklaerung-schritt-pruefschritte.php:91
 msgid "Save answers"
 msgstr ""
 
 #. translators: %s: success criterion numbers, e.g. 2.4.3
-#: views/erklaerung-schritt-pruefschritte.php:55
+#: views/erklaerung-schritt-pruefschritte.php:46
 #, php-format
 msgid "Success criterion %s"
 msgstr ""
 
-#: views/erklaerung-schritt-pruefschritte.php:71
+#: views/erklaerung-schritt-pruefschritte.php:62
 msgid "The page template has changed since your last answer. Please check again."
 msgstr ""
 
-#: views/erklaerung-schritt-pruefschritte.php:73
+#: views/erklaerung-schritt-pruefschritte.php:64
 msgid "Taken over from the previous scan."
 msgstr ""
 
-#: views/erklaerung-schritt-pruefschritte.php:77
+#: views/erklaerung-schritt-pruefschritte.php:68
 msgid "Is this requirement met?"
 msgstr ""
 
-#: views/erklaerung-schritt-pruefschritte.php:91
+#: views/erklaerung-schritt-pruefschritte.php:82
 msgid "Note"
 msgstr ""
 
@@ -830,47 +828,55 @@ msgstr ""
 msgid "Review and publish the statement"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:120
-msgid "Findings that are not a defect, that will not be fixed or that would be a disproportionate burden are assessed in the full report in the service, where the screenshots are. These assessments shape the text of the statement."
+#: views/erklaerung-uebersicht.php:116
+msgid "Release a new version"
 msgstr ""
 
 #: views/erklaerung-uebersicht.php:121
-msgid "Assess findings in the service"
+msgid "Review the draft again"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:127
-msgid "On your website"
+#: views/erklaerung-uebersicht.php:129
+msgid "Findings that are not a defect, that will not be fixed or that would be a disproportionate burden are assessed in the full report in the service, where the screenshots are. These assessments shape the text of the statement."
 msgstr ""
 
 #: views/erklaerung-uebersicht.php:130
-msgid "The statement is embedded on:"
+msgid "Assess findings in the service"
 msgstr ""
 
 #: views/erklaerung-uebersicht.php:136
-msgid "not published yet"
+msgid "On your website"
 msgstr ""
 
 #: views/erklaerung-uebersicht.php:139
+msgid "The statement is embedded on:"
+msgstr ""
+
+#: views/erklaerung-uebersicht.php:145
+msgid "not published yet"
+msgstr ""
+
+#: views/erklaerung-uebersicht.php:148
 msgid "view"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:140
+#: views/erklaerung-uebersicht.php:149
 msgid "edit"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:144
+#: views/erklaerung-uebersicht.php:153
 msgid "The page shows each new version automatically. Link to it from every page of your website, usually in the footer."
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:146
+#: views/erklaerung-uebersicht.php:155
 msgid "No page of this website contains the statement yet. It has to be reachable from every page, usually through a link in the footer."
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:150
+#: views/erklaerung-uebersicht.php:159
 msgid "Create a draft page with the statement"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:152
+#: views/erklaerung-uebersicht.php:161
 msgid "The page is created as a draft, so you can check it before it goes live. Alternatively, add the shortcode [barrierefreiheitserklaerung] or the block “Accessibility statement” to a page of your choice."
 msgstr ""
 

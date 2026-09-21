@@ -39,7 +39,7 @@ $barrierepruefung_art_id = Barrierepruefung_Erklaerung::feld_id('applies_to');
         </span>
     </p>
 
-    <fieldset id="<?php echo esc_attr($barrierepruefung_art_id); ?>" aria-describedby="<?php echo esc_attr($barrierepruefung_art_id.'-hinweis'); ?>">
+    <fieldset style="min-width:0" id="<?php echo esc_attr($barrierepruefung_art_id); ?>" aria-describedby="<?php echo esc_attr($barrierepruefung_art_id.'-hinweis'); ?>">
         <legend><strong><?php esc_html_e('Type of body', 'barrierepruefung-de-web-accessibility-checker'); ?></strong></legend>
         <p class="description" id="<?php echo esc_attr($barrierepruefung_art_id.'-hinweis'); ?>"><?php echo esc_html((string) ($daten['hint'] ?? '')); ?></p>
         <?php foreach ((array) ($daten['options'] ?? []) as $barrierepruefung_option) : ?>
