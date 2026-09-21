@@ -1,14 +1,14 @@
 === Barrierepruefung.de – Web Accessibility Checker ===
 Contributors: lukasbo
-Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
+Tags: accessibility, barrierefreiheit, barriereprüfung, bfsg, wcag
 Requires at least: 6.5
-Tested up to: 7.1
+Tested up to: 7.1.1
 Requires PHP: 8.1
 Stable tag: 0.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Scans this site for accessibility barriers and embeds your accessibility statement via shortcode.
+Scans this site for accessibility barriers, prepares and publishes your accessibility statement and embeds it via shortcode.
 
 == Description ==
 
@@ -194,6 +194,9 @@ remaining test steps; the statement explicitly states that it is based on a self
 * Added: After publishing, pages that embed the statement show the new version right away, and
   the plugin finds those pages - or creates one as a draft.
 * Added: The admin page shows when the published statement is out of date.
+* Changed: Tested up to WordPress 7.1.1.
+* Changed: New tag "barriereprüfung", so the plugin can be found by that search term; "bitv"
+  gives way, as the directory uses only five tags.
 * Changed: Requests to the service carry the language of the WordPress user, so the service's
   texts appear in that language.
 * Changed: German now ships in both forms of address, as WordPress distinguishes them: de_DE

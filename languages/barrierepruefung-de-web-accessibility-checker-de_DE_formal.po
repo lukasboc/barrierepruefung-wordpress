@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.6.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/barrierepruefung-"
 "de-web-accessibility-checker\n"
-"POT-Creation-Date: 2026-09-21T16:24:13+00:00\n"
+"POT-Creation-Date: 2026-09-21T16:39:20+00:00\n"
 "PO-Revision-Date: 2026-09-07T17:13:11+0200\n"
 "Last-Translator: Lukas Bock\n"
 "Language-Team: Deutsch\n"
@@ -30,11 +30,11 @@ msgstr ""
 #. Description of the plugin
 #: barrierepruefung-de-web-accessibility-checker.php
 msgid ""
-"Scans this site for accessibility barriers and embeds your accessibility "
-"statement via shortcode."
+"Scans this site for accessibility barriers, prepares and publishes your "
+"accessibility statement and embeds it via shortcode."
 msgstr ""
-"Prüft diese Website auf Barrierefreiheit und bindet die Erklärung zur "
-"Barrierefreiheit per Shortcode ein."
+"Prüft diese Website auf Barrierefreiheit, bereitet die Erklärung zur "
+"Barrierefreiheit vor, veröffentlicht sie und bindet sie per Shortcode ein."
 
 #. Author of the plugin
 #: barrierepruefung-de-web-accessibility-checker.php
@@ -65,7 +65,8 @@ msgid "Settings"
 msgstr "Einstellungen"
 
 #: includes/class-barrierepruefung-admin.php:135
-#: includes/class-barrierepruefung-admin.php:136 views/admin-page.php:8
+#: includes/class-barrierepruefung-admin.php:136
+#: includes/class-barrierepruefung-erklaerung.php:403 views/admin-page.php:8
 #: views/erklaerung-seite.php:10
 msgid "Accessibility"
 msgstr "Barrierefreiheit"
@@ -76,7 +77,7 @@ msgstr "Sie haben keine Berechtigung für diese Seite."
 
 #: includes/class-barrierepruefung-admin.php:433
 #: includes/class-barrierepruefung-erklaerung.php:393
-#: includes/class-barrierepruefung-erklaerung.php:552
+#: includes/class-barrierepruefung-erklaerung.php:556
 msgid "You do not have permission to perform this action."
 msgstr "Sie haben keine Berechtigung für diese Aktion."
 
@@ -100,16 +101,11 @@ msgstr "Fehler: %s"
 msgid "Version %s of your accessibility statement is published."
 msgstr "Version %s Ihrer Erklärung zur Barrierefreiheit ist veröffentlicht."
 
-#: includes/class-barrierepruefung-erklaerung.php:399
-#: includes/class-barrierepruefung-shortcode.php:92 views/reiter.php:18
-msgid "Accessibility statement"
-msgstr "Erklärung zur Barrierefreiheit"
-
-#: includes/class-barrierepruefung-erklaerung.php:406
+#: includes/class-barrierepruefung-erklaerung.php:410
 msgid "The page could not be created."
 msgstr "Die Seite konnte nicht angelegt werden."
 
-#: includes/class-barrierepruefung-erklaerung.php:411
+#: includes/class-barrierepruefung-erklaerung.php:415
 msgid ""
 "A draft page with your accessibility statement has been created. Check it, "
 "publish it and link to it from every page - usually in the footer."
@@ -119,12 +115,12 @@ msgstr ""
 "jeder Seite aus – üblicherweise in der Fußzeile."
 
 #. translators: %s: title of the next step
-#: includes/class-barrierepruefung-erklaerung.php:451
+#: includes/class-barrierepruefung-erklaerung.php:455
 #, php-format
 msgid "Saved. Next step: %s"
 msgstr "Gespeichert. Nächster Schritt: %s"
 
-#: includes/class-barrierepruefung-erklaerung.php:461
+#: includes/class-barrierepruefung-erklaerung.php:465
 msgid "Saved."
 msgstr "Gespeichert."
 
@@ -137,6 +133,10 @@ msgstr "Die Erklärung zur Barrierefreiheit kann gerade nicht geladen werden."
 #, php-format
 msgid "Version %1$s, as of %2$s"
 msgstr "Version %1$s, Stand %2$s"
+
+#: includes/class-barrierepruefung-shortcode.php:92 views/reiter.php:18
+msgid "Accessibility statement"
+msgstr "Erklärung zur Barrierefreiheit"
 
 #: views/admin-page.php:17
 msgid "Connect to your account"
@@ -567,6 +567,17 @@ msgstr ""
 "den oben eingetragenen Dienst, um Prüfungen auszulösen und die Erklärung "
 "abzurufen. Es werden keine Inhalte Ihrer Nutzerinnen und Nutzer übermittelt."
 
+#: views/admin-page.php:547
+msgid ""
+"When you prepare or publish the statement from the tab “Accessibility "
+"statement”, your answers and details are sent as well, together with your "
+"display name. The service records it as evidence of who released a version."
+msgstr ""
+"Bereiten Sie die Erklärung im Reiter „Erklärung zur Barrierefreiheit“ vor "
+"oder veröffentlichen sie, werden auch Ihre Antworten und Angaben übertragen, "
+"zusammen mit Ihrem Anzeigenamen. Der Dienst hält ihn als Nachweis fest, wer "
+"eine Version freigegeben hat."
+
 #: views/erklaerung-freigabe.php:24 views/erklaerung-schritt.php:24
 msgid "← Back to the overview"
 msgstr "← Zurück zur Übersicht"
@@ -701,15 +712,15 @@ msgstr "Ihr Konto im Dienst öffnen"
 msgid "There is a problem"
 msgstr "Es gibt ein Problem"
 
-#: views/erklaerung-rueckmeldung.php:54
+#: views/erklaerung-rueckmeldung.php:57
 msgid "Fix this in the service"
 msgstr "Im Dienst beheben"
 
-#: views/erklaerung-rueckmeldung.php:66 views/erklaerung-uebersicht.php:50
+#: views/erklaerung-rueckmeldung.php:69 views/erklaerung-uebersicht.php:50
 msgid "View the published statement"
 msgstr "Veröffentlichte Erklärung ansehen"
 
-#: views/erklaerung-rueckmeldung.php:74
+#: views/erklaerung-rueckmeldung.php:77
 msgid "Edit the new page"
 msgstr "Neue Seite bearbeiten"
 
@@ -840,39 +851,33 @@ msgstr ""
 "Diese Anforderungen kann keine Maschine abschließend beurteilen. Gehen Sie "
 "sie einmal durch; Ihre Antworten fließen in die Erklärung ein."
 
-#. translators: 1: open checks, 2: total number of checks
-#: views/erklaerung-schritt-pruefschritte.php:28
-#, php-format
-msgid "%1$s of %2$s still open."
-msgstr "Noch %1$s von %2$s offen."
-
-#: views/erklaerung-schritt-pruefschritte.php:39
-#: views/erklaerung-schritt-pruefschritte.php:100
+#: views/erklaerung-schritt-pruefschritte.php:30
+#: views/erklaerung-schritt-pruefschritte.php:91
 msgid "Save answers"
 msgstr "Antworten speichern"
 
 #. translators: %s: success criterion numbers, e.g. 2.4.3
-#: views/erklaerung-schritt-pruefschritte.php:55
+#: views/erklaerung-schritt-pruefschritte.php:46
 #, php-format
 msgid "Success criterion %s"
 msgstr "Erfolgskriterium %s"
 
-#: views/erklaerung-schritt-pruefschritte.php:71
+#: views/erklaerung-schritt-pruefschritte.php:62
 msgid ""
 "The page template has changed since your last answer. Please check again."
 msgstr ""
 "Die Seitenvorlage hat sich seit Ihrer letzten Antwort geändert. Bitte prüfen "
 "Sie erneut."
 
-#: views/erklaerung-schritt-pruefschritte.php:73
+#: views/erklaerung-schritt-pruefschritte.php:64
 msgid "Taken over from the previous scan."
 msgstr "Übernommen aus der vorherigen Prüfung."
 
-#: views/erklaerung-schritt-pruefschritte.php:77
+#: views/erklaerung-schritt-pruefschritte.php:68
 msgid "Is this requirement met?"
 msgstr "Ist diese Anforderung erfüllt?"
 
-#: views/erklaerung-schritt-pruefschritte.php:91
+#: views/erklaerung-schritt-pruefschritte.php:82
 msgid "Note"
 msgstr "Notiz"
 
@@ -998,7 +1003,15 @@ msgstr "Weiter: %s"
 msgid "Review and publish the statement"
 msgstr "Erklärung prüfen und veröffentlichen"
 
-#: views/erklaerung-uebersicht.php:120
+#: views/erklaerung-uebersicht.php:116
+msgid "Release a new version"
+msgstr "Neue Version freigeben"
+
+#: views/erklaerung-uebersicht.php:121
+msgid "Review the draft again"
+msgstr "Entwurf noch einmal ansehen"
+
+#: views/erklaerung-uebersicht.php:129
 msgid ""
 "Findings that are not a defect, that will not be fixed or that would be a "
 "disproportionate burden are assessed in the full report in the service, "
@@ -1009,31 +1022,31 @@ msgstr ""
 "Dienst, dort liegen die Bildschirmfotos. Diese Bewertungen prägen den Text "
 "der Erklärung."
 
-#: views/erklaerung-uebersicht.php:121
+#: views/erklaerung-uebersicht.php:130
 msgid "Assess findings in the service"
 msgstr "Befunde im Dienst bewerten"
 
-#: views/erklaerung-uebersicht.php:127
+#: views/erklaerung-uebersicht.php:136
 msgid "On your website"
 msgstr "Auf Ihrer Website"
 
-#: views/erklaerung-uebersicht.php:130
+#: views/erklaerung-uebersicht.php:139
 msgid "The statement is embedded on:"
 msgstr "Die Erklärung ist eingebunden auf:"
 
-#: views/erklaerung-uebersicht.php:136
+#: views/erklaerung-uebersicht.php:145
 msgid "not published yet"
 msgstr "noch nicht veröffentlicht"
 
-#: views/erklaerung-uebersicht.php:139
+#: views/erklaerung-uebersicht.php:148
 msgid "view"
 msgstr "ansehen"
 
-#: views/erklaerung-uebersicht.php:140
+#: views/erklaerung-uebersicht.php:149
 msgid "edit"
 msgstr "bearbeiten"
 
-#: views/erklaerung-uebersicht.php:144
+#: views/erklaerung-uebersicht.php:153
 msgid ""
 "The page shows each new version automatically. Link to it from every page of "
 "your website, usually in the footer."
@@ -1041,7 +1054,7 @@ msgstr ""
 "Die Seite zeigt jede neue Version von selbst. Verlinken Sie sie von jeder "
 "Seite Ihrer Website aus, üblicherweise in der Fußzeile."
 
-#: views/erklaerung-uebersicht.php:146
+#: views/erklaerung-uebersicht.php:155
 msgid ""
 "No page of this website contains the statement yet. It has to be reachable "
 "from every page, usually through a link in the footer."
@@ -1049,11 +1062,11 @@ msgstr ""
 "Noch keine Seite dieser Website enthält die Erklärung. Sie muss von jeder "
 "Seite aus erreichbar sein, üblicherweise über einen Link in der Fußzeile."
 
-#: views/erklaerung-uebersicht.php:150
+#: views/erklaerung-uebersicht.php:159
 msgid "Create a draft page with the statement"
 msgstr "Seite mit der Erklärung als Entwurf anlegen"
 
-#: views/erklaerung-uebersicht.php:152
+#: views/erklaerung-uebersicht.php:161
 msgid ""
 "The page is created as a draft, so you can check it before it goes live. "
 "Alternatively, add the shortcode [barrierefreiheitserklaerung] or the block "

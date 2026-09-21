@@ -22,15 +22,6 @@ foreach ((array) ($werte['checks'] ?? []) as $barrierepruefung_eingabe) {
 ?>
 <p><?php esc_html_e('No machine can fully assess these requirements. Go through them once; your answers flow into the statement.', 'barrierepruefung-de-web-accessibility-checker'); ?></p>
 
-<p>
-    <?php printf(
-        /* translators: 1: open checks, 2: total number of checks */
-        esc_html__('%1$s of %2$s still open.', 'barrierepruefung-de-web-accessibility-checker'),
-        esc_html(number_format_i18n((int) ($meta['open'] ?? 0))),
-        esc_html(number_format_i18n((int) ($meta['total'] ?? 0)))
-    ); ?>
-</p>
-
 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="<?php echo esc_attr(Barrierepruefung_Erklaerung::feld_id('checks')); ?>">
     <?php wp_nonce_field('barrierepruefung_pruefschritte'); ?>
     <input type="hidden" name="action" value="barrierepruefung_pruefschritte">
@@ -73,7 +64,7 @@ foreach ((array) ($werte['checks'] ?? []) as $barrierepruefung_eingabe) {
                 <p class="description"><?php esc_html_e('Taken over from the previous scan.', 'barrierepruefung-de-web-accessibility-checker'); ?></p>
             <?php endif; ?>
 
-            <fieldset>
+            <fieldset style="min-width:0">
                 <legend><?php esc_html_e('Is this requirement met?', 'barrierepruefung-de-web-accessibility-checker'); ?></legend>
                 <?php foreach (['passed', 'failed', 'not_applicable', 'unanswered'] as $barrierepruefung_wert) : ?>
                     <label style="display:block;margin:.25rem 0">

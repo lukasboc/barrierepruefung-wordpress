@@ -396,7 +396,11 @@ class Barrierepruefung_Erklaerung
         $id = wp_insert_post([
             'post_type' => 'page',
             'post_status' => 'draft',
-            'post_title' => __('Accessibility statement', 'barrierepruefung-de-web-accessibility-checker'),
+            // „Barrierefreiheit" und nicht der Titel der Erklärung: deren eigene
+            // Überschrift folgt direkt darunter, zweimal derselbe Satz wäre
+            // eine leere Wiederholung. So heißt der Link auch in den meisten
+            // Fußzeilen.
+            'post_title' => __('Accessibility', 'barrierepruefung-de-web-accessibility-checker'),
             'post_content' => '<!-- wp:barrierepruefung/erklaerung /-->',
         ]);
 

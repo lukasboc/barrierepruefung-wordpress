@@ -90,7 +90,7 @@ $barrierepruefung_feld = static function (array $feld) use ($barrierepruefung_be
     <?php endforeach; ?>
 
     <?php if ($barrierepruefung_stelle !== []) : ?>
-        <fieldset>
+        <fieldset style="min-width:0">
             <legend><strong><?php esc_html_e('Competent enforcement body', 'barrierepruefung-de-web-accessibility-checker'); ?></strong></legend>
             <p class="description"><?php esc_html_e('Pre-filled for your jurisdiction. For regional authorities and municipalities, the body of the respective state applies - please check.', 'barrierepruefung-de-web-accessibility-checker'); ?></p>
             <?php foreach ($barrierepruefung_stelle as $barrierepruefung_eintrag) : ?>
