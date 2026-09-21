@@ -3,6 +3,35 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.7.0]
+
+### Hinzugefügt
+
+- Neuer Reiter „Erklärung“: der ganze Weg bis zur veröffentlichten Erklärung — Prüfschritte,
+  wer erklärt, Betroffenheits-Check, Pflichtangaben, Prüfen und Veröffentlichen. Schritte,
+  Fragen und Texte kommen vom Dienst (`/declaration/path` und Geschwister); das Plugin kennt kein
+  Recht. Einen Schritt, den diese Fassung noch nicht kennt, zeigt es mit dem Weg in den Dienst,
+  statt ihn wegzulassen.
+- Die Freigabe schickt die Kennung des gezeigten Entwurfs und einen beim Anzeigen erzeugten
+  `Idempotency-Key`: Ein Doppelklick ergibt keine zweite Fassung, und ein inzwischen geänderter
+  Entwurf wird nicht ungesehen veröffentlicht. Als freigebende Person geht der Anzeigename der
+  WordPress-Person mit.
+- Nach der Freigabe zeigen eingebundene Seiten die neue Fassung sofort; das Plugin findet die
+  Seiten mit Shortcode oder Block oder legt eine als Entwurf an.
+- Der Stand der veröffentlichten Erklärung steht im Reiter, samt „veraltet“.
+- Fehler aus dem Dienst stehen als Liste mit Sprungmarken zu den Feldern ganz oben, der
+  Dokumenttitel beginnt dann mit „Fehler:“, und die Eingaben bleiben erhalten.
+
+### Geändert
+
+- Anfragen an den Dienst tragen die Sprache der WordPress-Person (`Accept-Language`).
+- Deutsch liegt jetzt in beiden Anreden bei, so wie WordPress sie trennt: `de_DE` duzt, das neue
+  `de_DE_formal` siezt. Bisher siezte `de_DE`, und Installationen auf „Deutsch (Sie)“ sahen
+  Englisch. Die Sprachpakete von translate.wordpress.org duzen für `de_DE` ebenfalls; die
+  mitgelieferte Fassung wechselte sonst beim ersten Sprachpaket die Anrede.
+- Die Deinstallation entfernt auch die Rückmeldung je Person (User-Meta
+  `barrierepruefung_rueckmeldung`).
+
 ## [0.6.4]
 
 ### Behoben

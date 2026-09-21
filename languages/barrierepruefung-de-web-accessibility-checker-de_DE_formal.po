@@ -10,7 +10,7 @@ msgstr ""
 "PO-Revision-Date: 2026-09-07T17:13:11+0200\n"
 "Last-Translator: Lukas Bock\n"
 "Language-Team: Deutsch\n"
-"Language: de_DE\n"
+"Language: de_DE_formal\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -72,13 +72,13 @@ msgstr "Barrierefreiheit"
 
 #: includes/class-barrierepruefung-admin.php:146
 msgid "You do not have permission to view this page."
-msgstr "Du hast keine Berechtigung für diese Seite."
+msgstr "Sie haben keine Berechtigung für diese Seite."
 
 #: includes/class-barrierepruefung-admin.php:433
 #: includes/class-barrierepruefung-erklaerung.php:393
 #: includes/class-barrierepruefung-erklaerung.php:552
 msgid "You do not have permission to perform this action."
-msgstr "Du hast keine Berechtigung für diese Aktion."
+msgstr "Sie haben keine Berechtigung für diese Aktion."
 
 #: includes/class-barrierepruefung-client.php:98
 msgid "The plugin is not connected to an account yet."
@@ -98,7 +98,7 @@ msgstr "Fehler: %s"
 #: includes/class-barrierepruefung-erklaerung.php:347
 #, php-format
 msgid "Version %s of your accessibility statement is published."
-msgstr "Version %s deiner Erklärung zur Barrierefreiheit ist veröffentlicht."
+msgstr "Version %s Ihrer Erklärung zur Barrierefreiheit ist veröffentlicht."
 
 #: includes/class-barrierepruefung-erklaerung.php:399
 #: includes/class-barrierepruefung-shortcode.php:92 views/reiter.php:18
@@ -114,9 +114,9 @@ msgid ""
 "A draft page with your accessibility statement has been created. Check it, "
 "publish it and link to it from every page - usually in the footer."
 msgstr ""
-"Eine Seite mit deiner Erklärung zur Barrierefreiheit ist als Entwurf "
-"angelegt. Prüfe sie, veröffentliche sie und verlinke sie von jeder Seite aus "
-"– üblicherweise in der Fußzeile."
+"Eine Seite mit Ihrer Erklärung zur Barrierefreiheit ist als Entwurf "
+"angelegt. Prüfen Sie sie, veröffentlichen Sie sie und verlinken Sie sie von "
+"jeder Seite aus – üblicherweise in der Fußzeile."
 
 #. translators: %s: title of the next step
 #: includes/class-barrierepruefung-erklaerung.php:451
@@ -140,7 +140,7 @@ msgstr "Version %1$s, Stand %2$s"
 
 #: views/admin-page.php:17
 msgid "Connect to your account"
-msgstr "Mit deinem Konto verbinden"
+msgstr "Mit Ihrem Konto verbinden"
 
 #: views/admin-page.php:30
 msgid ""
@@ -149,10 +149,10 @@ msgid ""
 "installation only fetches them and displays them. To do that it needs an API "
 "token from your account there."
 msgstr ""
-"Das Plugin prüft nicht selbst. Prüfung, Befunde und der Text deiner "
-"Erklärung zur Barrierefreiheit kommen vom Dienst; diese WordPress-"
-"Installation holt sie nur ab und zeigt sie an. Dafür braucht sie ein API-"
-"Token aus deinem Konto beim Dienst."
+"Das Plugin prüft nicht selbst. Prüfung, Befunde und der Text Ihrer Erklärung "
+"zur Barrierefreiheit kommen vom Dienst; diese WordPress-Installation holt "
+"sie nur ab und zeigt sie an. Dafür braucht sie ein API-Token aus Ihrem Konto "
+"beim Dienst."
 
 #: views/admin-page.php:33
 msgid "Where to get the three values"
@@ -163,8 +163,8 @@ msgstr "Woher die drei Angaben kommen"
 #, php-format
 msgid "Create an account at %s — or sign in there if you already have one."
 msgstr ""
-"Lege unter %s ein Konto an — oder melde dich dort an, wenn du schon eines "
-"hast."
+"Legen Sie unter %s ein Konto an — oder melden Sie sich dort an, wenn Sie "
+"schon eines haben."
 
 #. translators: %s: address of this WordPress installation
 #: views/admin-page.php:46
@@ -174,19 +174,21 @@ msgid ""
 "WordPress installation: %s. If a different address is stored, the domain "
 "cannot be verified later."
 msgstr ""
-"Trage dort diese Website ein. Nimm genau die Adresse dieser WordPress-"
-"Installation: %s. Steht dort eine andere Adresse, lässt sich die Domain "
-"später nicht bestätigen."
+"Tragen Sie dort diese Website ein. Nehmen Sie genau die Adresse dieser "
+"WordPress-Installation: %s. Steht dort eine andere Adresse, lässt sich die "
+"Domain später nicht bestätigen."
 
 #. translators: 1: path within the service, 2: name of the section there, 3: label of the button there
 #: views/admin-page.php:53
 #, php-format
 msgid "Open %1$s in your account and choose %3$s in the section %2$s."
-msgstr "Öffne im Konto %1$s und wähle im Abschnitt %2$s die Schaltfläche %3$s."
+msgstr ""
+"Öffnen Sie im Konto %1$s und wählen Sie im Abschnitt %2$s die Schaltfläche "
+"%3$s."
 
 #: views/admin-page.php:54
 msgid "Websites → your site → Embedding"
-msgstr "Websites → deine Website → Einbindung"
+msgstr "Websites → Ihre Website → Einbindung"
 
 #: views/admin-page.php:55
 msgid "WordPress plugin and API"
@@ -202,10 +204,10 @@ msgid ""
 "below — the token is shown this one time only. If it gets lost, create a new "
 "one in the same place; the old one can be revoked there."
 msgstr ""
-"Der Dienst zeigt jetzt das API-Token und die Website-Kennung an. Übernimm "
-"beides in das Formular unten — das Token wird nur dieses eine Mal angezeigt. "
-"Geht es verloren, erzeugst du an derselben Stelle ein neues; das alte lässt "
-"sich dort zurückziehen."
+"Der Dienst zeigt jetzt das API-Token und die Website-Kennung an. Übernehmen "
+"Sie beides in das Formular unten — das Token wird nur dieses eine Mal "
+"angezeigt. Geht es verloren, erzeugen Sie an derselben Stelle ein neues; das "
+"alte lässt sich dort zurückziehen."
 
 #: views/admin-page.php:63
 msgid ""
@@ -223,7 +225,7 @@ msgid ""
 msgstr ""
 "Nach dem Verbinden folgen zwei Schritte, beide von dieser Seite aus: die "
 "Domain bestätigen — ein Klick, den Nachweis liefert das Plugin selbst aus, "
-"du brauchst keinen Zugriff auf das DNS — und die erste Prüfung starten."
+"Sie brauchen keinen Zugriff auf das DNS — und die erste Prüfung starten."
 
 #: views/admin-page.php:77 views/admin-page.php:515
 msgid "Service address"
@@ -267,7 +269,8 @@ msgstr "Status"
 #: views/admin-page.php:134
 msgid ""
 "The site could not be retrieved. Please check the token and the site ID."
-msgstr "Die Website konnte nicht abgerufen werden. Prüfe Token und Kennung."
+msgstr ""
+"Die Website konnte nicht abgerufen werden. Prüfen Sie Token und Kennung."
 
 #: views/admin-page.php:141
 msgid "Status of this site"
@@ -309,7 +312,7 @@ msgid ""
 msgstr ""
 "Diese Seite aktualisiert sich nicht von selbst: Ein automatisches Neuladen "
 "würde den Fokus verschieben und Screenreader-Nutzende unterbrechen (WCAG "
-"2.2.2). Hol den aktuellen Stand mit der Schaltfläche unten."
+"2.2.2). Holen Sie den aktuellen Stand mit der Schaltfläche unten."
 
 #: views/admin-page.php:190 views/erklaerung-schritt-domain.php:19
 msgid "Verify domain now"
@@ -356,7 +359,8 @@ msgstr ""
 #: views/admin-page.php:237
 msgid "There is no scan result for this site yet. Choose “Scan now”."
 msgstr ""
-"Für diese Website liegt noch kein Prüfergebnis vor. Wähle „Jetzt prüfen“."
+"Für diese Website liegt noch kein Prüfergebnis vor. Wählen Sie „Jetzt "
+"prüfen“."
 
 #: views/admin-page.php:239
 msgid "The last scan found no open findings."
@@ -369,8 +373,8 @@ msgid ""
 "Open findings from the scan on %s. Fix them in WordPress and then start a "
 "new scan."
 msgstr ""
-"Offene Befunde der Prüfung vom %s. Behebe sie in WordPress und starte danach "
-"eine neue Prüfung."
+"Offene Befunde der Prüfung vom %s. Beheben Sie sie in WordPress und starten "
+"Sie danach eine neue Prüfung."
 
 #: views/admin-page.php:246
 msgid "an unknown date"
@@ -462,7 +466,7 @@ msgid ""
 "service’s website. Opening it asks you to sign in first."
 msgstr ""
 "Screenshots der Fundstellen stehen im vollständigen Bericht auf der Website "
-"des Dienstes. Beim Öffnen wirst du zuerst zur Anmeldung geführt."
+"des Dienstes. Beim Öffnen werden Sie zuerst zur Anmeldung geführt."
 
 #: views/admin-page.php:459
 msgid "Open the full report with screenshots"
@@ -536,7 +540,7 @@ msgid ""
 "Add this shortcode to the page that should carry your accessibility "
 "statement:"
 msgstr ""
-"Füge diesen Shortcode auf der Seite ein, die deine Erklärung zur "
+"Fügen Sie diesen Shortcode auf der Seite ein, die Ihre Erklärung zur "
 "Barrierefreiheit tragen soll:"
 
 #: views/admin-page.php:539
@@ -547,7 +551,7 @@ msgid ""
 msgstr ""
 "Optionen: teil=\"maengel\" oder teil=\"kontakt\" für einen einzelnen "
 "Abschnitt, stand=\"nein\" ohne Datumszeile, ueberschrift=\"3\" zum Einpassen "
-"in deine Überschriftenhierarchie."
+"in Ihre Überschriftenhierarchie."
 
 #: views/admin-page.php:542
 msgid "Data transfer"
@@ -561,7 +565,7 @@ msgid ""
 msgstr ""
 "Dieses Plugin überträgt die Adresse dieser Website sowie das API-Token an "
 "den oben eingetragenen Dienst, um Prüfungen auszulösen und die Erklärung "
-"abzurufen. Es werden keine Inhalte deiner Nutzerinnen und Nutzer übermittelt."
+"abzurufen. Es werden keine Inhalte Ihrer Nutzerinnen und Nutzer übermittelt."
 
 #: views/erklaerung-freigabe.php:24 views/erklaerung-schritt.php:24
 msgid "← Back to the overview"
@@ -576,15 +580,15 @@ msgid ""
 "The draft could not be retrieved from the service. Please try again in a "
 "moment."
 msgstr ""
-"Der Entwurf ließ sich beim Dienst nicht abrufen. Bitte versuche es gleich "
-"noch einmal."
+"Der Entwurf ließ sich beim Dienst nicht abrufen. Bitte versuchen Sie es "
+"gleich noch einmal."
 
 #: views/erklaerung-freigabe.php:40
 msgid ""
 "Not all steps are done yet. You can look at the draft, but it can only be "
 "published once every step is done."
 msgstr ""
-"Noch sind nicht alle Schritte erledigt. Den Entwurf kannst du ansehen, "
+"Noch sind nicht alle Schritte erledigt. Den Entwurf können Sie ansehen, "
 "veröffentlichen lässt er sich erst, wenn jeder Schritt erledigt ist."
 
 #: views/erklaerung-freigabe.php:41
@@ -615,7 +619,7 @@ msgstr "Ich möchte eine abweichende Konformitätsaussage veröffentlichen"
 
 #: views/erklaerung-freigabe.php:91
 msgid "Justification (required when deviating)"
-msgstr "Begründung (Pflicht, wenn du abweichst)"
+msgstr "Begründung (Pflicht, wenn Sie abweichen)"
 
 #: views/erklaerung-freigabe.php:97
 msgid "Released by"
@@ -680,18 +684,18 @@ msgid ""
 "there."
 msgstr ""
 "Der Dienst, mit dem diese Website verbunden ist, unterstützt das Vorbereiten "
-"und Veröffentlichen der Erklärung aus WordPress noch nicht. Du kannst das in "
-"deinem Konto dort erledigen."
+"und Veröffentlichen der Erklärung aus WordPress noch nicht. Sie können das "
+"in Ihrem Konto dort erledigen."
 
 #: views/erklaerung-nicht-erreichbar.php:17
 msgid "The steps to your accessibility statement could not be retrieved."
 msgstr ""
-"Die Schritte zu deiner Erklärung zur Barrierefreiheit ließen sich nicht "
+"Die Schritte zu Ihrer Erklärung zur Barrierefreiheit ließen sich nicht "
 "abrufen."
 
 #: views/erklaerung-nicht-erreichbar.php:24
 msgid "Open your account in the service"
-msgstr "Dein Konto im Dienst öffnen"
+msgstr "Ihr Konto im Dienst öffnen"
 
 #: views/erklaerung-rueckmeldung.php:25
 msgid "There is a problem"
@@ -715,7 +719,7 @@ msgstr "Für diese Website stellt sich die Frage nicht."
 
 #: views/erklaerung-schritt-betroffenheit.php:56
 msgid "Only if you ticked a service above:"
-msgstr "Nur, wenn du oben eine Dienstleistung angekreuzt hast:"
+msgstr "Nur, wenn Sie oben eine Dienstleistung angekreuzt haben:"
 
 #: views/erklaerung-schritt-betroffenheit.php:69
 msgid "Current result"
@@ -738,7 +742,7 @@ msgstr "Die Domain ist bestätigt."
 #: views/erklaerung-schritt-domain.php:14
 msgid "The plugin serves the proof itself, so you need no access to DNS."
 msgstr ""
-"Das Plugin liefert den Nachweis selbst aus; Zugriff auf das DNS brauchst du "
+"Das Plugin liefert den Nachweis selbst aus; Zugriff auf das DNS brauchen Sie "
 "nicht."
 
 #: views/erklaerung-schritt-pflichtangaben.php:17
@@ -775,8 +779,8 @@ msgid ""
 "Address of the page with these explanations. They belong on your home page; "
 "the statement only links to them."
 msgstr ""
-"Adresse der Seite mit diesen Erläuterungen. Sie gehören auf deine "
-"Startseite; die Erklärung verweist nur darauf."
+"Adresse der Seite mit diesen Erläuterungen. Sie gehören auf Ihre Startseite; "
+"die Erklärung verweist nur darauf."
 
 #: views/erklaerung-schritt-pflichtangaben.php:29
 msgid "Description of the service"
@@ -788,7 +792,7 @@ msgid ""
 "requires both: a general description and explanations of how the service is "
 "carried out."
 msgstr ""
-"Was bietest du an, und was muss man wissen, um es zu nutzen? Das Gesetz "
+"Was bieten Sie an, und was muss man wissen, um es zu nutzen? Das Gesetz "
 "verlangt beides: eine allgemeine Beschreibung und Erläuterungen zur "
 "Durchführung."
 
@@ -809,7 +813,7 @@ msgid ""
 "These details cannot be derived from a scan - only you know them. They "
 "appear in the statement."
 msgstr ""
-"Diese Angaben kann keine Prüfung ermitteln – nur du kennst sie. Sie "
+"Diese Angaben kann keine Prüfung ermitteln – nur Sie kennen sie. Sie "
 "erscheinen in der Erklärung."
 
 #: views/erklaerung-schritt-pflichtangaben.php:94
@@ -821,7 +825,7 @@ msgid ""
 "Pre-filled for your jurisdiction. For regional authorities and "
 "municipalities, the body of the respective state applies - please check."
 msgstr ""
-"Vorbelegt für deinen Rechtsraum. Bei Landesbehörden und Kommunen ist die "
+"Vorbelegt für Ihren Rechtsraum. Bei Landesbehörden und Kommunen ist die "
 "Stelle des jeweiligen Landes zuständig – bitte prüfen."
 
 #: views/erklaerung-schritt-pflichtangaben.php:102
@@ -833,8 +837,8 @@ msgid ""
 "No machine can fully assess these requirements. Go through them once; your "
 "answers flow into the statement."
 msgstr ""
-"Diese Anforderungen kann keine Maschine abschließend beurteilen. Geh sie "
-"einmal durch; deine Antworten fließen in die Erklärung ein."
+"Diese Anforderungen kann keine Maschine abschließend beurteilen. Gehen Sie "
+"sie einmal durch; Ihre Antworten fließen in die Erklärung ein."
 
 #. translators: 1: open checks, 2: total number of checks
 #: views/erklaerung-schritt-pruefschritte.php:28
@@ -857,8 +861,8 @@ msgstr "Erfolgskriterium %s"
 msgid ""
 "The page template has changed since your last answer. Please check again."
 msgstr ""
-"Die Seitenvorlage hat sich seit deiner letzten Antwort geändert. Bitte prüfe "
-"erneut."
+"Die Seitenvorlage hat sich seit Ihrer letzten Antwort geändert. Bitte prüfen "
+"Sie erneut."
 
 #: views/erklaerung-schritt-pruefschritte.php:73
 msgid "Taken over from the previous scan."
@@ -887,7 +891,7 @@ msgstr "Vollständigen Bericht öffnen"
 
 #: views/erklaerung-schritt-unbekannt.php:12
 msgid "This step can only be completed in the service for now."
-msgstr "Diesen Schritt erledigst du vorerst im Dienst."
+msgstr "Diesen Schritt erledigen Sie vorerst im Dienst."
 
 #: views/erklaerung-schritt-unbekannt.php:16
 msgid "Complete this step in the service"
@@ -938,12 +942,12 @@ msgid ""
 "This step could not be retrieved from the service. Please try again in a "
 "moment."
 msgstr ""
-"Dieser Schritt ließ sich beim Dienst nicht abrufen. Bitte versuche es gleich "
-"noch einmal."
+"Dieser Schritt ließ sich beim Dienst nicht abrufen. Bitte versuchen Sie es "
+"gleich noch einmal."
 
 #: views/erklaerung-uebersicht.php:33
 msgid "Your accessibility statement"
-msgstr "Deine Erklärung zur Barrierefreiheit"
+msgstr "Ihre Erklärung zur Barrierefreiheit"
 
 #. translators: 1: version number, 2: date
 #: views/erklaerung-uebersicht.php:41
@@ -956,8 +960,8 @@ msgid ""
 "It is out of date: a newer scan result is available. Please release a new "
 "version."
 msgstr ""
-"Sie ist veraltet: Ein neueres Prüfergebnis liegt vor. Bitte gib eine neue "
-"Version frei."
+"Sie ist veraltet: Ein neueres Prüfergebnis liegt vor. Bitte geben Sie eine "
+"neue Version frei."
 
 #: views/erklaerung-uebersicht.php:52
 msgid "Download as PDF"
@@ -1001,7 +1005,7 @@ msgid ""
 "where the screenshots are. These assessments shape the text of the statement."
 msgstr ""
 "Befunde, die kein Mangel sind, nicht behoben werden oder eine "
-"unverhältnismäßige Belastung wären, bewertest du im vollständigen Bericht im "
+"unverhältnismäßige Belastung wären, bewerten Sie im vollständigen Bericht im "
 "Dienst, dort liegen die Bildschirmfotos. Diese Bewertungen prägen den Text "
 "der Erklärung."
 
@@ -1011,7 +1015,7 @@ msgstr "Befunde im Dienst bewerten"
 
 #: views/erklaerung-uebersicht.php:127
 msgid "On your website"
-msgstr "Auf deiner Website"
+msgstr "Auf Ihrer Website"
 
 #: views/erklaerung-uebersicht.php:130
 msgid "The statement is embedded on:"
@@ -1034,8 +1038,8 @@ msgid ""
 "The page shows each new version automatically. Link to it from every page of "
 "your website, usually in the footer."
 msgstr ""
-"Die Seite zeigt jede neue Version von selbst. Verlinke sie von jeder Seite "
-"deiner Website aus, üblicherweise in der Fußzeile."
+"Die Seite zeigt jede neue Version von selbst. Verlinken Sie sie von jeder "
+"Seite Ihrer Website aus, üblicherweise in der Fußzeile."
 
 #: views/erklaerung-uebersicht.php:146
 msgid ""
@@ -1055,9 +1059,10 @@ msgid ""
 "Alternatively, add the shortcode [barrierefreiheitserklaerung] or the block "
 "“Accessibility statement” to a page of your choice."
 msgstr ""
-"Die Seite entsteht als Entwurf, damit du sie prüfen kannst, bevor sie online "
-"geht. Alternativ setzt du den Shortcode [barrierefreiheitserklaerung] oder "
-"den Block „Erklärung zur Barrierefreiheit“ auf eine Seite deiner Wahl."
+"Die Seite entsteht als Entwurf, damit Sie sie prüfen können, bevor sie "
+"online geht. Alternativ setzen Sie den Shortcode "
+"[barrierefreiheitserklaerung] oder den Block „Erklärung zur "
+"Barrierefreiheit“ auf eine Seite Ihrer Wahl."
 
 #: views/reiter.php:17
 msgid "Scan"
@@ -1069,7 +1074,7 @@ msgstr "Bereiche"
 
 #: views/statusmeldung.php:21
 msgid "Connected. Please verify the domain now."
-msgstr "Verbindung hergestellt. Bestätige jetzt die Domain."
+msgstr "Verbindung hergestellt. Bestätigen Sie jetzt die Domain."
 
 #: views/statusmeldung.php:23
 msgid "The domain could not be verified."

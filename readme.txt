@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, bitv, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.6.4
+Stable tag: 0.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,16 @@ next scan from the same place.
 Screenshots of the occurrences stay on the service's website and are reachable from the link to
 the full report.
 
+Under *Tools → Accessibility → Accessibility statement* you can go the whole way to a published
+statement without leaving WordPress: answer the manual checks, say who is making the statement,
+answer the applicability check, fill in the mandatory details, review the draft and publish it.
+The steps, the questions and the legal texts come from the service, so they are always current.
+Every version you publish is recorded with the name of the person who released it. Afterwards the
+plugin finds the page that embeds the statement, or creates one as a draft.
+
+Publishing from WordPress requires a token that an administrator in the service has explicitly
+allowed to publish.
+
 The statement is embedded **server-side** — so it is fully present without JavaScript and for
 assistive technologies.
 
@@ -45,7 +55,10 @@ What is transmitted:
 
 * the address of this site,
 * the API token you created,
-* the ID of your site within the service.
+* the ID of your site within the service,
+* when you answer manual checks, the applicability check or the mandatory details, or publish
+  the statement: your answers and details, and the display name of the WordPress user who does
+  it. The service records that name as evidence of who released a version.
 
 **No** content and **no** personal data of your visitors are transmitted. Transmission happens
 when you start a scan, when you verify the domain, when the page *Tools → Accessibility* is
@@ -138,8 +151,9 @@ problem for you.
 
 = Which languages does the plugin come in? =
 
-English (source language) and German. The template for further translations ships with the
-plugin under `languages/barrierepruefung-de-web-accessibility-checker.pot`.
+English (source language) and German, in both forms of address: informal (de_DE, "Du") and
+formal (de_DE_formal, "Sie"), as WordPress distinguishes them. The template for further
+translations ships with the plugin under `languages/barrierepruefung-de-web-accessibility-checker.pot`.
 
 = I mistyped something while connecting — how do I get back? =
 
@@ -168,6 +182,23 @@ remaining test steps; the statement explicitly states that it is based on a self
    occurrences and the pages affected. Each rule can be expanded to its individual occurrences.
 
 == Changelog ==
+
+= 0.7.0 =
+* Added: A new tab "Accessibility statement" leads step by step to a published statement:
+  manual checks, who is making the statement, applicability check, mandatory details, review and
+  publish. The steps and their texts come from the service; a step this version does not know yet
+  links to the service instead of being left out.
+* Added: Publishing sends the identifier of the draft you reviewed and a one-time key, so a
+  double click never creates a second version and a draft that changed in the meantime is not
+  published unseen.
+* Added: After publishing, pages that embed the statement show the new version right away, and
+  the plugin finds those pages - or creates one as a draft.
+* Added: The admin page shows when the published statement is out of date.
+* Changed: Requests to the service carry the language of the WordPress user, so the service's
+  texts appear in that language.
+* Changed: German now ships in both forms of address, as WordPress distinguishes them: de_DE
+  uses the informal "Du", the new de_DE_formal the formal "Sie". Until now de_DE used "Sie",
+  and installations set to "Deutsch (Sie)" saw English.
 
 = 0.6.4 =
 * Fixed: In the German translation, the hint shown before the first scan closed the quoted

@@ -76,9 +76,17 @@ class Barrierepruefung_Client
     /**
      * @return array{ok: bool, status: int, data: array<string, mixed>, error: string|null}
      */
-    public function post(string $pfad, array $body = []): array
+    public function post(string $pfad, array $body = [], array $headers = []): array
     {
-        return $this->request('POST', $pfad, $body);
+        return $this->request('POST', $pfad, $body, $headers);
+    }
+
+    /**
+     * @return array{ok: bool, status: int, data: array<string, mixed>, error: string|null}
+     */
+    public function put(string $pfad, array $body = []): array
+    {
+        return $this->request('PUT', $pfad, $body);
     }
 
     /**
@@ -97,6 +105,10 @@ class Barrierepruefung_Client
                 'Authorization' => 'Bearer '.$this->token(),
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
+                // Fachtexte - Prüfschritte, Katalog des Betroffenheits-Checks,
+                // Gründe - kommen vom Dienst. In der Sprache der Person, die
+                // gerade vor dem Backend sitzt, nicht in der der Website.
+                'Accept-Language' => str_replace('_', '-', (string) get_user_locale()),
             ], $headers),
         ];
 
@@ -116,14 +128,21 @@ class Barrierepruefung_Client
 
         if ($status >= 400) {
             // Fehler kommen als problem+json; „detail" ist der lesbare Teil.
-            return $this->fehler($status, $daten['detail'] ?? $daten['title'] ?? __('Unknown error.', 'barrierepruefung-de-web-accessibility-checker'));
+            // Der Rest bleibt in „data": „reason", „errors" und „blockers" sind
+            // das, woran die Oberfläche erkennt, was zu tun ist.
+            return $this->fehler(
+                $status,
+                $daten['detail'] ?? $daten['title'] ?? __('Unknown error.', 'barrierepruefung-de-web-accessibility-checker'),
+                $daten
+            );
         }
 
         return ['ok' => true, 'status' => $status, 'data' => $daten, 'error' => null];
     }
 
-    private function fehler(int $status, string $meldung): array
+    /** @param array<string, mixed> $daten */
+    private function fehler(int $status, string $meldung, array $daten = []): array
     {
-        return ['ok' => false, 'status' => $status, 'data' => [], 'error' => $meldung];
+        return ['ok' => false, 'status' => $status, 'data' => $daten, 'error' => $meldung];
     }
 }

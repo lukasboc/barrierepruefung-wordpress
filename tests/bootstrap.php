@@ -14,6 +14,10 @@ if (! defined('BARRIEREPRUEFUNG_BASENAME')) {
     define('BARRIEREPRUEFUNG_BASENAME', 'barrierepruefung-de-web-accessibility-checker/barrierepruefung-de-web-accessibility-checker.php');
 }
 
+if (! defined('HOUR_IN_SECONDS')) {
+    define('HOUR_IN_SECONDS', 3600);
+}
+
 if (! defined('DAY_IN_SECONDS')) {
     define('DAY_IN_SECONDS', 86400);
 }
@@ -175,3 +179,78 @@ function submit_button(...$a) { return ($GLOBALS['wp_stubs']['submit_button'])(.
 function date_i18n(...$a) { return ($GLOBALS['wp_stubs']['date_i18n'])(...$a); }
 function home_url(...$a) { return ($GLOBALS['wp_stubs']['home_url'])(...$a); }
 function wp_parse_url(...$a) { return ($GLOBALS['wp_stubs']['wp_parse_url'])(...$a); }
+
+/*
+ * Dritter Satz: was der Weg zur Erklärung braucht - Rückmeldung je Person
+ * (User-Meta), die handelnde Person, das Anlegen einer Seite als Entwurf.
+ */
+$GLOBALS['wp_user_meta'] = [];
+$GLOBALS['wp_beitraege'] = [];
+$GLOBALS['wp_neue_beitraege'] = [];
+
+$GLOBALS['wp_stubs'] += [
+    'get_user_locale' => static fn () => $GLOBALS['wp_sprache'] ?? 'de_DE',
+    'get_current_user_id' => static fn () => 7,
+    'wp_get_current_user' => static fn () => (object) ['ID' => 7, 'display_name' => 'Wanda WordPress'],
+    'get_user_meta' => static fn ($id, $schluessel = '', $einzeln = false) => $GLOBALS['wp_user_meta'][$id][$schluessel] ?? ($einzeln ? '' : []),
+    'update_user_meta' => static function ($id, $schluessel, $wert) {
+        $GLOBALS['wp_user_meta'][$id][$schluessel] = $wert;
+
+        return true;
+    },
+    'delete_user_meta' => static function ($id, $schluessel) {
+        unset($GLOBALS['wp_user_meta'][$id][$schluessel]);
+
+        return true;
+    },
+    'wp_generate_uuid4' => static fn () => 'uuid-'.bin2hex(random_bytes(4)),
+    'sanitize_textarea_field' => static fn ($text) => is_string($text) ? trim($text) : $text,
+    'esc_textarea' => static fn ($text) => htmlspecialchars((string) $text, ENT_QUOTES),
+    'checked' => static function ($a, $b = true, $ausgeben = true) {
+        $wert = ((string) $a === (string) $b) ? ' checked="checked"' : '';
+        if ($ausgeben) {
+            echo $wert;
+        }
+
+        return $wert;
+    },
+    'get_posts' => static fn ($argumente = []) => array_values(array_filter(
+        $GLOBALS['wp_beitraege'],
+        static fn ($beitrag) => str_contains($beitrag->post_content, (string) ($argumente['s'] ?? ''))
+    )),
+    'wp_insert_post' => static function ($daten) {
+        $id = 100 + count($GLOBALS['wp_neue_beitraege']);
+        $GLOBALS['wp_neue_beitraege'][$id] = $daten;
+
+        return $id;
+    },
+    'get_edit_post_link' => static fn ($id, $kontext = 'display') => 'https://beispiel.test/wp-admin/post.php?post='.$id.'&action=edit',
+    'get_permalink' => static fn ($id) => 'https://kundin.test/?page_id='.$id,
+    'get_the_title' => static fn ($id) => 'Seite '.$id,
+    'add_filter' => static fn () => true,
+    'add_action' => static fn () => true,
+];
+
+function get_user_locale(...$a) { return ($GLOBALS['wp_stubs']['get_user_locale'])(...$a); }
+function get_current_user_id(...$a) { return ($GLOBALS['wp_stubs']['get_current_user_id'])(...$a); }
+function wp_get_current_user(...$a) { return ($GLOBALS['wp_stubs']['wp_get_current_user'])(...$a); }
+function get_user_meta(...$a) { return ($GLOBALS['wp_stubs']['get_user_meta'])(...$a); }
+function update_user_meta(...$a) { return ($GLOBALS['wp_stubs']['update_user_meta'])(...$a); }
+function delete_user_meta(...$a) { return ($GLOBALS['wp_stubs']['delete_user_meta'])(...$a); }
+function wp_generate_uuid4(...$a) { return ($GLOBALS['wp_stubs']['wp_generate_uuid4'])(...$a); }
+function sanitize_textarea_field(...$a) { return ($GLOBALS['wp_stubs']['sanitize_textarea_field'])(...$a); }
+function esc_textarea(...$a) { return ($GLOBALS['wp_stubs']['esc_textarea'])(...$a); }
+function checked(...$a) { return ($GLOBALS['wp_stubs']['checked'])(...$a); }
+function get_posts(...$a) { return ($GLOBALS['wp_stubs']['get_posts'])(...$a); }
+function wp_insert_post(...$a) { return ($GLOBALS['wp_stubs']['wp_insert_post'])(...$a); }
+function get_edit_post_link(...$a) { return ($GLOBALS['wp_stubs']['get_edit_post_link'])(...$a); }
+function get_permalink(...$a) { return ($GLOBALS['wp_stubs']['get_permalink'])(...$a); }
+function get_the_title(...$a) { return ($GLOBALS['wp_stubs']['get_the_title'])(...$a); }
+function add_filter(...$a) { return ($GLOBALS['wp_stubs']['add_filter'])(...$a); }
+function add_action(...$a) { return ($GLOBALS['wp_stubs']['add_action'])(...$a); }
+
+$GLOBALS['wp_stubs'] += [
+    'esc_attr_e' => static function ($text, $domain = null) { echo htmlspecialchars((string) $text, ENT_QUOTES); },
+];
+
+function esc_attr_e(...$a) { return ($GLOBALS['wp_stubs']['esc_attr_e'])(...$a); }
