@@ -20,6 +20,14 @@ braucht, wo Token und Website-Kennung herkommen und was nach dem Verbinden noch 
 Aktivierung führt ein einmaliger Hinweis dorthin, dauerhaft der Verweis *Einstellungen* in der
 Plugin-Liste.
 
+Im Reiter *Erklärung* führt der ganze Weg zur veröffentlichten Erklärung durch WordPress:
+Prüfschritte beantworten, festlegen, wer erklärt, Betroffenheits-Check, Pflichtangaben, Entwurf
+prüfen und freigeben. Schritte, Fragen und Rechtstexte kommen vom Dienst — das Plugin kennt kein
+Recht und muss deshalb bei einer Rechtsänderung nicht neu erscheinen. Jede Fassung hält fest,
+wer sie in WordPress freigegeben hat. Danach findet das Plugin die Seite mit der Erklärung oder
+legt eine als Entwurf an. Veröffentlichen setzt ein Token voraus, dem eine Admin im Dienst das
+ausdrücklich erlaubt hat.
+
 Die Erklärung wird **serverseitig** eingebunden — sie ist also auch ohne JavaScript und für
 assistive Technologien vollständig vorhanden.
 

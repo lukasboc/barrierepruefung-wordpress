@@ -727,4 +727,24 @@ final class AdminTest extends TestCase
             $this->assertArrayHasKey('barrierepruefung_token', $GLOBALS['wp_options']);
         }
     }
+
+    /**
+     * Domain bestätigen gibt es auch als Schritt im Reiter „Erklärung". Wer
+     * dort klickt, soll dort bleiben und nicht auf dem anderen Reiter landen.
+     */
+    public function test_aus_dem_reiter_erklaerung_geht_es_dorthin_zurueck(): void
+    {
+        $_POST = ['barrierepruefung_schritt' => 'domain'];
+        $this->antwort(['data' => ['verified' => true]]);
+
+        try {
+            $this->admin->handle_verify();
+            $this->fail('Die Aktion hat nicht umgeleitet.');
+        } catch (Barrierepruefung_Umleitung $umleitung) {
+            $this->assertStringContainsString('ansicht=erklaerung', $umleitung->ziel);
+            $this->assertStringContainsString('schritt=domain', $umleitung->ziel);
+        }
+
+        $_POST = [];
+    }
 }

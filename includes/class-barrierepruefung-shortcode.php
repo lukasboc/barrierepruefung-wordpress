@@ -101,6 +101,33 @@ class Barrierepruefung_Shortcode
     }
 
     /**
+     * Der Entwurf für die Vorschau in der Freigabe.
+     *
+     * Dieselbe Verschiebung der Überschriften wie beim Einbinden - unter der
+     * h2 des Freigabebildschirms beginnt der Text bei h3. Eine h1 mitten im
+     * Backend wäre derselbe Fehler, den der Shortcode auf der Website
+     * vermeidet (WCAG 1.3.1).
+     */
+    public function vorschau(string $html): string
+    {
+        return $this->ueberschriften_verschieben($html, 3);
+    }
+
+    /**
+     * Verwirft den Zwischenspeicher und holt die Erklärung sofort neu.
+     *
+     * Nach einer Freigabe aus dem Plugin: die Seite soll die neue Fassung
+     * gleich zeigen, nicht erst nach einer Stunde. Gelingt der Abruf nicht,
+     * bleibt die Rückfallebene die letzte gute Fassung - wie bei jedem Abruf.
+     */
+    public function auffrischen(): void
+    {
+        delete_transient(self::CACHE_KEY);
+
+        $this->fetch();
+    }
+
+    /**
      * Holt die Erklärung, mit Zwischenspeicher und Rückfallebene.
      *
      * @return array<string, mixed>|null

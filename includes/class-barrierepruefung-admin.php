@@ -148,6 +148,19 @@ class Barrierepruefung_Admin
 
         $client = new Barrierepruefung_Client;
         $verbunden = $client->is_connected();
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nur Lesen eines Anzeigeparameters, keine Zustandsaenderung.
+        $ansicht = isset($_GET['ansicht']) ? sanitize_key(wp_unslash($_GET['ansicht'])) : '';
+
+        // Der Weg zur Erklärung braucht eine Verbindung. Ohne sie zeigt auch
+        // dieser Reiter die Anleitung zum Verbinden - sie ist dann das Einzige,
+        // was weiterführt.
+        if ($verbunden && $ansicht === 'erklaerung') {
+            include BARRIEREPRUEFUNG_PATH.'views/erklaerung-seite.php';
+
+            return;
+        }
+
         $site = null;
         $befunde = [];
         $abruffehler = null;
@@ -425,9 +438,17 @@ class Barrierepruefung_Admin
 
     private function zurueck(string $status, ?string $meldung = null): void
     {
+        // Domain bestätigen und Prüfung starten gibt es auch als Schritt im
+        // Reiter „Erklärung". Wer dort geklickt hat, soll dort bleiben - nicht
+        // auf dem anderen Reiter landen und den Faden verlieren.
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce wurde vom Aufrufer per pruefe_berechtigung() geprueft.
+        $schritt = isset($_POST['barrierepruefung_schritt']) ? sanitize_key(wp_unslash($_POST['barrierepruefung_schritt'])) : '';
+
         wp_safe_redirect(add_query_arg(
             array_filter([
                 'page' => 'barrierepruefung',
+                'ansicht' => $schritt !== '' ? 'erklaerung' : null,
+                'schritt' => $schritt !== '' ? $schritt : null,
                 'barrierepruefung_status' => $status,
                 'barrierepruefung_meldung' => $meldung ? rawurlencode(substr($meldung, 0, 200)) : null,
             ]),

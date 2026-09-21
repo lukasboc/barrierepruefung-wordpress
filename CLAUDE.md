@@ -16,11 +16,23 @@ composer lint:fix
 
 ## Aufbau
 
-`barrierepruefung-de-web-accessibility-checker.php` lädt die vier Klassen aus `includes/` in `plugins_loaded`:
+`barrierepruefung-de-web-accessibility-checker.php` lädt die fünf Klassen aus `includes/` in `plugins_loaded`:
 `Barrierepruefung_Client` (nur `wp_remote_*`, Zugang zur Public API v1), `Barrierepruefung_Verification`
 (Domain-Nachweis als Meta-Element und unter `/.well-known/`), `Barrierepruefung_Shortcode`
-(`[barrierefreiheitserklaerung]` samt Block, serverseitig gerendert) und `Barrierepruefung_Admin`
-(Seite unter *Werkzeuge*).
+(`[barrierefreiheitserklaerung]` samt Block, serverseitig gerendert), `Barrierepruefung_Admin`
+(Seite unter *Werkzeuge*, Reiter „Prüfung“) und `Barrierepruefung_Erklaerung` (Reiter „Erklärung“:
+der Weg bis zur veröffentlichten Erklärung).
+
+Der Reiter „Erklärung“ **kennt kein Recht.** Welche Schritte es gibt, was offen ist, welche Felder
+für eine Dokumentart gelten, welche Fragen der Betroffenheits-Check stellt und was daraus folgt,
+liefert der Dienst (docs/08 dort, „Der Weg zur Erklärung über die API“). Hier wird es dargestellt
+und zurückgeschickt, nicht nachgebaut — eine Rechtsänderung darf kein Plugin-Release verlangen.
+Ein Schritt-Schlüssel, den diese Fassung nicht kennt, erscheint mit Titel, Gründen und `web_url`,
+statt zu fehlen. Fachtexte kommen deshalb in der Sprache aus `Accept-Language` vom Dienst; nur die
+Bedienung des Plugins steht in `__()`. Nach einer Aktion liegt die Rückmeldung (Fehler je Feld,
+eingegebene Werte) als User-Meta `barrierepruefung_rueckmeldung` und wird genau einmal gelesen.
+Die Freigabe schickt `draft_etag`, `expected_version` und einen beim Anzeigen erzeugten
+`Idempotency-Key` — nicht beim Absenden, sonst schützt er nicht vor dem Doppelklick.
 
 ## Was hier nicht verhandelbar ist
 
@@ -85,10 +97,21 @@ beide Dateien in denselben Commit:
 ```bash
 wp i18n make-pot . languages/barrierepruefung-de-web-accessibility-checker.pot --slug=barrierepruefung-de-web-accessibility-checker --domain=barrierepruefung-de-web-accessibility-checker \
     --exclude=vendor,tests,dist
-msgmerge --update --backup=none languages/barrierepruefung-de-web-accessibility-checker-de_DE.po languages/barrierepruefung-de-web-accessibility-checker.pot
-# deutsche Fassung nachtragen, dann:
-msgfmt --check -o languages/barrierepruefung-de-web-accessibility-checker-de_DE.mo languages/barrierepruefung-de-web-accessibility-checker-de_DE.po
+for v in de_DE de_DE_formal; do
+    msgmerge --update --backup=none languages/barrierepruefung-de-web-accessibility-checker-$v.po languages/barrierepruefung-de-web-accessibility-checker.pot
+done
+# beide deutschen Fassungen nachtragen, dann:
+for v in de_DE de_DE_formal; do
+    msgfmt --check --statistics -o languages/barrierepruefung-de-web-accessibility-checker-$v.mo languages/barrierepruefung-de-web-accessibility-checker-$v.po
+done
 ```
+
+**Zwei deutsche Fassungen, zwei Anreden.** WordPress trennt sie über die Locale: `de_DE` duzt,
+`de_DE_formal` siezt — so übersetzt auch translate.wordpress.org, dessen Sprachpaket die
+mitgelieferte Datei später ersetzt. Bis 0.6.4 siezte `de_DE`; das wäre beim ersten Sprachpaket
+still zum Du gekippt. Jede neue Zeichenkette gehört deshalb in **beide** Dateien, jeweils in der
+passenden Anrede. „Sie“ als Pronomen der dritten Person („Sie bleibt online“) bleibt in beiden
+stehen — die Suche nach `\bSie\b` in `de_DE.po` findet also Treffer, die richtig sind.
 
 Eine englische msgid ohne deutschen msgstr fällt nicht auf: die Seite zeigt dann englischen
 Text in einer deutschen Installation, ohne Fehler. `msgfmt --statistics` nennt die Zahl der
@@ -97,8 +120,8 @@ Author-URI).
 
 Auch `*.mo` gehört ins Repository. Solange translate.wordpress.org für eine Sprache kein
 Sprachpaket gebaut hat, läuft ohne die mitgelieferte `.mo` jede deutsche Installation auf
-Englisch. Gibt es eins, gewinnt es aus `WP_LANG_DIR` ohnehin. Mitgeliefert ist nur `de_DE`;
-`de_AT`, `de_CH` und `de_DE_formal` sehen bis zu ihrem Sprachpaket Englisch — WordPress hat
+Englisch. Gibt es eins, gewinnt es aus `WP_LANG_DIR` ohnehin. Mitgeliefert sind `de_DE` und
+`de_DE_formal`; `de_AT` und `de_CH` sehen bis zu ihrem Sprachpaket Englisch — WordPress hat
 keinen Rückfall zwischen Locales.
 
 Nicht übersetzt werden Shortcode-Name und Attribute (`teil`, `stand`, `ueberschrift`, `sprache`

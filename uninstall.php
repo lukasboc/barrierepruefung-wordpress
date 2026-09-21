@@ -70,3 +70,10 @@ if (is_multisite()) {
 } else {
     barrierepruefung_purge_site();
 }
+
+/*
+ * Die Rückmeldung nach einer Aktion im Reiter „Erklärung" liegt je Person
+ * als User-Meta. Die Tabelle dafür teilen sich im Netzwerk alle Unterseiten -
+ * einmal löschen genügt, für alle Personen.
+ */
+delete_metadata('user', 0, 'barrierepruefung_rueckmeldung', '', true);
