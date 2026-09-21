@@ -2,7 +2,7 @@
 Contributors: lukasbo
 Tags: accessibility, barrierefreiheit, barriereprüfung, bfsg, wcag
 Requires at least: 6.5
-Tested up to: 7.1.1
+Tested up to: 7.1
 Requires PHP: 8.1
 Stable tag: 0.7.0
 License: GPLv2 or later
@@ -194,7 +194,7 @@ remaining test steps; the statement explicitly states that it is based on a self
 * Added: After publishing, pages that embed the statement show the new version right away, and
   the plugin finds those pages - or creates one as a draft.
 * Added: The admin page shows when the published statement is out of date.
-* Changed: Tested up to WordPress 7.1.1.
+* Changed: Tested with WordPress 7.1.1.
 * Changed: New tag "barriereprüfung", so the plugin can be found by that search term; "bitv"
   gives way, as the directory uses only five tags.
 * Changed: Requests to the service carry the language of the WordPress user, so the service's
