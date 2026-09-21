@@ -25,7 +25,9 @@ die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 ### Geändert
 
 - Anfragen an den Dienst tragen die Sprache der WordPress-Person (`Accept-Language`).
-- Getestet bis WordPress 7.1.1.
+- Getestet mit WordPress 7.1.1. Im Kopf der `readme.txt` steht weiter `Tested up to: 7.1`: das
+  Verzeichnis nimmt dort nur die Hauptversion an (Plugin Check: `invalid_tested_upto_minor`), und
+  7.1 umfasst 7.1.1.
 - Neuer Tag „barriereprüfung“, damit das Plugin unter diesem Suchbegriff gefunden wird. Dafür
   entfällt „bitv“: das Verzeichnis wertet nur fünf Tags aus.
 - Deutsch liegt jetzt in beiden Anreden bei, so wie WordPress sie trennt: `de_DE` duzt, das neue

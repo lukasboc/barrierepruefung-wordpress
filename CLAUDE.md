@@ -129,6 +129,10 @@ samt Werten `komplett`, `maengel`, `kontakt`) — das sind Bezeichner, keine Pro
 Änderungsverlauf in der `readme.txt` ist die englische Fassung von `CHANGELOG.md`, nicht dessen
 Kopie.
 
+`Tested up to:` in der `readme.txt` nimmt nur die Hauptversion (`7.1`), nie eine Patch-Version:
+Plugin Check bricht bei `7.1.1` mit `invalid_tested_upto_minor` ab. Gegen welche Patch-Version
+tatsächlich getestet wurde, steht im Änderungsverlauf.
+
 ### Veröffentlichen
 
 Eine Version erscheint, indem ihr Tag `vX.Y.Z` gepusht wird. `release.yml` baut daraus einmal
