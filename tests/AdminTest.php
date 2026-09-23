@@ -261,6 +261,7 @@ final class AdminTest extends TestCase
      */
     public function test_eine_bestaetigte_domain_verwirft_den_zwischenspeicher(): void
     {
+        $this->nachweise();
         $this->antwort(['data' => ['verified' => true, 'method' => 'meta_tag', 'failure_reason' => null]]);
 
         $status = $this->ausfuehren('handle_verify');
@@ -277,6 +278,7 @@ final class AdminTest extends TestCase
      */
     public function test_ein_gescheiterter_versuch_laesst_den_zwischenspeicher_stehen(): void
     {
+        $this->nachweise();
         $this->antwort(['data' => ['verified' => false, 'method' => 'meta_tag', 'failure_reason' => 'meta_tag_nicht_gefunden']]);
         $this->antwort(['data' => ['verified' => false, 'method' => 'file', 'failure_reason' => 'datei_nicht_erreichbar']]);
 
@@ -295,6 +297,7 @@ final class AdminTest extends TestCase
 
     public function test_scheitert_das_meta_element_wird_die_datei_versucht(): void
     {
+        $this->nachweise();
         $this->antwort(['data' => ['verified' => false, 'method' => 'meta_tag', 'failure_reason' => 'meta_tag_nicht_gefunden']]);
         $this->antwort(['data' => ['verified' => true, 'method' => 'file', 'failure_reason' => null]]);
 
@@ -306,6 +309,7 @@ final class AdminTest extends TestCase
 
     public function test_gelingt_das_meta_element_wird_die_datei_nicht_mehr_versucht(): void
     {
+        $this->nachweise();
         $this->antwort(['data' => ['verified' => true, 'method' => 'meta_tag', 'failure_reason' => null]]);
 
         $this->ausfuehren('handle_verify');
@@ -316,6 +320,7 @@ final class AdminTest extends TestCase
     /** Beide Gründe, je mit Verfahren - „token_nicht_gefunden" etwa heißt bei der Datei etwas anderes als beim DNS. */
     public function test_scheitern_beide_verfahren_gehen_beide_gruende_mit(): void
     {
+        $this->nachweise();
         $this->antwort(['data' => ['verified' => false, 'method' => 'meta_tag', 'failure_reason' => 'meta_tag_nicht_gefunden']]);
         $this->antwort(['data' => ['verified' => false, 'method' => 'file', 'failure_reason' => 'datei_nicht_erreichbar']]);
 
@@ -333,6 +338,7 @@ final class AdminTest extends TestCase
      */
     public function test_eine_anders_bestaetigte_website_gilt_als_bestaetigt(): void
     {
+        $this->nachweise();
         $this->antwort(['data' => [
             'verified' => false,
             'method' => 'meta_tag',
@@ -349,6 +355,7 @@ final class AdminTest extends TestCase
     /** Ein abgelehnter Aufruf ist kein Grund, das nächste Verfahren zu versuchen. */
     public function test_ein_fehler_des_dienstes_bricht_ab_statt_die_datei_zu_versuchen(): void
     {
+        $this->nachweise();
         $this->antwort(['title' => 'Too Many Requests', 'detail' => 'Zu viele Versuche.'], 429);
 
         $abfrage = $this->umleitung('handle_verify');
@@ -377,13 +384,33 @@ final class AdminTest extends TestCase
         $this->assertSame('01JDATEI2', $GLOBALS['wp_options']['barrierepruefung_verification_file_token']);
     }
 
-    public function test_mit_datei_token_werden_die_nachweise_nicht_erneut_geholt(): void
+    /**
+     * Scheitert der Nachweis-Abruf, bleiben die Tokens der vorigen Verbindung
+     * stehen - jeder weitere Versuch scheiterte sonst auf ewig an ihnen.
+     */
+    public function test_bestaetigen_ersetzt_tokens_einer_frueheren_verbindung(): void
     {
+        $GLOBALS['wp_options']['barrierepruefung_verification_token'] = '01JALTMETA';
+        $GLOBALS['wp_options']['barrierepruefung_verification_file_token'] = '01JALTDATEI';
+        $this->nachweise();
         $this->antwort(['data' => ['verified' => true, 'method' => 'meta_tag', 'failure_reason' => null]]);
 
         $this->ausfuehren('handle_verify');
 
-        $this->assertSame(['/sites/st_123/verify'], $this->abgerufenePfade());
+        $this->assertSame('01JMETA', $GLOBALS['wp_options']['barrierepruefung_verification_token']);
+        $this->assertSame('01JDATEI', $GLOBALS['wp_options']['barrierepruefung_verification_file_token']);
+    }
+
+    /** Scheitert schon der Nachweis-Abruf, wird gar nicht erst um Bestaetigung gebeten. */
+    public function test_scheitern_die_nachweise_wird_nicht_bestaetigt(): void
+    {
+        $this->antwort(['title' => 'Service Unavailable', 'detail' => 'Dienst voruebergehend nicht erreichbar.'], 503);
+
+        $abfrage = $this->umleitung('handle_verify');
+
+        $this->assertSame('nicht_bestaetigt', $abfrage['barrierepruefung_status']);
+        $this->assertSame('Dienst voruebergehend nicht erreichbar.', rawurldecode($abfrage['barrierepruefung_meldung']));
+        $this->assertSame([], $this->versuchteVerfahren());
     }
 
     /** Der Zwischenspeicher gehoert zu einer Verbindung, nicht zur Installation. */
@@ -469,6 +496,24 @@ final class AdminTest extends TestCase
 
         $this->assertSame('verbunden_nicht_bestaetigt', $abfrage['barrierepruefung_status']);
         $this->assertSame('meta_tag:meta_tag_nicht_gefunden,file:datei_nicht_erreichbar', $abfrage['barrierepruefung_gruende']);
+        $this->assertTrue((new Barrierepruefung_Client)->is_connected());
+    }
+
+    /**
+     * Lehnt der Dienst den Bestätigungsversuch selbst ab - anders als ein
+     * bloß gescheitertes Verfahren -, bleibt die Verbindung trotzdem stehen.
+     */
+    public function test_lehnt_der_dienst_die_bestaetigung_ab_bleibt_es_verbunden(): void
+    {
+        $this->verbinden();
+        $this->nachweise();
+        $this->antwort(['title' => 'Too Many Requests', 'detail' => 'Zu viele Versuche.'], 429);
+
+        $abfrage = $this->umleitung('handle_connect');
+
+        $this->assertSame('verbunden_nicht_bestaetigt', $abfrage['barrierepruefung_status']);
+        $this->assertSame('Zu viele Versuche.', rawurldecode($abfrage['barrierepruefung_meldung']));
+        $this->assertArrayNotHasKey('barrierepruefung_gruende', $abfrage);
         $this->assertTrue((new Barrierepruefung_Client)->is_connected());
     }
 
@@ -946,6 +991,7 @@ final class AdminTest extends TestCase
     public function test_aus_dem_reiter_erklaerung_geht_es_dorthin_zurueck(): void
     {
         $_POST = ['barrierepruefung_schritt' => 'domain'];
+        $this->nachweise();
         $this->antwort(['data' => ['verified' => true]]);
 
         try {

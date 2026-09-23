@@ -41,8 +41,8 @@ $barrierepruefung_meldungen = [
 $barrierepruefung_grundtexte = [
     'meta_tag:meta_tag_nicht_gefunden' => __('The verification tag was not found on the homepage. If this site uses a caching plugin or a cache at the host, clear the cache and try again.', 'barrierepruefung-de-web-accessibility-checker'),
     'meta_tag:seite_nicht_erreichbar' => __('The service could not load the homepage. Check that the site is publicly reachable — not in maintenance mode, not behind a password, not blocked by a firewall.', 'barrierepruefung-de-web-accessibility-checker'),
-    'file:datei_nicht_erreichbar' => __('The service could not load the file /.well-known/a11y-site-verification.txt. Some servers answer this path themselves instead of passing it on to WordPress.', 'barrierepruefung-de-web-accessibility-checker'),
-    'file:token_nicht_gefunden' => __('The file /.well-known/a11y-site-verification.txt contains a different code. Clear the cache if this site uses one; otherwise disconnect and connect again.', 'barrierepruefung-de-web-accessibility-checker'),
+    'file:datei_nicht_erreichbar' => __('The service could not load the file /.well-known/a11y-site-verification.txt. Some servers answer this path themselves instead of passing it on to WordPress. If WordPress runs in a subdirectory, the service looks for the file at the root of the domain.', 'barrierepruefung-de-web-accessibility-checker'),
+    'file:token_nicht_gefunden' => __('The file /.well-known/a11y-site-verification.txt contains a different code. Clear the cache if this site uses one, then choose “Verify domain now” again. If WordPress runs in a subdirectory, the service reads the file at the root of the domain instead.', 'barrierepruefung-de-web-accessibility-checker'),
     'file:ungueltige_adresse' => __('The address stored for this site at the service is not valid. Correct it there and try again.', 'barrierepruefung-de-web-accessibility-checker'),
 ];
 ?>
