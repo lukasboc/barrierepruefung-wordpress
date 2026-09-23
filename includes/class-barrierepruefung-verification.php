@@ -17,6 +17,22 @@ class Barrierepruefung_Verification
 
     private const FILE_PATH = '.well-known/a11y-site-verification.txt';
 
+    /**
+     * Option mit dem Token des Meta-Elements.
+     *
+     * Der Name stammt aus der Zeit, als es nur diesen einen gab, und bleibt:
+     * bestehende Installationen behalten so ihren Nachweis.
+     */
+    public const META_OPTION = 'barrierepruefung_verification_token';
+
+    /**
+     * Option mit dem Token der Datei.
+     *
+     * Beim Dienst ein eigener, anderer Wert als der des Meta-Elements
+     * (SiteVerificationService::tokenFor() je Verfahren).
+     */
+    public const FILE_OPTION = 'barrierepruefung_verification_file_token';
+
     public function register(): void
     {
         add_action('wp_head', [$this, 'render_meta_tag']);
@@ -24,9 +40,19 @@ class Barrierepruefung_Verification
         add_action('template_redirect', [$this, 'serve_file']);
     }
 
+    public function meta_token(): string
+    {
+        return (string) get_option(self::META_OPTION, '');
+    }
+
+    public function datei_token(): string
+    {
+        return (string) get_option(self::FILE_OPTION, '');
+    }
+
     public function render_meta_tag(): void
     {
-        $token = get_option('barrierepruefung_verification_token', '');
+        $token = $this->meta_token();
 
         if ($token === '') {
             return;
@@ -57,7 +83,7 @@ class Barrierepruefung_Verification
             return;
         }
 
-        $token = get_option('barrierepruefung_verification_token', '');
+        $token = $this->datei_token();
 
         if ($token === '') {
             status_header(404);
