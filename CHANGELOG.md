@@ -3,6 +3,30 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.7.1]
+
+### Behoben
+
+- Die Domain ließ sich hinter einem Seiten-Cache nicht bestätigen: Der Cache lieferte die
+  Startseite von vor dem Verbinden aus, ohne Meta-Element, und der Dienst meldete
+  `meta_tag_nicht_gefunden` (aufgefallen mit WP Super Cache). Scheitert das Meta-Element,
+  versucht das Plugin jetzt die Datei unter `/.well-known/a11y-site-verification.txt`, die an
+  Seiten-Caches vorbeiläuft.
+- Die Datei trug den Token des Meta-Elements. Der Dienst vergibt je Verfahren einen eigenen, eine
+  Bestätigung per Datei konnte so nie gelingen. Beide werden jetzt getrennt abgelegt;
+  Installationen aus 0.7.0 holen den fehlenden beim nächsten Bestätigen nach.
+- Eine Website, die schon anders bestätigt war (etwa per DNS), wurde beim erneuten Verbinden als
+  „nicht bestätigt" gemeldet.
+
+### Geändert
+
+- Verbinden bestätigt die Domain gleich mit; der eigene Klick auf „Domain jetzt bestätigen"
+  entfällt. Der Knopf bleibt für einen weiteren Versuch.
+- Scheitert die Bestätigung, nennt die Seite die Gründe je Verfahren in Worten, mit dem, was zu
+  tun ist, statt eines Schlüssels wie `meta_tag_nicht_gefunden`.
+- Die Deinstallation entfernt auch den Token der Nachweisdatei
+  (`barrierepruefung_verification_file_token`).
+
 ## [0.7.0]
 
 ### Hinzugefügt

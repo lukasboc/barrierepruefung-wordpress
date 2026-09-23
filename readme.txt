@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, barriereprüfung, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.7.0
+Stable tag: 0.7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,7 +61,7 @@ What is transmitted:
   it. The service records that name as evidence of who released a version.
 
 **No** content and **no** personal data of your visitors are transmitted. Transmission happens
-when you start a scan, when you verify the domain, when the page *Tools → Accessibility* is
+when you start a scan, when you connect the plugin or verify the domain, when the page *Tools → Accessibility* is
 opened (at most every five minutes, from the cache after that), when you expand a rule to see
 its occurrences, or when the statement is retrieved (at most once an hour, likewise from the
 cache after that).
@@ -75,12 +75,13 @@ Terms of service: https://barrierepruefung.de/agb
    below, including where each value comes from.
 2. Create an account at barrierepruefung.de, or sign in if you already have one.
 3. Add this site there, using exactly the address of this WordPress installation. If a different
-   address is stored, the domain cannot be verified in step 6.
+   address is stored, the domain cannot be verified.
 4. Under *Websites → [site] → Embedding*, section *WordPress plugin and API*, choose *Create
    token*. The API token and the site ID are shown once, in that place.
-5. Enter both under *Tools → Accessibility* and leave the service address as it is.
-6. Verify the domain — the plugin serves the proof itself, you do not need DNS access.
-7. Start a scan and insert the shortcode `[barrierefreiheitserklaerung]` on a page.
+5. Enter both under *Tools → Accessibility* and leave the service address as it is. Connecting
+   verifies the domain right away — the plugin serves the proof itself, you do not need DNS
+   access.
+6. Start a scan and insert the shortcode `[barrierefreiheitserklaerung]` on a page.
 
 == Shortcode ==
 
@@ -136,6 +137,13 @@ language version stored in the service.
 No. The plugin serves the proof itself, as a meta element and as a file under
 `/.well-known/a11y-site-verification.txt`.
 
+= The domain cannot be verified. What now? =
+
+The page names the reason. Most often a caching plugin or a cache at the host still serves the
+homepage from before you connected, without the verification tag. The plugin then tries the file
+`/.well-known/a11y-site-verification.txt`, which caches usually let through. If both fail,
+clear the cache and choose *Verify domain now* again.
+
 = I started a scan — where is the result? =
 
 A scan takes a few minutes. The page does not update on its own, because an automatic reload
@@ -182,6 +190,20 @@ remaining test steps; the statement explicitly states that it is based on a self
    occurrences and the pages affected. Each rule can be expanded to its individual occurrences.
 
 == Changelog ==
+
+= 0.7.1 =
+* Fixed: The domain could not be verified behind a page cache - the cache served the homepage
+  from before connecting, without the verification tag. If the tag is not found, the plugin now
+  tries the file under /.well-known/, which bypasses page caches.
+* Fixed: The verification file carried the code of the meta tag. The service issues a separate
+  code for each method, so verifying by file could never succeed. Sites updated from 0.7.0 fetch
+  the missing code on the next verification.
+* Fixed: A site already verified another way (for example by DNS) was reported as "not verified"
+  after connecting again.
+* Changed: Connecting now verifies the domain right away; the button remains for another attempt.
+* Changed: If verification fails, the page explains why and what to do, instead of showing a
+  code such as "meta_tag_nicht_gefunden".
+* Changed: Uninstalling also removes the code of the verification file.
 
 = 0.7.0 =
 * Added: A new tab "Accessibility statement" leads step by step to a published statement:

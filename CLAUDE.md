@@ -20,10 +20,16 @@ composer lint:fix
 `Barrierepruefung_Client` (nur `wp_remote_*`, Zugang zur Public API v1), `Barrierepruefung_Verification`
 (Domain-Nachweis als Meta-Element und unter `/.well-known/`), `Barrierepruefung_Shortcode`
 (`[barrierefreiheitserklaerung]` samt Block, serverseitig gerendert), `Barrierepruefung_Admin`
-(Seite unter *Werkzeuge*, Reiter „Prüfung“) und `Barrierepruefung_Erklaerung` (Reiter „Erklärung“:
+(Seite unter *Werkzeuge*, Reiter „Prüfung”) und `Barrierepruefung_Erklaerung` (Reiter „Erklärung”:
 der Weg bis zur veröffentlichten Erklärung).
 
-Der Reiter „Erklärung“ **kennt kein Recht.** Welche Schritte es gibt, was offen ist, welche Felder
+Der Dienst vergibt für Meta-Element und Nachweisdatei **je einen eigenen Token**
+(`GET /sites/{id}/verification` → `meta_tag.content`, `file.content`). Sie liegen getrennt in
+`barrierepruefung_verification_token` und `barrierepruefung_verification_file_token`; bis 0.7.0
+trug die Datei den des Meta-Elements und bestand nie. Bestätigt wird erst per Meta-Element, dann
+per Datei — ein Seiten-Cache verschluckt das eine, die Datei läuft an ihm vorbei.
+
+Der Reiter „Erklärung” **kennt kein Recht.** Welche Schritte es gibt, was offen ist, welche Felder
 für eine Dokumentart gelten, welche Fragen der Betroffenheits-Check stellt und was daraus folgt,
 liefert der Dienst (docs/08 dort, „Der Weg zur Erklärung über die API“). Hier wird es dargestellt
 und zurückgeschickt, nicht nachgebaut — eine Rechtsänderung darf kein Plugin-Release verlangen.
