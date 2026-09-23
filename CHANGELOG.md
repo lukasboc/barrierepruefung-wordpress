@@ -16,11 +16,11 @@ die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
   Bestätigung per Datei konnte so nie gelingen. Beide werden jetzt getrennt abgelegt;
   Installationen aus 0.7.0 holen den fehlenden beim nächsten Bestätigen nach.
 - Eine Website, die schon anders bestätigt war (etwa per DNS), wurde beim erneuten Verbinden als
-  „nicht bestätigt" gemeldet.
+  „nicht bestätigt“ gemeldet.
 
 ### Geändert
 
-- Verbinden bestätigt die Domain gleich mit; der eigene Klick auf „Domain jetzt bestätigen"
+- Verbinden bestätigt die Domain gleich mit; der eigene Klick auf „Domain jetzt bestätigen“
   entfällt. Der Knopf bleibt für einen weiteren Versuch.
 - Scheitert die Bestätigung, nennt die Seite die Gründe je Verfahren in Worten, mit dem, was zu
   tun ist, statt eines Schlüssels wie `meta_tag_nicht_gefunden`.
