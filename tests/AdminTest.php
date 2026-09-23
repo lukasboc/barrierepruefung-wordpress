@@ -870,7 +870,7 @@ final class AdminTest extends TestCase
         $this->assertStringContainsString('the token is shown this one time only', $seite);
 
         // Und was danach kommt.
-        $this->assertStringContainsString('verify the domain', $seite);
+        $this->assertStringContainsString('verifies the domain right away', $seite);
     }
 
     /**
