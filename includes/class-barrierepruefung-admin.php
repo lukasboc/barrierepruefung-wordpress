@@ -31,6 +31,15 @@ class Barrierepruefung_Admin
     private const FUNDSTELLEN_SCHRITT = 20;
 
     /**
+     * Die Verfahren, mit denen die Domain bestätigt wird, in dieser Reihenfolge.
+     *
+     * Das Meta-Element scheitert an Seiten-Caches, die Datei an Servern, die
+     * /.well-known/ selbst beantworten - deshalb beide. Das Meta-Element
+     * zuerst: gelingt es, bleibt es bei einer Anfrage wie bis 0.7.0.
+     */
+    private const VERFAHREN = ['meta_tag', 'file'];
+
+    /**
      * Merker fuer den einmaligen Hinweis nach der Aktivierung.
      *
      * Ein Transient und keine Option: er soll von selbst verschwinden, auch
@@ -284,19 +293,13 @@ class Barrierepruefung_Admin
         // Nachweise holen und selbst ausliefern - dafür braucht die Kundin
         // keinen DNS-Zugriff (docs/08 der Dienst-Dokumentation).
         $client = new Barrierepruefung_Client;
-        $antwort = $client->get('/sites/'.$client->site_id().'/verification');
-
-        if ($antwort['ok']) {
-            update_option('barrierepruefung_verification_token',
-                sanitize_text_field($antwort['data']['data']['meta_tag']['content'] ?? ''));
-            flush_rewrite_rules();
-        }
+        $geholt = $this->nachweise_holen($client);
 
         // Der Zwischenspeicher gehoert zu einer Verbindung. Wer eine neue
         // eintraegt, darf nicht den Stand der alten zu sehen bekommen.
         delete_transient(self::ZUSTAND);
 
-        $this->zurueck($antwort['ok'] ? 'verbunden' : 'fehler', $antwort['error']);
+        $this->zurueck($geholt['ok'] ? 'verbunden' : 'fehler', $geholt['error']);
     }
 
     /**
@@ -315,24 +318,97 @@ class Barrierepruefung_Admin
      *
      * Bei einem gescheiterten Versuch bleibt er stehen: dann hat sich beim
      * Dienst nichts geaendert, und der Zwischenspeicher ist weiterhin richtig.
+     *
+     * Installationen aus 0.7.0 kennen nur den Token des Meta-Elements; der
+     * der Datei wird beim ersten Versuch nachgeholt, statt ein neues Verbinden
+     * zu verlangen.
      */
     public function handle_verify(): void
     {
         $this->pruefe_berechtigung('barrierepruefung_verify');
 
         $client = new Barrierepruefung_Client;
-        $antwort = $client->post('/sites/'.$client->site_id().'/verify', ['method' => 'meta_tag']);
 
-        $bestaetigt = $antwort['ok'] && ! empty($antwort['data']['data']['verified']);
+        if ((new Barrierepruefung_Verification)->datei_token() === '') {
+            $geholt = $this->nachweise_holen($client);
 
-        if ($bestaetigt) {
+            if (! $geholt['ok']) {
+                $this->zurueck('nicht_bestaetigt', $geholt['error']);
+            }
+        }
+
+        $ergebnis = $this->domain_bestaetigen($client);
+
+        if ($ergebnis['bestaetigt']) {
             delete_transient(self::ZUSTAND);
         }
 
         $this->zurueck(
-            $bestaetigt ? 'bestaetigt' : 'nicht_bestaetigt',
-            $antwort['data']['data']['failure_reason'] ?? $antwort['error']
+            $ergebnis['bestaetigt'] ? 'bestaetigt' : 'nicht_bestaetigt',
+            $ergebnis['fehler'],
+            $ergebnis['gruende']
         );
+    }
+
+    /**
+     * Holt die Nachweise beim Dienst und legt beide ab.
+     *
+     * Meta-Element und Datei haben dort je einen eigenen Token; wer nur einen
+     * ablegt und an beiden Stellen ausliefert, besteht nur mit einem Verfahren.
+     *
+     * @return array{ok: bool, error: string|null}
+     */
+    private function nachweise_holen(Barrierepruefung_Client $client): array
+    {
+        $antwort = $client->get('/sites/'.$client->site_id().'/verification');
+
+        if (! $antwort['ok']) {
+            return ['ok' => false, 'error' => $antwort['error']];
+        }
+
+        $nachweise = (array) ($antwort['data']['data'] ?? []);
+
+        update_option(Barrierepruefung_Verification::META_OPTION, sanitize_text_field($nachweise['meta_tag']['content'] ?? ''));
+        update_option(Barrierepruefung_Verification::FILE_OPTION, sanitize_text_field($nachweise['file']['content'] ?? ''));
+
+        // Die Regel für /.well-known/ muss stehen, bevor der Dienst die Datei abruft.
+        flush_rewrite_rules();
+
+        return ['ok' => true, 'error' => null];
+    }
+
+    /**
+     * Bittet den Dienst um Bestätigung, Verfahren für Verfahren.
+     *
+     * Maßgeblich ist die Website, nicht das einzelne Verfahren: verify()
+     * antwortet mit dem Stand des gefragten Verfahrens, und eine per DNS
+     * bestätigte Domain hieße sonst „nicht bestätigt". Lehnt der Dienst den
+     * Aufruf selbst ab - Token, Kontingent, zu viele Versuche -, endet es dort.
+     *
+     * @return array{bestaetigt: bool, gruende: list<string>, fehler: string|null}
+     */
+    private function domain_bestaetigen(Barrierepruefung_Client $client): array
+    {
+        $gruende = [];
+
+        foreach (self::VERFAHREN as $verfahren) {
+            $antwort = $client->post('/sites/'.$client->site_id().'/verify', ['method' => $verfahren]);
+
+            if (! $antwort['ok']) {
+                return ['bestaetigt' => false, 'gruende' => $gruende, 'fehler' => $antwort['error']];
+            }
+
+            $daten = (array) ($antwort['data']['data'] ?? []);
+
+            if (! empty($daten['verified']) || ! empty($daten['site']['verified'])) {
+                return ['bestaetigt' => true, 'gruende' => [], 'fehler' => null];
+            }
+
+            $grund = sanitize_key((string) ($daten['failure_reason'] ?? ''));
+            $gruende[] = $verfahren.':'.($grund !== '' ? $grund : 'unbekannt');
+        }
+
+        return ['bestaetigt' => false, 'gruende' => $gruende, 'fehler' => null];
     }
 
     public function handle_scan(): void
@@ -393,7 +469,7 @@ class Barrierepruefung_Admin
     {
         $this->pruefe_berechtigung('barrierepruefung_disconnect');
 
-        foreach (['barrierepruefung_token', 'barrierepruefung_site_id', 'barrierepruefung_verification_token', 'barrierepruefung_declaration_fallback'] as $option) {
+        foreach (['barrierepruefung_token', 'barrierepruefung_site_id', Barrierepruefung_Verification::META_OPTION, Barrierepruefung_Verification::FILE_OPTION, 'barrierepruefung_declaration_fallback'] as $option) {
             delete_option($option);
         }
 
@@ -436,7 +512,8 @@ class Barrierepruefung_Admin
         check_admin_referer($aktion);
     }
 
-    private function zurueck(string $status, ?string $meldung = null): void
+    /** @param list<string> $gruende Gründe des Dienstes als „verfahren:grund", siehe domain_bestaetigen(). */
+    private function zurueck(string $status, ?string $meldung = null, array $gruende = []): void
     {
         // Domain bestätigen und Prüfung starten gibt es auch als Schritt im
         // Reiter „Erklärung". Wer dort geklickt hat, soll dort bleiben - nicht
@@ -451,6 +528,7 @@ class Barrierepruefung_Admin
                 'schritt' => $schritt !== '' ? $schritt : null,
                 'barrierepruefung_status' => $status,
                 'barrierepruefung_meldung' => $meldung ? rawurlencode(substr($meldung, 0, 200)) : null,
+                'barrierepruefung_gruende' => $gruende !== [] ? implode(',', $gruende) : null,
             ]),
             admin_url('tools.php')
         ));
