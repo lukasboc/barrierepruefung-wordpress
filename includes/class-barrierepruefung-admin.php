@@ -279,6 +279,13 @@ class Barrierepruefung_Admin
         return $zustand;
     }
 
+    /**
+     * Legt die Verbindung ab, holt die Nachweise und bestätigt die Domain.
+     *
+     * Der Dienst ruft während dieser Anfrage die Website ab - Startseite und
+     * /.well-known/. Das dauert im schlechtesten Fall zweimal so lange wie
+     * sein Zeitlimit (10 s je Abruf).
+     */
     public function handle_connect(): void
     {
         $this->pruefe_berechtigung('barrierepruefung_connect');
@@ -299,7 +306,20 @@ class Barrierepruefung_Admin
         // eintraegt, darf nicht den Stand der alten zu sehen bekommen.
         delete_transient(self::ZUSTAND);
 
-        $this->zurueck($geholt['ok'] ? 'verbunden' : 'fehler', $geholt['error']);
+        if (! $geholt['ok']) {
+            $this->zurueck('fehler', $geholt['error']);
+        }
+
+        // Gleich bestätigen: ein eigener Klick danach war ein Schritt, der nur
+        // vergessen werden konnte. Scheitert es, ist trotzdem verbunden - die
+        // Seite zeigt dann die Gründe und den Knopf für den nächsten Versuch.
+        $ergebnis = $this->domain_bestaetigen($client);
+
+        if ($ergebnis['bestaetigt']) {
+            $this->zurueck('verbunden_bestaetigt');
+        }
+
+        $this->zurueck('verbunden_nicht_bestaetigt', $ergebnis['fehler'], $ergebnis['gruende']);
     }
 
     /**

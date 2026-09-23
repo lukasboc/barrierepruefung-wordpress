@@ -397,6 +397,93 @@ final class AdminTest extends TestCase
         $this->assertContains('barrierepruefung_status', $GLOBALS['wp_transients_geloescht']);
     }
 
+    /*
+     * Verbinden bestätigt die Domain gleich mit. Ein eigener Klick danach war
+     * ein Schritt, der nur dazu da war, vergessen zu werden.
+     */
+
+    private function verbinden(): void
+    {
+        $_POST = ['api_url' => 'https://beispiel.test/api/v1', 'token' => '2|neu', 'site_id' => 'st_999'];
+    }
+
+    private function nachweise(): void
+    {
+        $this->antwort(['data' => [
+            'meta_tag' => ['name' => 'a11y-site-verification', 'content' => '01JMETA'],
+            'file' => ['path' => '/.well-known/a11y-site-verification.txt', 'content' => '01JDATEI'],
+            'dns_txt' => ['name' => '_a11y-verify.kundin.test', 'content' => '01JDNS'],
+        ]]);
+    }
+
+    public function test_verbinden_legt_beide_nachweise_getrennt_ab(): void
+    {
+        $this->verbinden();
+        $this->nachweise();
+        $this->antwort(['data' => ['verified' => true, 'method' => 'meta_tag', 'failure_reason' => null]]);
+
+        $this->ausfuehren('handle_connect');
+
+        $this->assertSame('01JMETA', $GLOBALS['wp_options']['barrierepruefung_verification_token']);
+        $this->assertSame('01JDATEI', $GLOBALS['wp_options']['barrierepruefung_verification_file_token']);
+    }
+
+    public function test_verbinden_bestaetigt_die_domain_gleich_mit(): void
+    {
+        $this->verbinden();
+        $this->nachweise();
+        $this->antwort(['data' => ['verified' => true, 'method' => 'meta_tag', 'failure_reason' => null]]);
+
+        $status = $this->ausfuehren('handle_connect');
+
+        $this->assertSame('verbunden_bestaetigt', $status);
+        $this->assertSame(['/sites/st_999/verification', '/sites/st_999/verify'], $this->abgerufenePfade());
+    }
+
+    /** Der Fall, an dem das auffiel: der Cache kennt das Meta-Element noch nicht. */
+    public function test_hinter_einem_seitencache_bestaetigt_die_datei(): void
+    {
+        $this->verbinden();
+        $this->nachweise();
+        $this->antwort(['data' => ['verified' => false, 'method' => 'meta_tag', 'failure_reason' => 'meta_tag_nicht_gefunden']]);
+        $this->antwort(['data' => ['verified' => true, 'method' => 'file', 'failure_reason' => null]]);
+
+        $status = $this->ausfuehren('handle_connect');
+
+        $this->assertSame('verbunden_bestaetigt', $status);
+        $this->assertSame(['meta_tag', 'file'], $this->versuchteVerfahren());
+    }
+
+    /**
+     * Verbunden ist verbunden, auch wenn die Bestätigung scheitert: die Seite
+     * zeigt dann den Status samt Knopf, und die Gründe stehen darüber.
+     */
+    public function test_verbinden_ohne_bestaetigung_nennt_die_gruende(): void
+    {
+        $this->verbinden();
+        $this->nachweise();
+        $this->antwort(['data' => ['verified' => false, 'method' => 'meta_tag', 'failure_reason' => 'meta_tag_nicht_gefunden']]);
+        $this->antwort(['data' => ['verified' => false, 'method' => 'file', 'failure_reason' => 'datei_nicht_erreichbar']]);
+
+        $abfrage = $this->umleitung('handle_connect');
+
+        $this->assertSame('verbunden_nicht_bestaetigt', $abfrage['barrierepruefung_status']);
+        $this->assertSame('meta_tag:meta_tag_nicht_gefunden,file:datei_nicht_erreichbar', $abfrage['barrierepruefung_gruende']);
+        $this->assertTrue((new Barrierepruefung_Client)->is_connected());
+    }
+
+    /** Falsches Token, falsche Kennung: dann gibt es nichts zu bestätigen. */
+    public function test_scheitern_die_nachweise_wird_nichts_bestaetigt(): void
+    {
+        $this->verbinden();
+        $this->antwort(['title' => 'Unauthenticated', 'detail' => 'Token ungültig.'], 401);
+
+        $status = $this->ausfuehren('handle_connect');
+
+        $this->assertSame('fehler', $status);
+        $this->assertSame([], $this->versuchteVerfahren());
+    }
+
     /** Der abgelegte Stand kam von der alten Adresse. */
     public function test_das_zuruecksetzen_der_adresse_verwirft_den_zwischenspeicher(): void
     {
