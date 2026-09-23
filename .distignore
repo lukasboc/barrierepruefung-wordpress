@@ -9,6 +9,7 @@
 /assets
 /dist
 /tests
+/docs
 /vendor
 /composer.json
 /composer.lock
