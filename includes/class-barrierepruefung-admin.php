@@ -339,9 +339,10 @@ class Barrierepruefung_Admin
      * Bei einem gescheiterten Versuch bleibt er stehen: dann hat sich beim
      * Dienst nichts geaendert, und der Zwischenspeicher ist weiterhin richtig.
      *
-     * Installationen aus 0.7.0 kennen nur den Token des Meta-Elements; der
-     * der Datei wird beim ersten Versuch nachgeholt, statt ein neues Verbinden
-     * zu verlangen.
+     * Die Nachweise werden bei jedem Versuch neu geholt - so heilt ein Klick
+     * auch Tokens einer frueheren Verbindung, die nach einem gescheiterten
+     * Abruf beim Neuverbinden stehen geblieben sind, und Installationen aus
+     * 0.7.0 bekommen den fehlenden Datei-Token.
      */
     public function handle_verify(): void
     {
@@ -349,12 +350,10 @@ class Barrierepruefung_Admin
 
         $client = new Barrierepruefung_Client;
 
-        if ((new Barrierepruefung_Verification)->datei_token() === '') {
-            $geholt = $this->nachweise_holen($client);
+        $geholt = $this->nachweise_holen($client);
 
-            if (! $geholt['ok']) {
-                $this->zurueck('nicht_bestaetigt', $geholt['error']);
-            }
+        if (! $geholt['ok']) {
+            $this->zurueck('nicht_bestaetigt', $geholt['error']);
         }
 
         $ergebnis = $this->domain_bestaetigen($client);
