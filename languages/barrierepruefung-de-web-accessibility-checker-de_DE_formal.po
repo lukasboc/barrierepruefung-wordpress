@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.6.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/barrierepruefung-"
 "de-web-accessibility-checker\n"
-"POT-Creation-Date: 2026-09-21T16:39:20+00:00\n"
+"POT-Creation-Date: 2026-09-23T16:03:04+00:00\n"
 "PO-Revision-Date: 2026-09-07T17:13:11+0200\n"
 "Last-Translator: Lukas Bock\n"
 "Language-Team: Deutsch\n"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "https://barrierepruefung.de"
 msgstr ""
 
-#: includes/class-barrierepruefung-admin.php:100
+#: includes/class-barrierepruefung-admin.php:109
 msgid ""
 "The accessibility checker is active but not yet connected to an account. The "
 "setup — account, API token, first scan — is explained step by step on its "
@@ -56,26 +56,26 @@ msgstr ""
 "verbunden. Wie die Einrichtung geht — Konto, API-Token, erste Prüfung —, "
 "steht Schritt für Schritt auf ihrer Seite."
 
-#: includes/class-barrierepruefung-admin.php:102
+#: includes/class-barrierepruefung-admin.php:111
 msgid "Set up the accessibility checker"
 msgstr "Barrierefreiheits-Prüfung einrichten"
 
-#: includes/class-barrierepruefung-admin.php:126
+#: includes/class-barrierepruefung-admin.php:135
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: includes/class-barrierepruefung-admin.php:135
-#: includes/class-barrierepruefung-admin.php:136
+#: includes/class-barrierepruefung-admin.php:144
+#: includes/class-barrierepruefung-admin.php:145
 #: includes/class-barrierepruefung-erklaerung.php:403 views/admin-page.php:8
 #: views/erklaerung-seite.php:10
 msgid "Accessibility"
 msgstr "Barrierefreiheit"
 
-#: includes/class-barrierepruefung-admin.php:146
+#: includes/class-barrierepruefung-admin.php:155
 msgid "You do not have permission to view this page."
 msgstr "Sie haben keine Berechtigung für diese Seite."
 
-#: includes/class-barrierepruefung-admin.php:433
+#: includes/class-barrierepruefung-admin.php:529
 #: includes/class-barrierepruefung-erklaerung.php:393
 #: includes/class-barrierepruefung-erklaerung.php:556
 msgid "You do not have permission to perform this action."
@@ -219,13 +219,14 @@ msgstr ""
 
 #: views/admin-page.php:68
 msgid ""
-"Two steps follow after connecting, both from this page: verify the domain — "
-"one click, the plugin serves the proof itself, so you need no access to DNS "
-"— and start the first scan."
+"After connecting, the plugin verifies the domain right away — it serves the "
+"proof itself, so you need no access to DNS. This can take a few seconds. "
+"Then start the first scan from this page."
 msgstr ""
-"Nach dem Verbinden folgen zwei Schritte, beide von dieser Seite aus: die "
-"Domain bestätigen — ein Klick, den Nachweis liefert das Plugin selbst aus, "
-"Sie brauchen keinen Zugriff auf das DNS — und die erste Prüfung starten."
+"Nach dem Verbinden bestätigt das Plugin die Domain sofort — den Nachweis "
+"liefert es selbst aus, Sie brauchen keinen Zugriff auf das DNS. Das kann "
+"einige Sekunden dauern. Danach starten Sie von dieser Seite aus die erste "
+"Prüfung."
 
 #: views/admin-page.php:77 views/admin-page.php:515
 msgid "Service address"
@@ -746,7 +747,7 @@ msgstr "Beantwortet am %s."
 msgid "Save answer"
 msgstr "Antwort speichern"
 
-#: views/erklaerung-schritt-domain.php:12 views/statusmeldung.php:22
+#: views/erklaerung-schritt-domain.php:12 views/statusmeldung.php:28
 msgid "The domain is verified."
 msgstr "Die Domain ist bestätigt."
 
@@ -1085,23 +1086,35 @@ msgstr "Prüfung"
 msgid "Sections"
 msgstr "Bereiche"
 
-#: views/statusmeldung.php:21
-msgid "Connected. Please verify the domain now."
-msgstr "Verbindung hergestellt. Bestätigen Sie jetzt die Domain."
+#: views/statusmeldung.php:26
+msgid ""
+"Connected. The domain is verified as well — you can start the first scan now."
+msgstr ""
+"Verbindung hergestellt. Die Domain ist auch schon bestätigt — Sie können "
+"jetzt die erste Prüfung starten."
 
-#: views/statusmeldung.php:23
+#: views/statusmeldung.php:27
+msgid ""
+"Connected, but the domain could not be verified yet. Fix the cause below, "
+"then choose “Verify domain now”."
+msgstr ""
+"Verbindung hergestellt, aber die Domain konnte noch nicht bestätigt werden. "
+"Beheben Sie die Ursache unten und wählen Sie dann „Domain jetzt "
+"bestätigen“."
+
+#: views/statusmeldung.php:29
 msgid "The domain could not be verified."
 msgstr "Die Domain konnte nicht bestätigt werden."
 
-#: views/statusmeldung.php:24
+#: views/statusmeldung.php:30
 msgid "The scan has started. It usually takes a few minutes."
 msgstr "Die Prüfung wurde gestartet. Sie dauert in der Regel einige Minuten."
 
-#: views/statusmeldung.php:25
+#: views/statusmeldung.php:31
 msgid "The status has been refreshed."
 msgstr "Der Status wurde neu abgerufen."
 
-#: views/statusmeldung.php:26
+#: views/statusmeldung.php:32
 msgid ""
 "The connection has been removed. Token, site ID and the stored text of the "
 "statement were deleted."
@@ -1109,10 +1122,63 @@ msgstr ""
 "Die Verbindung wurde getrennt. Token, Website-Kennung und der gespeicherte "
 "Text der Erklärung wurden entfernt."
 
-#: views/statusmeldung.php:27
+#: views/statusmeldung.php:33
 msgid "The service address is back to its default value."
 msgstr "Die Adresse des Dienstes steht wieder auf dem Standardwert."
 
-#: views/statusmeldung.php:28
+#: views/statusmeldung.php:34
 msgid "An error occurred."
 msgstr "Es ist ein Fehler aufgetreten."
+
+#: views/statusmeldung.php:44
+msgid ""
+"The verification tag was not found on the homepage. If this site uses a "
+"caching plugin or a cache at the host, clear the cache and try again."
+msgstr ""
+"Auf der Startseite wurde das Meta-Element für den Nachweis nicht gefunden. "
+"Nutzt diese Website ein Cache-Plugin oder einen Cache beim Hoster, leeren "
+"Sie den Cache und versuchen Sie es noch einmal."
+
+#: views/statusmeldung.php:45
+msgid ""
+"The service could not load the homepage. Check that the site is publicly "
+"reachable — not in maintenance mode, not behind a password, not blocked by a "
+"firewall."
+msgstr ""
+"Der Dienst konnte die Startseite nicht abrufen. Prüfen Sie, ob die Website "
+"öffentlich erreichbar ist — nicht im Wartungsmodus, nicht hinter einem "
+"Passwort, nicht von einer Firewall gesperrt."
+
+#: views/statusmeldung.php:46
+msgid ""
+"The service could not load the file /.well-known/a11y-site-verification.txt. "
+"Some servers answer this path themselves instead of passing it on to "
+"WordPress."
+msgstr ""
+"Der Dienst konnte die Datei /.well-known/a11y-site-verification.txt nicht "
+"abrufen. Manche Server beantworten diesen Pfad selbst, statt ihn an "
+"WordPress weiterzugeben."
+
+#: views/statusmeldung.php:47
+msgid ""
+"The file /.well-known/a11y-site-verification.txt contains a different code. "
+"Clear the cache if this site uses one; otherwise disconnect and connect "
+"again."
+msgstr ""
+"Die Datei /.well-known/a11y-site-verification.txt enthält einen anderen "
+"Code. Leeren Sie den Cache, falls diese Website einen nutzt; sonst trennen "
+"Sie die Verbindung und verbinden Sie neu."
+
+#: views/statusmeldung.php:48
+msgid ""
+"The address stored for this site at the service is not valid. Correct it "
+"there and try again."
+msgstr ""
+"Die beim Dienst hinterlegte Adresse dieser Website ist ungültig. "
+"Korrigieren Sie sie dort und versuchen Sie es noch einmal."
+
+#. translators: %s: reason code reported by the service, e.g. "file:token_nicht_gefunden"
+#: views/statusmeldung.php:64
+#, php-format
+msgid "Reason reported by the service: %s"
+msgstr "Vom Dienst gemeldeter Grund: %s"

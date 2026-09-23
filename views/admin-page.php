@@ -65,7 +65,7 @@ if (! defined('ABSPATH')) {
         </ol>
 
         <p>
-            <?php esc_html_e('Two steps follow after connecting, both from this page: verify the domain — one click, the plugin serves the proof itself, so you need no access to DNS — and start the first scan.', 'barrierepruefung-de-web-accessibility-checker'); ?>
+            <?php esc_html_e('After connecting, the plugin verifies the domain right away — it serves the proof itself, so you need no access to DNS. This can take a few seconds. Then start the first scan from this page.', 'barrierepruefung-de-web-accessibility-checker'); ?>
         </p>
 
         <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">

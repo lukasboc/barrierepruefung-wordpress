@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-21T16:39:20+00:00\n"
+"POT-Creation-Date: 2026-09-23T16:03:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: barrierepruefung-de-web-accessibility-checker\n"
@@ -39,31 +39,31 @@ msgstr ""
 msgid "https://barrierepruefung.de"
 msgstr ""
 
-#: includes/class-barrierepruefung-admin.php:100
+#: includes/class-barrierepruefung-admin.php:109
 msgid "The accessibility checker is active but not yet connected to an account. The setup — account, API token, first scan — is explained step by step on its page."
 msgstr ""
 
-#: includes/class-barrierepruefung-admin.php:102
+#: includes/class-barrierepruefung-admin.php:111
 msgid "Set up the accessibility checker"
 msgstr ""
 
-#: includes/class-barrierepruefung-admin.php:126
+#: includes/class-barrierepruefung-admin.php:135
 msgid "Settings"
 msgstr ""
 
-#: includes/class-barrierepruefung-admin.php:135
-#: includes/class-barrierepruefung-admin.php:136
+#: includes/class-barrierepruefung-admin.php:144
+#: includes/class-barrierepruefung-admin.php:145
 #: includes/class-barrierepruefung-erklaerung.php:403
 #: views/admin-page.php:8
 #: views/erklaerung-seite.php:10
 msgid "Accessibility"
 msgstr ""
 
-#: includes/class-barrierepruefung-admin.php:146
+#: includes/class-barrierepruefung-admin.php:155
 msgid "You do not have permission to view this page."
 msgstr ""
 
-#: includes/class-barrierepruefung-admin.php:433
+#: includes/class-barrierepruefung-admin.php:529
 #: includes/class-barrierepruefung-erklaerung.php:393
 #: includes/class-barrierepruefung-erklaerung.php:556
 msgid "You do not have permission to perform this action."
@@ -173,7 +173,7 @@ msgid "The service address is the third value: it says where the plugin sends it
 msgstr ""
 
 #: views/admin-page.php:68
-msgid "Two steps follow after connecting, both from this page: verify the domain — one click, the plugin serves the proof itself, so you need no access to DNS — and start the first scan."
+msgid "After connecting, the plugin verifies the domain right away — it serves the proof itself, so you need no access to DNS. This can take a few seconds. Then start the first scan from this page."
 msgstr ""
 
 #: views/admin-page.php:77
@@ -618,7 +618,7 @@ msgid "Save answer"
 msgstr ""
 
 #: views/erklaerung-schritt-domain.php:12
-#: views/statusmeldung.php:22
+#: views/statusmeldung.php:28
 msgid "The domain is verified."
 msgstr ""
 
@@ -888,30 +888,60 @@ msgstr ""
 msgid "Sections"
 msgstr ""
 
-#: views/statusmeldung.php:21
-msgid "Connected. Please verify the domain now."
-msgstr ""
-
-#: views/statusmeldung.php:23
-msgid "The domain could not be verified."
-msgstr ""
-
-#: views/statusmeldung.php:24
-msgid "The scan has started. It usually takes a few minutes."
-msgstr ""
-
-#: views/statusmeldung.php:25
-msgid "The status has been refreshed."
-msgstr ""
-
 #: views/statusmeldung.php:26
-msgid "The connection has been removed. Token, site ID and the stored text of the statement were deleted."
+msgid "Connected. The domain is verified as well — you can start the first scan now."
 msgstr ""
 
 #: views/statusmeldung.php:27
+msgid "Connected, but the domain could not be verified yet. Fix the cause below, then choose “Verify domain now”."
+msgstr ""
+
+#: views/statusmeldung.php:29
+msgid "The domain could not be verified."
+msgstr ""
+
+#: views/statusmeldung.php:30
+msgid "The scan has started. It usually takes a few minutes."
+msgstr ""
+
+#: views/statusmeldung.php:31
+msgid "The status has been refreshed."
+msgstr ""
+
+#: views/statusmeldung.php:32
+msgid "The connection has been removed. Token, site ID and the stored text of the statement were deleted."
+msgstr ""
+
+#: views/statusmeldung.php:33
 msgid "The service address is back to its default value."
 msgstr ""
 
-#: views/statusmeldung.php:28
+#: views/statusmeldung.php:34
 msgid "An error occurred."
+msgstr ""
+
+#: views/statusmeldung.php:44
+msgid "The verification tag was not found on the homepage. If this site uses a caching plugin or a cache at the host, clear the cache and try again."
+msgstr ""
+
+#: views/statusmeldung.php:45
+msgid "The service could not load the homepage. Check that the site is publicly reachable — not in maintenance mode, not behind a password, not blocked by a firewall."
+msgstr ""
+
+#: views/statusmeldung.php:46
+msgid "The service could not load the file /.well-known/a11y-site-verification.txt. Some servers answer this path themselves instead of passing it on to WordPress."
+msgstr ""
+
+#: views/statusmeldung.php:47
+msgid "The file /.well-known/a11y-site-verification.txt contains a different code. Clear the cache if this site uses one; otherwise disconnect and connect again."
+msgstr ""
+
+#: views/statusmeldung.php:48
+msgid "The address stored for this site at the service is not valid. Correct it there and try again."
+msgstr ""
+
+#. translators: %s: reason code reported by the service, e.g. "file:token_nicht_gefunden"
+#: views/statusmeldung.php:64
+#, php-format
+msgid "Reason reported by the service: %s"
 msgstr ""
