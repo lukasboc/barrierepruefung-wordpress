@@ -22,6 +22,7 @@ const BARRIEREPRUEFUNG_OPTIONS = [
     'barrierepruefung_token',
     'barrierepruefung_site_id',
     'barrierepruefung_verification_token',
+    'barrierepruefung_verification_file_token',
     'barrierepruefung_declaration_fallback',
     // Das Praefix vor 0.6.0. Wer eine Vorabfassung im Einsatz hatte, soll die
     // Reste nicht behalten - das Token darunter ist ein Geheimnis.

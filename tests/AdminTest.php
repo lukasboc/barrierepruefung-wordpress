@@ -24,6 +24,7 @@ final class AdminTest extends TestCase
             'barrierepruefung_token' => '1|geheim',
             'barrierepruefung_site_id' => 'st_123',
             'barrierepruefung_verification_token' => '01JABCDEF',
+            'barrierepruefung_verification_file_token' => '01JDATEI',
             'barrierepruefung_declaration_fallback' => ['html' => '<h1>Erklärung</h1>'],
         ];
         $GLOBALS['wp_transients'] = [];
@@ -31,6 +32,7 @@ final class AdminTest extends TestCase
         $GLOBALS['wp_antworten'] = [];
         $GLOBALS['wp_anfragen'] = [];
         $_GET = [];
+        $_POST = [];
         unset($GLOBALS['wp_darf']);
     }
 
@@ -49,18 +51,38 @@ final class AdminTest extends TestCase
         );
     }
 
-    /** @return string Der Statuswert, mit dem die Seite neu geladen wird. */
-    private function ausfuehren(string $methode): string
+    /** @return array<string, string> Die Abfrage, mit der die Seite neu geladen wird. */
+    private function umleitung(string $methode): array
     {
         try {
             $this->admin->$methode();
         } catch (Barrierepruefung_Umleitung $umleitung) {
             parse_str((string) parse_url($umleitung->ziel, PHP_URL_QUERY), $abfrage);
 
-            return (string) ($abfrage['barrierepruefung_status'] ?? '');
+            return $abfrage;
         }
 
         $this->fail('Die Aktion hat nicht umgeleitet.');
+    }
+
+    /** @return string Der Statuswert, mit dem die Seite neu geladen wird. */
+    private function ausfuehren(string $methode): string
+    {
+        return (string) ($this->umleitung($methode)['barrierepruefung_status'] ?? '');
+    }
+
+    /** @return list<string> Die Verfahren, mit denen um Bestätigung gebeten wurde, in Reihenfolge. */
+    private function versuchteVerfahren(): array
+    {
+        $verfahren = [];
+
+        foreach ($GLOBALS['wp_anfragen'] as $anfrage) {
+            if (str_ends_with($anfrage['url'], '/verify')) {
+                $verfahren[] = (string) (json_decode((string) $anfrage['args']['body'], true)['method'] ?? '');
+            }
+        }
+
+        return $verfahren;
     }
 
     public function test_trennen_entfernt_das_token_und_die_kennung(): void
@@ -85,6 +107,7 @@ final class AdminTest extends TestCase
         $this->ausfuehren('handle_disconnect');
 
         $this->assertArrayNotHasKey('barrierepruefung_verification_token', $GLOBALS['wp_options']);
+        $this->assertArrayNotHasKey('barrierepruefung_verification_file_token', $GLOBALS['wp_options']);
     }
 
     /**
@@ -254,12 +277,113 @@ final class AdminTest extends TestCase
      */
     public function test_ein_gescheiterter_versuch_laesst_den_zwischenspeicher_stehen(): void
     {
-        $this->antwort(['data' => ['verified' => false, 'method' => 'meta_tag', 'failure_reason' => 'Meta-Element nicht gefunden']]);
+        $this->antwort(['data' => ['verified' => false, 'method' => 'meta_tag', 'failure_reason' => 'meta_tag_nicht_gefunden']]);
+        $this->antwort(['data' => ['verified' => false, 'method' => 'file', 'failure_reason' => 'datei_nicht_erreichbar']]);
 
         $status = $this->ausfuehren('handle_verify');
 
         $this->assertSame('nicht_bestaetigt', $status);
         $this->assertNotContains('barrierepruefung_status', $GLOBALS['wp_transients_geloescht']);
+    }
+
+    /*
+     * Meta-Element und Datei scheitern an verschiedenen Dingen: das eine an
+     * einem Seiten-Cache, der die Startseite von vor dem Verbinden ausliefert,
+     * die andere an Servern, die /.well-known/ selbst beantworten. Deshalb
+     * beide - so fiel eine Kundenseite hinter WP Super Cache durch.
+     */
+
+    public function test_scheitert_das_meta_element_wird_die_datei_versucht(): void
+    {
+        $this->antwort(['data' => ['verified' => false, 'method' => 'meta_tag', 'failure_reason' => 'meta_tag_nicht_gefunden']]);
+        $this->antwort(['data' => ['verified' => true, 'method' => 'file', 'failure_reason' => null]]);
+
+        $status = $this->ausfuehren('handle_verify');
+
+        $this->assertSame('bestaetigt', $status);
+        $this->assertSame(['meta_tag', 'file'], $this->versuchteVerfahren());
+    }
+
+    public function test_gelingt_das_meta_element_wird_die_datei_nicht_mehr_versucht(): void
+    {
+        $this->antwort(['data' => ['verified' => true, 'method' => 'meta_tag', 'failure_reason' => null]]);
+
+        $this->ausfuehren('handle_verify');
+
+        $this->assertSame(['meta_tag'], $this->versuchteVerfahren());
+    }
+
+    /** Beide Gründe, je mit Verfahren - „token_nicht_gefunden" etwa heißt bei der Datei etwas anderes als beim DNS. */
+    public function test_scheitern_beide_verfahren_gehen_beide_gruende_mit(): void
+    {
+        $this->antwort(['data' => ['verified' => false, 'method' => 'meta_tag', 'failure_reason' => 'meta_tag_nicht_gefunden']]);
+        $this->antwort(['data' => ['verified' => false, 'method' => 'file', 'failure_reason' => 'datei_nicht_erreichbar']]);
+
+        $abfrage = $this->umleitung('handle_verify');
+
+        $this->assertSame('nicht_bestaetigt', $abfrage['barrierepruefung_status']);
+        $this->assertSame('meta_tag:meta_tag_nicht_gefunden,file:datei_nicht_erreichbar', $abfrage['barrierepruefung_gruende']);
+        $this->assertArrayNotHasKey('barrierepruefung_meldung', $abfrage);
+    }
+
+    /**
+     * verify() antwortet mit dem Stand des Verfahrens. Ist die Website schon
+     * anders bestätigt - per DNS, früher per Datei -, wäre „nicht bestätigt"
+     * falsch; maßgeblich ist site.verified.
+     */
+    public function test_eine_anders_bestaetigte_website_gilt_als_bestaetigt(): void
+    {
+        $this->antwort(['data' => [
+            'verified' => false,
+            'method' => 'meta_tag',
+            'failure_reason' => 'meta_tag_nicht_gefunden',
+            'site' => ['verified' => true],
+        ]]);
+
+        $status = $this->ausfuehren('handle_verify');
+
+        $this->assertSame('bestaetigt', $status);
+        $this->assertSame(['meta_tag'], $this->versuchteVerfahren());
+    }
+
+    /** Ein abgelehnter Aufruf ist kein Grund, das nächste Verfahren zu versuchen. */
+    public function test_ein_fehler_des_dienstes_bricht_ab_statt_die_datei_zu_versuchen(): void
+    {
+        $this->antwort(['title' => 'Too Many Requests', 'detail' => 'Zu viele Versuche.'], 429);
+
+        $abfrage = $this->umleitung('handle_verify');
+
+        $this->assertSame('nicht_bestaetigt', $abfrage['barrierepruefung_status']);
+        $this->assertSame('Zu viele Versuche.', rawurldecode($abfrage['barrierepruefung_meldung']));
+        $this->assertSame(['meta_tag'], $this->versuchteVerfahren());
+    }
+
+    /**
+     * Installationen aus 0.7.0 kennen nur den Token des Meta-Elements. Ohne
+     * Nachholen bliebe die Datei leer, bis jemand die Verbindung neu einträgt.
+     */
+    public function test_ohne_datei_token_werden_die_nachweise_nachgeholt(): void
+    {
+        unset($GLOBALS['wp_options']['barrierepruefung_verification_file_token']);
+        $this->antwort(['data' => [
+            'meta_tag' => ['name' => 'a11y-site-verification', 'content' => '01JABCDEF'],
+            'file' => ['path' => '/.well-known/a11y-site-verification.txt', 'content' => '01JDATEI2'],
+        ]]);
+        $this->antwort(['data' => ['verified' => true, 'method' => 'meta_tag', 'failure_reason' => null]]);
+
+        $this->ausfuehren('handle_verify');
+
+        $this->assertSame(['/sites/st_123/verification', '/sites/st_123/verify'], $this->abgerufenePfade());
+        $this->assertSame('01JDATEI2', $GLOBALS['wp_options']['barrierepruefung_verification_file_token']);
+    }
+
+    public function test_mit_datei_token_werden_die_nachweise_nicht_erneut_geholt(): void
+    {
+        $this->antwort(['data' => ['verified' => true, 'method' => 'meta_tag', 'failure_reason' => null]]);
+
+        $this->ausfuehren('handle_verify');
+
+        $this->assertSame(['/sites/st_123/verify'], $this->abgerufenePfade());
     }
 
     /** Der Zwischenspeicher gehoert zu einer Verbindung, nicht zur Installation. */
