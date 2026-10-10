@@ -483,4 +483,164 @@ final class ErklaerungTest extends TestCase
 
         $this->assertSame('en-GB', $GLOBALS['wp_anfragen'][0]['args']['headers']['Accept-Language']);
     }
+
+    // --- Bund oder Land ---
+
+    /** Was der Dienst zu „Wer erklärt" liefert, wenn der Rechtsraum Länder führt. */
+    private function stelle(array $ueberschreiben = []): array
+    {
+        return ['data' => array_merge([
+            'name' => '',
+            'inherited_name' => 'Stadt Beispiel',
+            'effective_name' => 'Stadt Beispiel',
+            'applies_to' => 'public_body',
+            'subdivision' => null,
+            'subdivision_required' => true,
+            'subdivisions' => [
+                ['key' => 'BUND', 'label' => 'Bund'],
+                ['key' => 'NI', 'label' => 'Niedersachsen'],
+            ],
+            'options' => [
+                ['key' => 'public_body', 'label' => 'Öffentliche Stelle', 'description' => 'Behörde.'],
+                ['key' => 'business', 'label' => 'Privatwirtschaft', 'description' => 'Unternehmen.'],
+            ],
+            'hint' => 'Davon hängt ab, welches Dokument entsteht.',
+        ], $ueberschreiben)];
+    }
+
+    /** Ein Weg, auf dem „Wer erklärt" am fehlenden Land hängt. */
+    private function weg_ohne_land(): array
+    {
+        return $this->weg([
+            'steps' => [
+                ['key' => 'verantwortliche_stelle', 'title' => 'Wer erklärt', 'state' => 'offen', 'reasons' => [['key' => 'land', 'text' => 'Es fehlt die Angabe, ob die Stelle dem Bund oder einem Land angehört.']], 'web_url' => 'https://beispiel.test/pruefung/sc_1/erklaerung#angaben'],
+            ],
+            'next' => 'verantwortliche_stelle',
+        ]);
+    }
+
+    /**
+     * Der Grund „land" hängt am Schritt „Wer erklärt". Ohne das Feld dazu
+     * stünde er dort, und nichts auf der Seite könnte ihn beheben.
+     */
+    public function test_wer_erklaert_fragt_nach_bund_oder_land_wenn_der_dienst_laender_nennt(): void
+    {
+        $this->antwort($this->weg_ohne_land());
+        $this->antwort($this->stelle(['subdivision' => 'NI', 'subdivision_required' => false]));
+
+        $html = $this->rendern('verantwortliche_stelle');
+
+        $this->assertStringContainsString('name="subdivision"', $html);
+        $this->assertStringContainsString('id="barrierepruefung-feld-subdivision"', $html);
+        $this->assertStringContainsString('<option value="BUND">Bund</option>', $html);
+        $this->assertMatchesRegularExpression('#<option value="NI"\s+selected[^>]*>Niedersachsen</option>#', $html);
+    }
+
+    public function test_ohne_laender_im_rechtsraum_gibt_es_keine_auswahl(): void
+    {
+        $this->antwort($this->weg_ohne_land());
+        $this->antwort($this->stelle(['subdivisions' => [], 'subdivision_required' => false]));
+
+        $this->assertStringNotContainsString('name="subdivision"', $this->rendern('verantwortliche_stelle'));
+    }
+
+    /** Ein Dienst in älterer Fassung nennt den Schlüssel gar nicht. */
+    public function test_ein_dienst_ohne_laender_bekommt_auch_keine_auswahl(): void
+    {
+        $stelle = $this->stelle();
+        unset($stelle['data']['subdivision'], $stelle['data']['subdivision_required'], $stelle['data']['subdivisions']);
+
+        $this->antwort($this->weg_ohne_land());
+        $this->antwort($stelle);
+
+        $this->assertStringNotContainsString('name="subdivision"', $this->rendern('verantwortliche_stelle'));
+    }
+
+    public function test_das_land_geht_mit_seinem_schluessel_an_den_dienst(): void
+    {
+        $_POST = ['name' => '', 'applies_to' => 'public_body', 'subdivision' => 'NI'];
+        $this->antwort($this->stelle(['subdivision' => 'NI']));
+        $this->antwort($this->weg(['next' => 'pflichtangaben']));
+
+        $this->ausfuehren('handle_stelle');
+
+        $this->assertStringEndsWith('/sites/st_123/declaring-party', $GLOBALS['wp_anfragen'][0]['url']);
+        $this->assertSame('NI', $this->gesendet(0)['subdivision']);
+    }
+
+    /**
+     * Fehlend heißt beim Dienst „unverändert", leer heißt „leeren". Wurde das
+     * Feld nicht gezeigt, darf der Schlüssel deshalb nicht mitgehen.
+     */
+    public function test_ohne_das_feld_geht_kein_land_mit(): void
+    {
+        $_POST = ['name' => 'Stadt Beispiel', 'applies_to' => 'public_body'];
+        $this->antwort($this->stelle());
+        $this->antwort($this->weg());
+
+        $this->ausfuehren('handle_stelle');
+
+        $this->assertArrayNotHasKey('subdivision', $this->gesendet(0));
+    }
+
+    /** Ein Grund, den diese Fassung an einem bekannten Schritt nicht beheben kann, ist keine Sackgasse. */
+    public function test_ein_offener_bekannter_schritt_nennt_den_weg_in_den_dienst(): void
+    {
+        $this->antwort($this->weg_ohne_land());
+        $this->antwort($this->stelle());
+
+        $html = $this->rendern('verantwortliche_stelle');
+
+        $this->assertStringContainsString('href="https://beispiel.test/pruefung/sc_1/erklaerung#angaben"', $html);
+        $this->assertStringContainsString('Complete this step in the service', $html);
+    }
+
+    // --- Prüfschritte ---
+
+    /** Was der Dienst ohne `umfang` liefert: nur die sperrenden Fragen. */
+    private function pruefschritte(array $zeile = []): array
+    {
+        return [
+            'data' => [array_merge([
+                'id' => 11, 'rule' => 'manual.focus-order', 'title' => 'Ist die Fokusreihenfolge sinnvoll?',
+                'description' => '', 'success_criteria' => ['2.4.3'], 'evidence' => '',
+                'answer' => 'unanswered', 'note' => '', 'stale' => false, 'inherited' => false, 'answered_at' => null,
+            ], $zeile)],
+            'meta' => [
+                'total' => 1, 'open' => 1,
+                'answers' => ['passed' => 'erfüllt', 'failed' => 'nicht erfüllt', 'not_applicable' => 'trifft nicht zu', 'unanswered' => 'offen'],
+                'note_hint' => 'Notiz',
+                'web_url' => 'https://beispiel.test/pruefung/sc_1/pruefschritte',
+            ],
+        ];
+    }
+
+    /**
+     * Hier stehen nur die Fragen, die die Veröffentlichung sperren. Wer die
+     * übrigen nicht kennt, versteht nicht, warum die Erklärung Kriterien als
+     * nicht beurteilt führt - und findet sie nicht.
+     */
+    public function test_die_pruefschritte_nennen_den_ort_der_uebrigen_fragen(): void
+    {
+        $this->antwort($this->weg());
+        $this->antwort($this->pruefschritte());
+
+        $html = $this->rendern('pruefschritte');
+
+        $this->assertStringContainsString('have to be answered before the statement can be published', $html);
+        $this->assertStringContainsString('href="https://beispiel.test/pruefung/sc_1/pruefschritte"', $html);
+        $this->assertStringContainsString('Answer the remaining questions in the service', $html);
+    }
+
+    /** `stale` heißt: die Messung widerspricht der geerbten Antwort - nicht „Vorlage geändert". */
+    public function test_eine_verworfene_antwort_nennt_den_widerspruch_der_messung(): void
+    {
+        $this->antwort($this->weg());
+        $this->antwort($this->pruefschritte(['stale' => true, 'inherited' => true]));
+
+        $html = $this->rendern('pruefschritte');
+
+        $this->assertStringContainsString('contradicts the answer taken over from the previous scan', $html);
+        $this->assertStringNotContainsString('page template', $html);
+    }
 }

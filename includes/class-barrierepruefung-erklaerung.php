@@ -242,6 +242,16 @@ class Barrierepruefung_Erklaerung
             'applies_to' => isset($_POST['applies_to']) ? sanitize_key(wp_unslash($_POST['applies_to'])) : '',
         ];
 
+        // Bund oder Land. Nur wenn das Feld im Formular stand: fehlt der
+        // Schlüssel, lässt der Dienst das Land, wie es ist - leer mitgeschickt
+        // leert er es. Nicht sanitize_key(): die Schlüssel sind groß
+        // geschrieben (BUND, NI).
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- wie oben.
+        if (isset($_POST['subdivision'])) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing -- wie oben.
+            $werte['subdivision'] = strtoupper(sanitize_text_field(wp_unslash($_POST['subdivision'])));
+        }
+
         $client = new Barrierepruefung_Client;
         $antwort = $client->put('/sites/'.rawurlencode($client->site_id()).'/declaring-party', $werte + [
             'actor_name' => $this->handelnde_person(),

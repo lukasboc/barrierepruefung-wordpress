@@ -3,6 +3,31 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.7.2]
+
+### Behoben
+
+- Öffentliche Stellen kamen im Schritt „Wer erklärt“ nicht weiter: Der Dienst verlangt seit
+  Oktober 2026 die Angabe „Bund oder Land“ (Grund `land`), weil Länder und Kommunen nach
+  Landesrecht erklären. Das Plugin zeigte den Grund, hatte aber kein Feld dafür — Speichern
+  gelang, der Schritt blieb offen. Die Auswahl steht jetzt im Schritt; welche Länder zur Wahl
+  stehen, sagt der Dienst (`subdivisions`), und ohne Liste erscheint kein Feld.
+- Der Hinweis an einer verworfenen Antwort sprach von einer geänderten Seitenvorlage. Der Dienst
+  kennzeichnet damit, dass die Messung der Prüfung der übernommenen Antwort widerspricht; das
+  steht jetzt dort.
+
+### Geändert
+
+- Ein offener Schritt nennt immer auch den Weg in den Dienst (`web_url`), nicht nur ein Schritt,
+  den diese Fassung nicht kennt. Gibt der Dienst einem bekannten Schritt einen neuen Grund, ist
+  das damit keine Sackgasse mehr.
+- Die Prüfschritte sagen, was sie sind: die Fragen, die vor der Veröffentlichung beantwortet sein
+  müssen. Der Dienst führt inzwischen eine Frage je Erfolgskriterium; ein Hinweis nennt die
+  Folge offener Fragen (Kriterien gelten als nicht beurteilt, „vollständig konform“ ist nicht
+  wählbar) und führt zu den übrigen Fragen im Dienst.
+- Der Hinweis zur zuständigen Durchsetzungsstelle folgt dem Dienst: Sie wird nach Bund oder Land
+  vorbelegt.
+
 ## [0.7.1]
 
 ### Behoben

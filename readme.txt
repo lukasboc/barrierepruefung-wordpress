@@ -4,7 +4,7 @@ Tags: accessibility, barrierefreiheit, barriereprüfung, bfsg, wcag
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.7.1
+Stable tag: 0.7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -190,6 +190,20 @@ remaining test steps; the statement explicitly states that it is based on a self
    occurrences and the pages affected. Each rule can be expanded to its individual occurrences.
 
 == Changelog ==
+
+= 0.7.2 =
+* Fixed: Public bodies got stuck in the step "Who is making the statement". The service now asks
+  whether the body belongs to the federal level or to a state, because the applicable law
+  depends on it; the plugin showed the reason but had no field for it. The choice is now part of
+  the step. Which states are offered comes from the service.
+* Fixed: The note on a discarded answer spoke of a changed page template. It now says what the
+  service means: this scan measured something that contradicts the answer taken over.
+* Changed: Every open step also links to the place in the service where it can be completed.
+* Changed: The manual checks say what they are - the questions that have to be answered before
+  publishing - and link to the remaining questions in the service. Criteria nobody has assessed
+  are named as not assessed in the statement.
+* Changed: The hint on the competent enforcement body reflects that it is pre-filled according
+  to the federal or state level.
 
 = 0.7.1 =
 * Fixed: The domain could not be verified behind a page cache - the cache served the homepage

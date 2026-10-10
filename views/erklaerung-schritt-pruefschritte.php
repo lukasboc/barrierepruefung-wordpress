@@ -2,6 +2,11 @@
 /**
  * Schritt „Prüfschritte beantworten".
  *
+ * Der Dienst liefert hier nur die Fragen, die die Veröffentlichung sperren; den
+ * ganzen Katalog (eine Frage je Erfolgskriterium, mit Vorfragen) gibt es dort.
+ * Deshalb der Hinweis samt Verweis: wer die übrigen nicht beantwortet, bekommt
+ * eine Erklärung, die Kriterien als nicht beurteilt führt.
+ *
  * Alle auf einer Seite, offene zuerst - die Reihenfolge kommt vom Dienst. Ohne
  * Skript gibt es keinen Klick je Antwort; deshalb ein Formular für alle mit
  * einem Speichern-Knopf oben und unten. Der Dienst speichert alle oder keine.
@@ -20,7 +25,14 @@ foreach ((array) ($werte['checks'] ?? []) as $barrierepruefung_eingabe) {
     $barrierepruefung_eingaben[(int) ($barrierepruefung_eingabe['id'] ?? 0)] = $barrierepruefung_eingabe;
 }
 ?>
-<p><?php esc_html_e('No machine can fully assess these requirements. Go through them once; your answers flow into the statement.', 'barrierepruefung-de-web-accessibility-checker'); ?></p>
+<p><?php esc_html_e('No machine can fully assess these requirements. These are the questions that have to be answered before the statement can be published.', 'barrierepruefung-de-web-accessibility-checker'); ?></p>
+
+<?php if (! empty($meta['web_url'])) : ?>
+    <p class="description">
+        <?php esc_html_e('The service may hold further questions, one for each success criterion. A criterion that nobody has assessed is named as not assessed in the statement, and “fully compliant” cannot be chosen.', 'barrierepruefung-de-web-accessibility-checker'); ?>
+        <a href="<?php echo esc_url((string) $meta['web_url']); ?>" rel="external"><?php esc_html_e('Answer the remaining questions in the service', 'barrierepruefung-de-web-accessibility-checker'); ?></a>
+    </p>
+<?php endif; ?>
 
 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="<?php echo esc_attr(Barrierepruefung_Erklaerung::feld_id('checks')); ?>">
     <?php wp_nonce_field('barrierepruefung_pruefschritte'); ?>
@@ -59,7 +71,7 @@ foreach ((array) ($werte['checks'] ?? []) as $barrierepruefung_eingabe) {
             <?php endif; ?>
 
             <?php if (! empty($barrierepruefung_check['stale'])) : ?>
-                <p><strong><?php esc_html_e('The page template has changed since your last answer. Please check again.', 'barrierepruefung-de-web-accessibility-checker'); ?></strong></p>
+                <p><strong><?php esc_html_e('This scan measured something that contradicts the answer taken over from the previous scan. Please answer again.', 'barrierepruefung-de-web-accessibility-checker'); ?></strong></p>
             <?php elseif (! empty($barrierepruefung_check['inherited'])) : ?>
                 <p class="description"><?php esc_html_e('Taken over from the previous scan.', 'barrierepruefung-de-web-accessibility-checker'); ?></p>
             <?php endif; ?>

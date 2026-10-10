@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.7.1\n"
+"Project-Id-Version: Barrierepruefung.de – Web Accessibility Checker 0.7.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/barrierepruefung-de-web-accessibility-checker\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-23T16:44:40+00:00\n"
+"POT-Creation-Date: 2026-10-10T15:13:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: barrierepruefung-de-web-accessibility-checker\n"
@@ -53,7 +53,7 @@ msgstr ""
 
 #: includes/class-barrierepruefung-admin.php:144
 #: includes/class-barrierepruefung-admin.php:145
-#: includes/class-barrierepruefung-erklaerung.php:403
+#: includes/class-barrierepruefung-erklaerung.php:413
 #: views/admin-page.php:8
 #: views/erklaerung-seite.php:10
 msgid "Accessibility"
@@ -64,8 +64,8 @@ msgid "You do not have permission to view this page."
 msgstr ""
 
 #: includes/class-barrierepruefung-admin.php:528
-#: includes/class-barrierepruefung-erklaerung.php:393
-#: includes/class-barrierepruefung-erklaerung.php:556
+#: includes/class-barrierepruefung-erklaerung.php:403
+#: includes/class-barrierepruefung-erklaerung.php:566
 msgid "You do not have permission to perform this action."
 msgstr ""
 
@@ -84,26 +84,26 @@ msgid "Error: %s"
 msgstr ""
 
 #. translators: %s: version number
-#: includes/class-barrierepruefung-erklaerung.php:347
+#: includes/class-barrierepruefung-erklaerung.php:357
 #, php-format
 msgid "Version %s of your accessibility statement is published."
 msgstr ""
 
-#: includes/class-barrierepruefung-erklaerung.php:410
+#: includes/class-barrierepruefung-erklaerung.php:420
 msgid "The page could not be created."
 msgstr ""
 
-#: includes/class-barrierepruefung-erklaerung.php:415
+#: includes/class-barrierepruefung-erklaerung.php:425
 msgid "A draft page with your accessibility statement has been created. Check it, publish it and link to it from every page - usually in the footer."
 msgstr ""
 
 #. translators: %s: title of the next step
-#: includes/class-barrierepruefung-erklaerung.php:455
+#: includes/class-barrierepruefung-erklaerung.php:465
 #, php-format
 msgid "Saved. Next step: %s"
 msgstr ""
 
-#: includes/class-barrierepruefung-erklaerung.php:465
+#: includes/class-barrierepruefung-erklaerung.php:475
 msgid "Saved."
 msgstr ""
 
@@ -587,7 +587,7 @@ msgid "Fix this in the service"
 msgstr ""
 
 #: views/erklaerung-rueckmeldung.php:69
-#: views/erklaerung-uebersicht.php:50
+#: views/erklaerung-uebersicht.php:52
 msgid "View the published statement"
 msgstr ""
 
@@ -667,6 +667,7 @@ msgid "Website"
 msgstr ""
 
 #: views/erklaerung-schritt-pflichtangaben.php:64
+#: views/erklaerung-schritt-verantwortliche_stelle.php:71
 msgid "(required)"
 msgstr ""
 
@@ -679,41 +680,49 @@ msgid "Competent enforcement body"
 msgstr ""
 
 #: views/erklaerung-schritt-pflichtangaben.php:95
-msgid "Pre-filled for your jurisdiction. For regional authorities and municipalities, the body of the respective state applies - please check."
+msgid "Pre-filled for your jurisdiction - for public bodies according to the federal or state level you selected. Please check."
 msgstr ""
 
 #: views/erklaerung-schritt-pflichtangaben.php:102
 msgid "Save details"
 msgstr ""
 
-#: views/erklaerung-schritt-pruefschritte.php:23
-msgid "No machine can fully assess these requirements. Go through them once; your answers flow into the statement."
+#: views/erklaerung-schritt-pruefschritte.php:28
+msgid "No machine can fully assess these requirements. These are the questions that have to be answered before the statement can be published."
 msgstr ""
 
-#: views/erklaerung-schritt-pruefschritte.php:30
-#: views/erklaerung-schritt-pruefschritte.php:91
+#: views/erklaerung-schritt-pruefschritte.php:32
+msgid "The service may hold further questions, one for each success criterion. A criterion that nobody has assessed is named as not assessed in the statement, and “fully compliant” cannot be chosen."
+msgstr ""
+
+#: views/erklaerung-schritt-pruefschritte.php:33
+msgid "Answer the remaining questions in the service"
+msgstr ""
+
+#: views/erklaerung-schritt-pruefschritte.php:42
+#: views/erklaerung-schritt-pruefschritte.php:103
 msgid "Save answers"
 msgstr ""
 
 #. translators: %s: success criterion numbers, e.g. 2.4.3
-#: views/erklaerung-schritt-pruefschritte.php:46
+#: views/erklaerung-schritt-pruefschritte.php:58
 #, php-format
 msgid "Success criterion %s"
 msgstr ""
 
-#: views/erklaerung-schritt-pruefschritte.php:62
-msgid "The page template has changed since your last answer. Please check again."
+#: views/erklaerung-schritt-pruefschritte.php:74
+msgid "This scan measured something that contradicts the answer taken over from the previous scan. Please answer again."
 msgstr ""
 
-#: views/erklaerung-schritt-pruefschritte.php:64
+#: views/erklaerung-schritt-pruefschritte.php:76
 msgid "Taken over from the previous scan."
 msgstr ""
 
-#: views/erklaerung-schritt-pruefschritte.php:68
+#: views/erklaerung-schritt-pruefschritte.php:80
 msgid "Is this requirement met?"
 msgstr ""
 
-#: views/erklaerung-schritt-pruefschritte.php:82
+#: views/erklaerung-schritt-pruefschritte.php:94
 msgid "Note"
 msgstr ""
 
@@ -734,43 +743,56 @@ msgid "This step can only be completed in the service for now."
 msgstr ""
 
 #: views/erklaerung-schritt-unbekannt.php:16
+#: views/erklaerung-schritt.php:55
 msgid "Complete this step in the service"
 msgstr ""
 
-#: views/erklaerung-schritt-verantwortliche_stelle.php:24
+#: views/erklaerung-schritt-verantwortliche_stelle.php:29
 msgid "Name of the responsible body"
 msgstr ""
 
 #. translators: %s: name of the organization in the service
-#: views/erklaerung-schritt-verantwortliche_stelle.php:33
+#: views/erklaerung-schritt-verantwortliche_stelle.php:38
 #, php-format
 msgid "Leave empty to use “%s”. This name appears in the published statement."
 msgstr ""
 
-#: views/erklaerung-schritt-verantwortliche_stelle.php:37
+#: views/erklaerung-schritt-verantwortliche_stelle.php:42
 msgid "This name appears in the published statement."
 msgstr ""
 
-#: views/erklaerung-schritt-verantwortliche_stelle.php:43
+#: views/erklaerung-schritt-verantwortliche_stelle.php:48
 msgid "Type of body"
 msgstr ""
 
-#: views/erklaerung-schritt-verantwortliche_stelle.php:60
+#: views/erklaerung-schritt-verantwortliche_stelle.php:69
+msgid "Federal or state level"
+msgstr ""
+
+#: views/erklaerung-schritt-verantwortliche_stelle.php:78
+msgid "— Please choose —"
+msgstr ""
+
+#: views/erklaerung-schritt-verantwortliche_stelle.php:84
+msgid "Only for public bodies: does the body belong to the federal level or to a state? The law the statement refers to and the competent enforcement body depend on it."
+msgstr ""
+
+#: views/erklaerung-schritt-verantwortliche_stelle.php:89
 msgid "Save"
 msgstr ""
 
 #: views/erklaerung-schritt.php:16
-#: views/erklaerung-uebersicht.php:16
+#: views/erklaerung-uebersicht.php:18
 msgid "done"
 msgstr ""
 
 #: views/erklaerung-schritt.php:17
-#: views/erklaerung-uebersicht.php:17
+#: views/erklaerung-uebersicht.php:19
 msgid "open"
 msgstr ""
 
 #: views/erklaerung-schritt.php:18
-#: views/erklaerung-uebersicht.php:19
+#: views/erklaerung-uebersicht.php:21
 msgid "filled in before you publish"
 msgstr ""
 
@@ -782,101 +804,101 @@ msgstr ""
 msgid "This step could not be retrieved from the service. Please try again in a moment."
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:33
+#: views/erklaerung-uebersicht.php:35
 msgid "Your accessibility statement"
 msgstr ""
 
 #. translators: 1: version number, 2: date
-#: views/erklaerung-uebersicht.php:41
+#: views/erklaerung-uebersicht.php:43
 #, php-format
 msgid "Version %1$s is published, as of %2$s."
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:46
+#: views/erklaerung-uebersicht.php:48
 msgid "It is out of date: a newer scan result is available. Please release a new version."
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:52
+#: views/erklaerung-uebersicht.php:54
 msgid "Download as PDF"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:58
+#: views/erklaerung-uebersicht.php:60
 msgid "The statement is based on a finished scan. There is none for this site yet."
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:61
+#: views/erklaerung-uebersicht.php:63
 msgid "Go to the scan"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:74
+#: views/erklaerung-uebersicht.php:76
 msgid "Steps"
 msgstr ""
 
 #. translators: 1: steps done, 2: total number of steps
-#: views/erklaerung-uebersicht.php:79
+#: views/erklaerung-uebersicht.php:81
 #, php-format
 msgid "%1$s of %2$s steps done."
 msgstr ""
 
 #. translators: %s: title of the next open step
-#: views/erklaerung-uebersicht.php:106
+#: views/erklaerung-uebersicht.php:108
 #, php-format
 msgid "Next: %s"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:112
+#: views/erklaerung-uebersicht.php:114
 msgid "Review and publish the statement"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:116
+#: views/erklaerung-uebersicht.php:118
 msgid "Release a new version"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:121
+#: views/erklaerung-uebersicht.php:123
 msgid "Review the draft again"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:129
+#: views/erklaerung-uebersicht.php:131
 msgid "Findings that are not a defect, that will not be fixed or that would be a disproportionate burden are assessed in the full report in the service, where the screenshots are. These assessments shape the text of the statement."
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:130
+#: views/erklaerung-uebersicht.php:132
 msgid "Assess findings in the service"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:136
+#: views/erklaerung-uebersicht.php:138
 msgid "On your website"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:139
+#: views/erklaerung-uebersicht.php:141
 msgid "The statement is embedded on:"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:145
+#: views/erklaerung-uebersicht.php:147
 msgid "not published yet"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:148
+#: views/erklaerung-uebersicht.php:150
 msgid "view"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:149
+#: views/erklaerung-uebersicht.php:151
 msgid "edit"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:153
+#: views/erklaerung-uebersicht.php:155
 msgid "The page shows each new version automatically. Link to it from every page of your website, usually in the footer."
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:155
+#: views/erklaerung-uebersicht.php:157
 msgid "No page of this website contains the statement yet. It has to be reachable from every page, usually through a link in the footer."
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:159
+#: views/erklaerung-uebersicht.php:161
 msgid "Create a draft page with the statement"
 msgstr ""
 
-#: views/erklaerung-uebersicht.php:161
+#: views/erklaerung-uebersicht.php:163
 msgid "The page is created as a draft, so you can check it before it goes live. Alternatively, add the shortcode [barrierefreiheitserklaerung] or the block “Accessibility statement” to a page of your choice."
 msgstr ""
 

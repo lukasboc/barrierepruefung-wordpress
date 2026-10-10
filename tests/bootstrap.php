@@ -206,6 +206,14 @@ $GLOBALS['wp_stubs'] += [
     'wp_generate_uuid4' => static fn () => 'uuid-'.bin2hex(random_bytes(4)),
     'sanitize_textarea_field' => static fn ($text) => is_string($text) ? trim($text) : $text,
     'esc_textarea' => static fn ($text) => htmlspecialchars((string) $text, ENT_QUOTES),
+    'selected' => static function ($a, $b = true, $ausgeben = true) {
+        $wert = ((string) $a === (string) $b) ? ' selected="selected"' : '';
+        if ($ausgeben) {
+            echo $wert;
+        }
+
+        return $wert;
+    },
     'checked' => static function ($a, $b = true, $ausgeben = true) {
         $wert = ((string) $a === (string) $b) ? ' checked="checked"' : '';
         if ($ausgeben) {
@@ -241,6 +249,7 @@ function wp_generate_uuid4(...$a) { return ($GLOBALS['wp_stubs']['wp_generate_uu
 function sanitize_textarea_field(...$a) { return ($GLOBALS['wp_stubs']['sanitize_textarea_field'])(...$a); }
 function esc_textarea(...$a) { return ($GLOBALS['wp_stubs']['esc_textarea'])(...$a); }
 function checked(...$a) { return ($GLOBALS['wp_stubs']['checked'])(...$a); }
+function selected(...$a) { return ($GLOBALS['wp_stubs']['selected'])(...$a); }
 function get_posts(...$a) { return ($GLOBALS['wp_stubs']['get_posts'])(...$a); }
 function wp_insert_post(...$a) { return ($GLOBALS['wp_stubs']['wp_insert_post'])(...$a); }
 function get_edit_post_link(...$a) { return ($GLOBALS['wp_stubs']['get_edit_post_link'])(...$a); }

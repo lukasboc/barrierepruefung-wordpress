@@ -37,6 +37,14 @@ Ein Schritt-Schlüssel, den diese Fassung nicht kennt, erscheint mit Titel, Grü
 statt zu fehlen. Fachtexte kommen deshalb in der Sprache aus `Accept-Language` vom Dienst; nur die
 Bedienung des Plugins steht in `__()`. Nach einer Aktion liegt die Rückmeldung (Fehler je Feld,
 eingegebene Werte) als User-Meta `barrierepruefung_rueckmeldung` und wird genau einmal gelesen.
+Dasselbe gilt für Gründe: Ein offener Schritt nennt immer auch `web_url`, denn der Dienst kann
+einem bekannten Schritt einen Grund geben, für den es hier kein Feld gibt — so stand `land`
+(„Bund oder Land“, seit Oktober 2026) in 0.7.1 an „Wer erklärt“, ohne behebbar zu sein. Das Feld
+dazu (`subdivision`) geht nur mit, wenn es gezeigt wurde: fehlend heißt beim Dienst
+„unverändert“, leer heißt „leeren“. Die Prüfschritte zeigen nur die Fragen, die die
+Veröffentlichung sperren (der Standard von `/manual-checks`); der ganze Katalog mit Vorfragen
+bleibt im Dienst, `meta.web_url` führt hin.
+
 Die Freigabe schickt `draft_etag`, `expected_version` und einen beim Anzeigen erzeugten
 `Idempotency-Key` — nicht beim Absenden, sonst schützt er nicht vor dem Doppelklick.
 
@@ -52,7 +60,8 @@ Die Freigabe schickt `draft_etag`, `expected_version` und einen beim Anzeigen er
 ## Der Vertrag mit dem Dienst
 
 `ueberschriften_verschieben()` existiert ein zweites Mal im Dienst
-(`App\Domain\Declarations\DeclarationFragment`), weil es zwei Laufzeiten sind — portiert, nicht
+(`App\Domain\Declarations\DeclarationMarkdown::ebenenVerschieben()`, aufgerufen aus
+`DeclarationFragment`), weil es zwei Laufzeiten sind — portiert, nicht
 geteilt. Das Dienst-Repository zieht dieses Plugin als Composer-Paket herein und vergleicht
 beide Ausgaben Zeichen für Zeichen. Sie sind schon einmal auseinandergelaufen. Eine Änderung an
 dieser Methode ist eine Änderung an beiden Seiten.
