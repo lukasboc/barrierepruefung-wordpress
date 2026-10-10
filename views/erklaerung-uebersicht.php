@@ -2,8 +2,10 @@
 /**
  * Übersicht des Wegs zur Erklärung.
  *
- * Dieselben Schritte, dieselbe Reihenfolge und dieselben Wörter wie im
- * Dienst - sie kommen von dort. Die hervorgehobene Schaltfläche nennt das
+ * Dieselben Schritte, dieselbe Reihenfolge und dieselben Wörter, wie die
+ * API des Dienstes sie liefert (`path.steps`). Die Weboberfläche dort bündelt
+ * sie seit Oktober 2026 zu vier Stationen, die beim Entwurf enden; hier endet
+ * der Weg bei der veröffentlichten Fassung, denn nur die lässt sich einbinden. Die hervorgehobene Schaltfläche nennt das
  * echte Ziel des nächsten offenen Schritts, nie ein bloßes „Weiter".
  *
  * Erwartet $weg, $lauf, $schritte, $rueckmeldung, $seiten, $client.

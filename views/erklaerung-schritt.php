@@ -47,3 +47,12 @@ $barrierepruefung_zustand = (string) ($aktueller['state'] ?? '');
 <?php else : ?>
     <?php include BARRIEREPRUEFUNG_PATH.'views/erklaerung-schritt-'.$ansicht.'.php'; ?>
 <?php endif; ?>
+
+<?php // Der Dienst kann einem bekannten Schritt einen Grund geben, den diese Fassung nicht beheben kann - wie „land", bevor es das Feld dazu gab. Solange der Schritt offen ist, steht deshalb auch hier der Weg in den Dienst. ?>
+<?php if ($ansicht !== 'unbekannt' && $barrierepruefung_zustand === 'offen' && ! empty($aktueller['web_url'])) : ?>
+    <p class="description">
+        <a href="<?php echo esc_url((string) $aktueller['web_url']); ?>" rel="external">
+            <?php esc_html_e('Complete this step in the service', 'barrierepruefung-de-web-accessibility-checker'); ?>
+        </a>
+    </p>
+<?php endif; ?>
