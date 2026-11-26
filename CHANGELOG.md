@@ -3,6 +3,15 @@
 Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 die Versionierung [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.7.3]
+
+### Geändert
+
+- `Tested up to: 7.2`. Getestet mit WordPress 7.2-RC3 unter PHP 8.5 (Plugin Check 2.2.0 ohne neue
+  Befunde, `WP_DEBUG` ohne Meldungen aus dem Plugin); die Unit-Tests laufen auch unter PHP 8.6.0.
+  Am Code ändert sich nichts: Keine der Änderungen in 7.2 berührt, was das Plugin von WordPress
+  nutzt.
+
 ## [0.7.2]
 
 ### Behoben
