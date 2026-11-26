@@ -2,9 +2,9 @@
 Contributors: lukasbo
 Tags: accessibility, barrierefreiheit, barriereprüfung, bfsg, wcag
 Requires at least: 6.5
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 8.1
-Stable tag: 0.7.2
+Stable tag: 0.7.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -190,6 +190,9 @@ remaining test steps; the statement explicitly states that it is based on a self
    occurrences and the pages affected. Each rule can be expanded to its individual occurrences.
 
 == Changelog ==
+
+= 0.7.3 =
+* Changed: Tested up to WordPress 7.2 (Release Candidate 3). No code changes.
 
 = 0.7.2 =
 * Fixed: Public bodies got stuck in the step "Who is making the statement". The service now asks
